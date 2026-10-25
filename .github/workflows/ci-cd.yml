@@ -9,17 +9,18 @@ on:
 
 permissions:
   contents: read
-  security-events: write
 
 concurrency:
-  group: wattsnext-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: wattsnext-${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/') && 'production' || github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 env:
   PYTHON_VERSION: '3.13'
   NODE_VERSION: '22'
   PYTHONDONTWRITEBYTECODE: '1'
   WATTSNEXT_USE_NEON: 'false'
+  DATABASE_URL: ''
+  WATTSNEXT_PROVIDER: local
 
 jobs:
   repository-checks:
@@ -32,7 +33,7 @@ jobs:
         shell: bash
         run: |
           test ! -f .env && test ! -f .env.local
-          if git ls-files | grep -E '(^|/)(\.env|\.env\..*)$|\.pem$|\.key$'; then
+          if git ls-files | grep -Ev '(^|/)\.env\.example$' | grep -E '(^|/)(\.env|\.env\..*)$|\.pem$|\.key$'; then
             echo 'Secret-like files are tracked.'
             exit 1
           fi
@@ -45,17 +46,35 @@ jobs:
     name: Python checks
     runs-on: ubuntu-latest
     needs: repository-checks
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: wattsnext_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ci -d wattsnext_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      CI_TEST_DATABASE_URL: postgresql://ci:ci@localhost:5432/wattsnext_ci
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: pip
-          cache-dependency-path: requirements.txt
+          cache-dependency-path: requirements*.txt
       - name: Install dependencies
         run: python -m pip install --upgrade pip && pip install -r requirements-dev.txt
       - name: Compile all Python modules
         run: python -m compileall -q backend concierge server.py api scripts
+      - name: Lint Python
+        run: python -m ruff check backend concierge server.py api scripts tests
+      - name: Audit Python dependencies
+        run: python -m pip_audit -r requirements.txt
       - name: Run unit and API tests
         run: python -m unittest discover -s tests -v
       - name: Verify migration files are present and parseable
@@ -82,10 +101,41 @@ jobs:
           cache: npm
       - name: Install frontend tooling
         run: npm ci
+      - name: Audit frontend dependencies
+        run: npm audit --audit-level=high
       - name: Validate frontend build and JavaScript syntax
         run: npm run build
       - name: Validate JSON configuration
         run: node -e "JSON.parse(require('fs').readFileSync('vercel.json')); JSON.parse(require('fs').readFileSync('package.json'))"
+
+  browser-checks:
+    name: Browser checks
+    runs-on: ubuntu-latest
+    needs: [python-checks, frontend-checks]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: python -m pip install -r requirements-dev.txt
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-results
+          path: |
+            playwright-report/
+            test-results/
+            reports/
+          retention-days: 7
 
   docker-checks:
     name: Docker checks
@@ -120,7 +170,7 @@ jobs:
   release-readiness:
     name: Release readiness
     runs-on: ubuntu-latest
-    needs: [python-checks, frontend-checks, docker-checks]
+    needs: [python-checks, frontend-checks, browser-checks, docker-checks]
     steps:
       - uses: actions/checkout@v4
       - name: Check production deployment files
@@ -151,6 +201,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '${{ env.NODE_VERSION }}'
+          cache: npm
+      - run: npm ci
       - name: Deploy production build
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -158,7 +210,9 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           test -n "$VERCEL_TOKEN"
-          npx --yes vercel@latest deploy --prod --token "$VERCEL_TOKEN" --yes
+          test -n "$VERCEL_ORG_ID"
+          test -n "$VERCEL_PROJECT_ID"
+          npx --no-install vercel deploy --prod --token "$VERCEL_TOKEN" --yes
 
   neon-migrations:
     name: Apply production Neon migrations
@@ -171,7 +225,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.13' }
       - name: Install migration dependencies
-        run: pip install --no-cache-dir 'psycopg[binary]>=3.2'
+        run: python -m pip install --no-cache-dir -r requirements.txt
       - name: Apply versioned migrations to Neon production
         env:
           DATABASE_URL_UNPOOLED: ${{ secrets.DATABASE_URL_UNPOOLED }}

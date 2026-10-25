@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "python -m compileall -q backend concierge server.py && node --check static/app.js"
+    "build": "node --check static/app.js",
+    "test:browser": "playwright test"
   },
   "dependencies": {
     "@neon/config": "^1.9.4",
