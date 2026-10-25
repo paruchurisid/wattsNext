@@ -14,3 +14,8 @@ test-results
 playwright-report
 .coverage*
 .pytest_cache
+.uv-cache
+.venv-pipeline
+.ruff_cache
+data/cache
+data/smoke
