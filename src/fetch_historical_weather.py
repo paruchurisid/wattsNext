@@ -28,9 +28,12 @@ IEM = "tmpf,dwpf,relh,drct,sknt,gust,p01i,wxcodes,ice_accretion_1hr,ice_accretio
 
 
 def circular_degrees(values):
-    radians=np.deg2rad(values.dropna())
-    if not len(radians): return float('nan')
-    return float(np.rad2deg(np.arctan2(np.sin(radians).mean(),np.cos(radians).mean()))%360)
+    radians = np.deg2rad(values.dropna())
+    if not len(radians):
+        return float("nan")
+    return float(
+        np.rad2deg(np.arctan2(np.sin(radians).mean(), np.cos(radians).mean())) % 360
+    )
 
 
 def archive(city, start, end):
@@ -117,7 +120,7 @@ def asos(city, start, end):
             )
             for c in numeric
         }
-        agg["wind_direction_deg"]=circular_degrees
+        agg["wind_direction_deg"] = circular_degrees
         frames.append(f.groupby("timestamp_utc").agg(agg).reset_index())
         time.sleep(1)
     f = pd.concat(frames).drop_duplicates("timestamp_utc")

@@ -139,3 +139,368 @@
 2026-10-25 03:13:29,385 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
 2026-10-25 03:15:19,562 INFO EAGLE-I 2017: range 17/699 MB filtered (2879 target rows)
 2026-10-25 03:15:56,300 INFO EAGLE-I 2017: range 50/699 MB filtered (3587 target rows)
+2026-10-25 03:19:46,557 INFO EAGLE-I 2017: range 436/699 MB filtered (2403 target rows)
+2026-10-25 03:20:25,191 INFO EAGLE-I 2017: range 453/699 MB filtered (2129 target rows)
+2026-10-25 03:22:57,426 INFO EAGLE-I 2017: range 386/699 MB filtered (2023 target rows)
+2026-10-25 03:23:33,282 INFO EAGLE-I 2018: range 101/999 MB filtered (2229 target rows)
+2026-10-25 03:23:46,643 INFO EAGLE-I 2018: range 17/999 MB filtered (2203 target rows)
+2026-10-25 03:23:54,120 INFO EAGLE-I 2018: range 185/999 MB filtered (2270 target rows)
+2026-10-25 03:23:55,720 INFO EAGLE-I 2017: range 503/699 MB filtered (1987 target rows)
+2026-10-25 03:23:57,768 INFO EAGLE-I 2017: range 520/699 MB filtered (2410 target rows)
+2026-10-25 03:24:00,581 INFO EAGLE-I 2018: range 252/999 MB filtered (1721 target rows)
+2026-10-25 03:24:01,066 INFO EAGLE-I 2017: range 487/699 MB filtered (2363 target rows)
+2026-10-25 03:24:01,899 INFO EAGLE-I 2018: range 336/999 MB filtered (1900 target rows)
+2026-10-25 03:24:03,593 INFO EAGLE-I 2018: range 134/999 MB filtered (2158 target rows)
+2026-10-25 03:24:04,262 INFO EAGLE-I 2018: range 319/999 MB filtered (2128 target rows)
+2026-10-25 03:24:04,991 INFO EAGLE-I 2017: range 34/699 MB filtered (3032 target rows)
+2026-10-25 03:24:05,695 INFO EAGLE-I 2018: range 67/999 MB filtered (2361 target rows)
+2026-10-25 03:24:06,592 INFO EAGLE-I 2018: range 285/999 MB filtered (2131 target rows)
+2026-10-25 03:24:07,898 INFO EAGLE-I 2017: range 285/699 MB filtered (2171 target rows)
+2026-10-25 03:24:07,943 INFO EAGLE-I 2018: range 168/999 MB filtered (2079 target rows)
+2026-10-25 03:24:08,412 INFO EAGLE-I 2018: range 151/999 MB filtered (2030 target rows)
+2026-10-25 03:24:08,602 INFO EAGLE-I 2018: range 117/999 MB filtered (2378 target rows)
+2026-10-25 03:24:09,357 INFO EAGLE-I 2018: range 50/999 MB filtered (2140 target rows)
+2026-10-25 03:24:09,704 INFO EAGLE-I 2017: range 67/699 MB filtered (3583 target rows)
+2026-10-25 03:24:10,364 INFO EAGLE-I 2018: range 537/999 MB filtered (1728 target rows)
+2026-10-25 03:24:10,466 INFO EAGLE-I 2017: range 235/699 MB filtered (2353 target rows)
+2026-10-25 03:24:10,481 INFO EAGLE-I 2018: range 268/999 MB filtered (2136 target rows)
+2026-10-25 03:24:10,488 INFO EAGLE-I 2017: range 101/699 MB filtered (2399 target rows)
+2026-10-25 03:24:10,509 INFO EAGLE-I 2017: range 117/699 MB filtered (2989 target rows)
+2026-10-25 03:24:10,521 INFO EAGLE-I 2017: range 336/699 MB filtered (2122 target rows)
+2026-10-25 03:24:10,539 INFO EAGLE-I 2017: range 218/699 MB filtered (2721 target rows)
+2026-10-25 03:24:11,052 INFO EAGLE-I 2018: range 369/999 MB filtered (1760 target rows)
+2026-10-25 03:24:11,229 INFO EAGLE-I 2017: range 151/699 MB filtered (2229 target rows)
+2026-10-25 03:24:11,375 INFO EAGLE-I 2017: range 403/699 MB filtered (2553 target rows)
+2026-10-25 03:24:11,655 INFO EAGLE-I 2017: range 134/699 MB filtered (2777 target rows)
+2026-10-25 03:24:12,054 INFO EAGLE-I 2018: range 453/999 MB filtered (1566 target rows)
+2026-10-25 03:24:14,192 INFO EAGLE-I 2017: range 268/699 MB filtered (2177 target rows)
+2026-10-25 03:24:15,394 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:15,592 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:15,648 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:16,230 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:16,247 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:16,499 INFO EAGLE-I 2017: range 352/699 MB filtered (2142 target rows)
+2026-10-25 03:24:16,553 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:16,631 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:16,656 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:16,835 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:17,110 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:17,236 INFO EAGLE-I 2017: range 302/699 MB filtered (2313 target rows)
+2026-10-25 03:24:17,507 INFO EAGLE-I 2018: range 403/999 MB filtered (1763 target rows)
+2026-10-25 03:24:17,646 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:17,648 INFO EAGLE-I 2017: range 185/699 MB filtered (2872 target rows)
+2026-10-25 03:24:18,158 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:24:20,141 INFO EAGLE-I 2018: range 302/999 MB filtered (1996 target rows)
+2026-10-25 03:24:20,376 INFO EAGLE-I 2018: range 34/999 MB filtered (2078 target rows)
+2026-10-25 03:24:21,272 INFO EAGLE-I 2017: range 419/699 MB filtered (2326 target rows)
+2026-10-25 03:24:21,515 INFO EAGLE-I 2018: range 352/999 MB filtered (1970 target rows)
+2026-10-25 03:24:22,026 INFO EAGLE-I 2017: range 470/699 MB filtered (2148 target rows)
+2026-10-25 03:24:22,196 INFO EAGLE-I 2018: range 386/999 MB filtered (1859 target rows)
+2026-10-25 03:24:22,336 INFO EAGLE-I 2018: range 520/999 MB filtered (1671 target rows)
+2026-10-25 03:24:22,359 INFO EAGLE-I 2017: range 168/699 MB filtered (2954 target rows)
+2026-10-25 03:24:22,450 INFO EAGLE-I 2018: range 503/999 MB filtered (1770 target rows)
+2026-10-25 03:24:22,517 INFO EAGLE-I 2017: range 201/699 MB filtered (2171 target rows)
+2026-10-25 03:24:22,561 INFO EAGLE-I 2017: range 369/699 MB filtered (2150 target rows)
+2026-10-25 03:24:22,637 INFO EAGLE-I 2017: range 252/699 MB filtered (2728 target rows)
+2026-10-25 03:24:22,652 INFO EAGLE-I 2018: range 487/999 MB filtered (1628 target rows)
+2026-10-25 03:24:22,666 INFO EAGLE-I 2018: range 436/999 MB filtered (1692 target rows)
+2026-10-25 03:24:22,694 INFO EAGLE-I 2018: range 84/999 MB filtered (2062 target rows)
+2026-10-25 03:24:22,726 INFO EAGLE-I 2018: range 419/999 MB filtered (1831 target rows)
+2026-10-25 03:24:22,749 INFO EAGLE-I 2018: range 470/999 MB filtered (1530 target rows)
+2026-10-25 03:24:22,761 INFO EAGLE-I 2017: range 319/699 MB filtered (2246 target rows)
+2026-10-25 03:24:22,792 INFO EAGLE-I 2017: range 537/699 MB filtered (2609 target rows)
+2026-10-25 03:24:22,833 INFO EAGLE-I 2018: range 235/999 MB filtered (2182 target rows)
+2026-10-25 03:24:22,851 INFO EAGLE-I 2017: range 84/699 MB filtered (3213 target rows)
+2026-10-25 03:24:22,862 INFO EAGLE-I 2018: range 218/999 MB filtered (1990 target rows)
+2026-10-25 03:24:22,878 INFO EAGLE-I 2018: range 201/999 MB filtered (2601 target rows)
+2026-10-25 03:25:27,484 INFO EAGLE-I 2017: range 554/699 MB filtered (2785 target rows)
+2026-10-25 03:25:54,067 INFO EAGLE-I 2017: range 570/699 MB filtered (2797 target rows)
+2026-10-25 03:27:57,141 INFO EAGLE-I 2018: range 999/999 MB filtered (861 target rows)
+2026-10-25 03:28:02,682 INFO EAGLE-I 2017: range 587/699 MB filtered (2498 target rows)
+2026-10-25 03:28:14,633 INFO EAGLE-I 2017: range 699/699 MB filtered (1747 target rows)
+2026-10-25 03:28:18,966 INFO EAGLE-I 2017: range 604/699 MB filtered (2285 target rows)
+2026-10-25 03:29:53,951 INFO EAGLE-I 2017: range 621/699 MB filtered (2245 target rows)
+2026-10-25 03:30:05,282 INFO EAGLE-I 2018: range 554/999 MB filtered (1882 target rows)
+2026-10-25 03:30:15,859 INFO EAGLE-I 2018: range 570/999 MB filtered (1830 target rows)
+2026-10-25 03:30:21,848 INFO EAGLE-I 2018: range 587/999 MB filtered (1912 target rows)
+2026-10-25 03:30:23,033 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:23,396 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:23,787 INFO EAGLE-I 2017: range 671/699 MB filtered (1933 target rows)
+2026-10-25 03:30:23,894 INFO EAGLE-I 2017: range 638/699 MB filtered (2612 target rows)
+2026-10-25 03:30:24,034 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:24,444 INFO EAGLE-I 2017: range 688/699 MB filtered (2450 target rows)
+2026-10-25 03:30:24,806 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:25,136 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:25,238 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:25,568 INFO EAGLE-I 2018: range 604/999 MB filtered (1755 target rows)
+2026-10-25 03:30:25,841 INFO EAGLE-I 2018: range 654/999 MB filtered (1909 target rows)
+2026-10-25 03:30:25,915 INFO EAGLE-I 2018: range 638/999 MB filtered (1899 target rows)
+2026-10-25 03:30:26,138 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:26,281 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:26,859 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:26,903 INFO EAGLE-I 2017: range 654/699 MB filtered (1989 target rows)
+2026-10-25 03:30:27,023 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:27,475 INFO EAGLE-I 2018: range 621/999 MB filtered (1868 target rows)
+2026-10-25 03:30:27,525 INFO EAGLE-I 2017: checkpointed 104100 county snapshots
+2026-10-25 03:30:27,527 INFO EAGLE-I 2019: streaming 1102.8 MB
+2026-10-25 03:30:27,535 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:27,781 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:27,807 INFO EAGLE-I 2018: range 671/999 MB filtered (1726 target rows)
+2026-10-25 03:30:27,919 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:28,322 INFO EAGLE-I 2018: range 772/999 MB filtered (2095 target rows)
+2026-10-25 03:30:28,389 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:28,626 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:28,738 INFO EAGLE-I 2018: range 705/999 MB filtered (1948 target rows)
+2026-10-25 03:30:29,486 INFO EAGLE-I 2018: range 789/999 MB filtered (1504 target rows)
+2026-10-25 03:30:29,608 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:29,775 INFO EAGLE-I 2018: range 738/999 MB filtered (1926 target rows)
+2026-10-25 03:30:30,132 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:30:30,138 INFO EAGLE-I 2018: range 688/999 MB filtered (1850 target rows)
+2026-10-25 03:30:30,172 INFO EAGLE-I 2018: range 755/999 MB filtered (2142 target rows)
+2026-10-25 03:30:30,511 INFO EAGLE-I 2018: range 721/999 MB filtered (1863 target rows)
+2026-10-25 03:30:30,968 INFO EAGLE-I 2018: range 822/999 MB filtered (1795 target rows)
+2026-10-25 03:30:31,451 INFO EAGLE-I 2018: range 839/999 MB filtered (2044 target rows)
+2026-10-25 03:30:33,344 INFO EAGLE-I 2018: range 805/999 MB filtered (1791 target rows)
+2026-10-25 03:30:33,438 INFO EAGLE-I 2018: range 872/999 MB filtered (1736 target rows)
+2026-10-25 03:30:34,406 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:34,425 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:34,425 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:34,425 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:34,474 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:34,510 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:37,882 INFO EAGLE-I 2018: range 956/999 MB filtered (1940 target rows)
+2026-10-25 03:30:38,178 INFO EAGLE-I 2018: range 923/999 MB filtered (1950 target rows)
+2026-10-25 03:30:38,202 INFO EAGLE-I 2018: range 973/999 MB filtered (1621 target rows)
+2026-10-25 03:30:38,211 INFO EAGLE-I 2018: range 889/999 MB filtered (1853 target rows)
+2026-10-25 03:30:38,225 INFO EAGLE-I 2018: range 856/999 MB filtered (1936 target rows)
+2026-10-25 03:30:38,286 INFO EAGLE-I 2018: range 940/999 MB filtered (1974 target rows)
+2026-10-25 03:30:38,315 INFO EAGLE-I 2018: range 990/999 MB filtered (1761 target rows)
+2026-10-25 03:30:38,323 INFO EAGLE-I 2018: range 906/999 MB filtered (2103 target rows)
+2026-10-25 03:30:38,394 INFO EAGLE-I 2018: checkpointed 115015 county snapshots
+2026-10-25 03:30:38,395 INFO EAGLE-I 2020: streaming 1170.7 MB
+2026-10-25 03:30:41,821 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:41,873 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:41,873 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:41,926 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:41,955 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:42,026 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:42,139 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:30:42,239 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:40:58,794 INFO EAGLE-I 2019: range 17/1103 MB filtered (1857 target rows)
+2026-10-25 03:41:00,779 INFO EAGLE-I 2019: range 386/1103 MB filtered (1742 target rows)
+2026-10-25 03:41:03,232 INFO EAGLE-I 2019: range 34/1103 MB filtered (1689 target rows)
+2026-10-25 03:41:04,769 INFO EAGLE-I 2019: range 151/1103 MB filtered (1609 target rows)
+2026-10-25 03:41:07,104 INFO EAGLE-I 2019: range 185/1103 MB filtered (2246 target rows)
+2026-10-25 03:41:07,952 INFO EAGLE-I 2019: range 235/1103 MB filtered (2047 target rows)
+2026-10-25 03:41:10,045 INFO EAGLE-I 2019: range 117/1103 MB filtered (1812 target rows)
+2026-10-25 03:41:10,095 INFO EAGLE-I 2019: range 352/1103 MB filtered (1638 target rows)
+2026-10-25 03:41:10,151 INFO EAGLE-I 2019: range 336/1103 MB filtered (1859 target rows)
+2026-10-25 03:41:10,670 INFO EAGLE-I 2019: range 487/1103 MB filtered (1701 target rows)
+2026-10-25 03:41:12,520 INFO EAGLE-I 2020: range 50/1171 MB filtered (1659 target rows)
+2026-10-25 03:41:12,880 INFO EAGLE-I 2019: range 168/1103 MB filtered (2268 target rows)
+2026-10-25 03:41:14,234 INFO EAGLE-I 2019: range 218/1103 MB filtered (1981 target rows)
+2026-10-25 03:41:17,121 INFO EAGLE-I 2019: range 285/1103 MB filtered (1659 target rows)
+2026-10-25 03:41:17,293 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:17,386 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:17,394 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:17,396 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:17,538 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:17,594 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:17,597 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:18,015 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:18,136 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:18,171 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:18,177 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:18,258 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:18,889 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:19,198 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:19,301 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:19,873 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:20,072 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:20,311 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:20,372 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:20,821 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:20,929 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:21,527 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:22,877 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:25,111 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:28,663 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:29,345 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:41:38,788 INFO EAGLE-I 2019: range 134/1103 MB filtered (1979 target rows)
+2026-10-25 03:41:38,789 INFO EAGLE-I 2019: range 101/1103 MB filtered (1689 target rows)
+2026-10-25 03:41:39,332 INFO EAGLE-I 2019: range 369/1103 MB filtered (1858 target rows)
+2026-10-25 03:41:43,926 INFO EAGLE-I 2019: range 520/1103 MB filtered (1374 target rows)
+2026-10-25 03:41:44,386 INFO EAGLE-I 2020: range 403/1171 MB filtered (1683 target rows)
+2026-10-25 03:41:46,156 INFO EAGLE-I 2019: range 403/1103 MB filtered (1582 target rows)
+2026-10-25 03:41:46,517 INFO EAGLE-I 2019: range 319/1103 MB filtered (1460 target rows)
+2026-10-25 03:41:46,773 INFO EAGLE-I 2020: range 134/1171 MB filtered (1839 target rows)
+2026-10-25 03:41:46,974 INFO EAGLE-I 2019: range 268/1103 MB filtered (1648 target rows)
+2026-10-25 03:41:47,198 INFO EAGLE-I 2020: range 369/1171 MB filtered (1443 target rows)
+2026-10-25 03:41:47,261 INFO EAGLE-I 2019: range 470/1103 MB filtered (1561 target rows)
+2026-10-25 03:41:47,282 INFO EAGLE-I 2019: range 67/1103 MB filtered (2239 target rows)
+2026-10-25 03:41:47,386 INFO EAGLE-I 2020: range 302/1171 MB filtered (1280 target rows)
+2026-10-25 03:41:47,562 INFO EAGLE-I 2019: range 419/1103 MB filtered (1702 target rows)
+2026-10-25 03:41:47,598 INFO EAGLE-I 2020: range 84/1171 MB filtered (2118 target rows)
+2026-10-25 03:41:47,614 INFO EAGLE-I 2019: range 436/1103 MB filtered (1719 target rows)
+2026-10-25 03:41:47,650 INFO EAGLE-I 2019: range 252/1103 MB filtered (1701 target rows)
+2026-10-25 03:41:47,672 INFO EAGLE-I 2020: range 17/1171 MB filtered (1652 target rows)
+2026-10-25 03:41:47,672 INFO EAGLE-I 2020: range 336/1171 MB filtered (1617 target rows)
+2026-10-25 03:41:47,691 INFO EAGLE-I 2020: range 117/1171 MB filtered (1705 target rows)
+2026-10-25 03:41:47,711 INFO EAGLE-I 2020: range 285/1171 MB filtered (1627 target rows)
+2026-10-25 03:41:47,743 INFO EAGLE-I 2019: range 84/1103 MB filtered (2252 target rows)
+2026-10-25 03:41:47,744 INFO EAGLE-I 2020: range 218/1171 MB filtered (1771 target rows)
+2026-10-25 03:41:47,759 INFO EAGLE-I 2020: range 34/1171 MB filtered (1673 target rows)
+2026-10-25 03:41:47,787 INFO EAGLE-I 2020: range 168/1171 MB filtered (1605 target rows)
+2026-10-25 03:41:47,805 INFO EAGLE-I 2019: range 503/1103 MB filtered (1500 target rows)
+2026-10-25 03:41:47,806 INFO EAGLE-I 2020: range 453/1171 MB filtered (1678 target rows)
+2026-10-25 03:41:47,861 INFO EAGLE-I 2020: range 352/1171 MB filtered (1394 target rows)
+2026-10-25 03:41:47,873 INFO EAGLE-I 2019: range 201/1103 MB filtered (1786 target rows)
+2026-10-25 03:41:47,891 INFO EAGLE-I 2020: range 201/1171 MB filtered (1794 target rows)
+2026-10-25 03:41:47,911 INFO EAGLE-I 2020: range 436/1171 MB filtered (1675 target rows)
+2026-10-25 03:41:47,932 INFO EAGLE-I 2020: range 101/1171 MB filtered (2174 target rows)
+2026-10-25 03:41:47,963 INFO EAGLE-I 2020: range 386/1171 MB filtered (1545 target rows)
+2026-10-25 03:41:47,976 INFO EAGLE-I 2020: range 185/1171 MB filtered (1379 target rows)
+2026-10-25 03:41:47,976 INFO EAGLE-I 2019: range 302/1103 MB filtered (1678 target rows)
+2026-10-25 03:41:48,003 INFO EAGLE-I 2020: range 470/1171 MB filtered (1381 target rows)
+2026-10-25 03:41:48,028 INFO EAGLE-I 2020: range 252/1171 MB filtered (1881 target rows)
+2026-10-25 03:41:48,066 INFO EAGLE-I 2020: range 487/1171 MB filtered (1463 target rows)
+2026-10-25 03:41:48,136 INFO EAGLE-I 2020: range 419/1171 MB filtered (1611 target rows)
+2026-10-25 03:41:48,150 INFO EAGLE-I 2020: range 151/1171 MB filtered (1541 target rows)
+2026-10-25 03:41:48,188 INFO EAGLE-I 2020: range 537/1171 MB filtered (1494 target rows)
+2026-10-25 03:41:48,194 INFO EAGLE-I 2020: range 319/1171 MB filtered (1587 target rows)
+2026-10-25 03:41:48,206 INFO EAGLE-I 2019: range 537/1103 MB filtered (1547 target rows)
+2026-10-25 03:41:48,292 INFO EAGLE-I 2019: range 50/1103 MB filtered (1798 target rows)
+2026-10-25 03:41:48,313 INFO EAGLE-I 2020: range 503/1171 MB filtered (1421 target rows)
+2026-10-25 03:41:48,357 INFO EAGLE-I 2020: range 520/1171 MB filtered (1772 target rows)
+2026-10-25 03:41:48,400 INFO EAGLE-I 2020: range 67/1171 MB filtered (2114 target rows)
+2026-10-25 03:41:48,435 INFO EAGLE-I 2020: range 268/1171 MB filtered (1701 target rows)
+2026-10-25 03:41:48,456 INFO EAGLE-I 2019: range 453/1103 MB filtered (1590 target rows)
+2026-10-25 03:41:48,512 INFO EAGLE-I 2020: range 235/1171 MB filtered (1501 target rows)
+2026-10-25 03:50:16,317 INFO EAGLE-I 2019: range 621/1103 MB filtered (1342 target rows)
+2026-10-25 03:50:22,057 INFO EAGLE-I 2019: range 554/1103 MB filtered (1395 target rows)
+2026-10-25 03:50:25,092 INFO EAGLE-I 2019: range 638/1103 MB filtered (1448 target rows)
+2026-10-25 03:50:32,025 INFO EAGLE-I 2019: range 654/1103 MB filtered (1687 target rows)
+2026-10-25 03:50:33,203 INFO EAGLE-I 2019: range 570/1103 MB filtered (1626 target rows)
+2026-10-25 03:50:33,247 INFO EAGLE-I 2019: range 688/1103 MB filtered (1441 target rows)
+2026-10-25 03:50:34,311 INFO EAGLE-I 2019: range 671/1103 MB filtered (1496 target rows)
+2026-10-25 03:50:37,882 INFO EAGLE-I 2019: range 721/1103 MB filtered (1667 target rows)
+2026-10-25 03:50:38,605 INFO EAGLE-I 2019: range 604/1103 MB filtered (1405 target rows)
+2026-10-25 03:50:41,731 INFO EAGLE-I 2019: range 705/1103 MB filtered (1686 target rows)
+2026-10-25 03:50:42,951 INFO EAGLE-I 2019: range 587/1103 MB filtered (1578 target rows)
+2026-10-25 03:50:44,897 INFO EAGLE-I 2020: range 554/1171 MB filtered (1511 target rows)
+2026-10-25 03:50:48,754 INFO EAGLE-I 2019: range 755/1103 MB filtered (1819 target rows)
+2026-10-25 03:50:51,004 INFO EAGLE-I 2019: range 738/1103 MB filtered (1578 target rows)
+2026-10-25 03:51:26,609 INFO EAGLE-I 2019: range 772/1103 MB filtered (1830 target rows)
+2026-10-25 03:51:27,787 INFO EAGLE-I 2019: range 789/1103 MB filtered (1701 target rows)
+2026-10-25 03:51:29,990 INFO EAGLE-I 2019: range 856/1103 MB filtered (1888 target rows)
+2026-10-25 03:51:31,290 INFO EAGLE-I 2019: range 1023/1103 MB filtered (1869 target rows)
+2026-10-25 03:51:31,359 INFO EAGLE-I 2019: range 805/1103 MB filtered (1870 target rows)
+2026-10-25 03:51:31,411 INFO EAGLE-I 2019: range 956/1103 MB filtered (1668 target rows)
+2026-10-25 03:51:31,875 INFO EAGLE-I 2019: range 839/1103 MB filtered (1734 target rows)
+2026-10-25 03:51:34,443 INFO EAGLE-I 2020: range 570/1171 MB filtered (1527 target rows)
+2026-10-25 03:51:34,536 INFO EAGLE-I 2019: range 923/1103 MB filtered (1662 target rows)
+2026-10-25 03:51:37,034 INFO EAGLE-I 2020: range 738/1171 MB filtered (1513 target rows)
+2026-10-25 03:51:37,202 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:37,456 INFO EAGLE-I 2020: range 587/1171 MB filtered (1513 target rows)
+2026-10-25 03:51:37,895 INFO EAGLE-I 2019: range 906/1103 MB filtered (1715 target rows)
+2026-10-25 03:51:38,008 INFO EAGLE-I 2020: range 956/1171 MB filtered (1697 target rows)
+2026-10-25 03:51:38,054 INFO EAGLE-I 2020: range 604/1171 MB filtered (1503 target rows)
+2026-10-25 03:51:38,221 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:39,004 INFO EAGLE-I 2019: range 1074/1103 MB filtered (2263 target rows)
+2026-10-25 03:51:39,117 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:39,252 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:39,948 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:39,950 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:39,952 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:40,253 INFO EAGLE-I 2019: range 1040/1103 MB filtered (1868 target rows)
+2026-10-25 03:51:40,312 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:40,565 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:40,742 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:40,860 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,006 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,211 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,237 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,431 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,504 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,649 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,744 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:41,785 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:42,016 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:42,108 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:42,200 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:42,315 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:42,569 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:42,655 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:43,127 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:43,129 INFO EAGLE-I 2020: range 621/1171 MB filtered (1577 target rows)
+2026-10-25 03:51:43,185 INFO EAGLE-I 2020: range 688/1171 MB filtered (1551 target rows)
+2026-10-25 03:51:43,219 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:43,731 INFO EAGLE-I 2020: range 839/1171 MB filtered (1465 target rows)
+2026-10-25 03:51:45,753 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:45,754 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:48,070 INFO EAGLE-I 2020: range 789/1171 MB filtered (1465 target rows)
+2026-10-25 03:51:50,328 INFO EAGLE-I 2020: range 822/1171 MB filtered (1541 target rows)
+2026-10-25 03:51:51,279 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:51,599 INFO EAGLE-I 2020: range 889/1171 MB filtered (1687 target rows)
+2026-10-25 03:51:51,602 INFO EAGLE-I 2019: range 1007/1103 MB filtered (1973 target rows)
+2026-10-25 03:51:52,074 INFO EAGLE-I 2019: range 872/1103 MB filtered (1963 target rows)
+2026-10-25 03:51:52,159 INFO EAGLE-I 2019: range 889/1103 MB filtered (1926 target rows)
+2026-10-25 03:51:52,234 INFO EAGLE-I 2019: range 973/1103 MB filtered (1810 target rows)
+2026-10-25 03:51:52,316 INFO EAGLE-I 2020: range 1007/1171 MB filtered (1447 target rows)
+2026-10-25 03:51:52,424 INFO EAGLE-I 2020: range 705/1171 MB filtered (1320 target rows)
+2026-10-25 03:51:52,549 INFO EAGLE-I 2020: range 772/1171 MB filtered (1820 target rows)
+2026-10-25 03:51:52,594 INFO EAGLE-I 2020: range 990/1171 MB filtered (1304 target rows)
+2026-10-25 03:51:52,614 INFO EAGLE-I 2020: range 721/1171 MB filtered (1516 target rows)
+2026-10-25 03:51:52,666 INFO EAGLE-I 2020: range 872/1171 MB filtered (1833 target rows)
+2026-10-25 03:51:52,707 INFO EAGLE-I 2020: range 940/1171 MB filtered (1580 target rows)
+2026-10-25 03:51:52,822 INFO EAGLE-I 2020: range 923/1171 MB filtered (1498 target rows)
+2026-10-25 03:51:52,838 INFO EAGLE-I 2020: range 638/1171 MB filtered (1587 target rows)
+2026-10-25 03:51:52,849 INFO EAGLE-I 2019: range 1057/1103 MB filtered (2262 target rows)
+2026-10-25 03:51:52,880 INFO EAGLE-I 2020: range 856/1171 MB filtered (1622 target rows)
+2026-10-25 03:51:52,897 INFO EAGLE-I 2020: range 1057/1171 MB filtered (1697 target rows)
+2026-10-25 03:51:52,916 INFO EAGLE-I 2019: range 990/1103 MB filtered (1903 target rows)
+2026-10-25 03:51:52,962 INFO EAGLE-I 2019: range 940/1103 MB filtered (1607 target rows)
+2026-10-25 03:51:52,971 INFO EAGLE-I 2020: range 1040/1171 MB filtered (1664 target rows)
+2026-10-25 03:51:52,971 INFO EAGLE-I 2020: range 671/1171 MB filtered (1546 target rows)
+2026-10-25 03:51:52,972 INFO EAGLE-I 2020: range 906/1171 MB filtered (1967 target rows)
+2026-10-25 03:51:52,972 INFO EAGLE-I 2020: range 1023/1171 MB filtered (1617 target rows)
+2026-10-25 03:51:52,972 INFO EAGLE-I 2020: range 805/1171 MB filtered (1528 target rows)
+2026-10-25 03:51:53,005 INFO EAGLE-I 2020: range 973/1171 MB filtered (1753 target rows)
+2026-10-25 03:51:53,016 INFO EAGLE-I 2020: range 1074/1171 MB filtered (1831 target rows)
+2026-10-25 03:51:53,072 INFO EAGLE-I 2020: range 755/1171 MB filtered (1595 target rows)
+2026-10-25 03:51:55,538 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:51:56,103 INFO EAGLE-I 2019: range 822/1103 MB filtered (1829 target rows)
+2026-10-25 03:52:01,877 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:52:02,533 INFO EAGLE-I 2020: range 654/1171 MB filtered (1508 target rows)
+2026-10-25 03:52:33,763 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:52:34,053 INFO EAGLE-I 2019: range 1103/1103 MB filtered (1647 target rows)
+2026-10-25 03:52:47,905 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:52:48,151 INFO EAGLE-I 2020: range 1171/1171 MB filtered (1676 target rows)
+2026-10-25 03:52:53,339 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:52:53,806 INFO EAGLE-I 2019: range 1091/1103 MB filtered (2109 target rows)
+2026-10-25 03:52:53,930 INFO EAGLE-I 2019: checkpointed 116036 county snapshots
+2026-10-25 03:52:53,931 INFO EAGLE-I 2021: streaming 1141.1 MB
+2026-10-25 03:52:54,903 INFO EAGLE-I 2020: range 1091/1171 MB filtered (1407 target rows)
+2026-10-25 03:52:55,281 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:52:57,862 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,863 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,863 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,863 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,864 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,878 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,924 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:52:57,924 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:02,651 INFO EAGLE-I 2020: range 1141/1171 MB filtered (1965 target rows)
+2026-10-25 03:53:04,647 INFO EAGLE-I 2020: range 1124/1171 MB filtered (1632 target rows)
+2026-10-25 03:53:09,895 INFO EAGLE-I 2020: range 1158/1171 MB filtered (2112 target rows)
+2026-10-25 03:53:11,298 INFO EAGLE-I 2020: range 1107/1171 MB filtered (2080 target rows)
+2026-10-25 03:53:11,396 INFO EAGLE-I 2020: checkpointed 114433 county snapshots
+2026-10-25 03:53:11,396 INFO EAGLE-I 2022: streaming 1187.6 MB
+2026-10-25 03:53:14,413 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:14,465 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:14,614 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:15,504 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:15,709 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:16,189 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:16,219 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:53:16,705 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24

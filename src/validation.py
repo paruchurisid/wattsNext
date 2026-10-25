@@ -55,6 +55,19 @@ def validate(name, frame, start, end):
     keys = ["city_key", "fips_code"]
     if frame[keys].isna().any().any():
         raise ValueError(f"{name}: missing county/city join key")
+    for column in (
+        "event_id",
+        "outage_event_id",
+        "record_type",
+        "asos_id",
+        "ghcnd_id",
+        "forecast_source",
+    ):
+        if column in frame and (
+            frame[column].isna().any()
+            or frame[column].astype(str).str.strip().eq("").any()
+        ):
+            raise ValueError(f"{name}: missing required identifier {column}")
     for city, fips in frame[keys].drop_duplicates().itertuples(index=False, name=None):
         if fips not in FIPS or FIPS[fips].city_key != city:
             raise ValueError(f"{name}: inconsistent city/FIPS mapping: {city}/{fips}")
@@ -94,14 +107,40 @@ def validate(name, frame, start, end):
         if finish.le(begin).any():
             raise ValueError("Outage end must follow start")
         if (
+            frame[["peak_customers_out", "customer_hours_interrupted"]]
+            .isna()
+            .any()
+            .any()
+        ):
+            raise ValueError("Missing outage measurements")
+        if (
+            "duration_minutes" in frame
+            and ((finish - begin).dt.total_seconds() / 60 - frame.duration_minutes)
+            .abs()
+            .gt(1e-6)
+            .any()
+        ):
+            raise ValueError("Outage duration disagrees with observed interval")
+        if (
             (frame[["peak_customers_out", "customer_hours_interrupted"]] < 0)
             .any()
             .any()
         ):
             raise ValueError("Negative outage measurements")
     if name == "forecasts" and len(frame):
+        if frame.duplicated(
+            [
+                "forecast_source",
+                "fips_code",
+                "valid_timestamp_utc",
+                "issue_timestamp_utc",
+            ]
+        ).any():
+            raise ValueError("Duplicate forecast source/county/issue/valid keys")
         issue = pd.to_datetime(frame.issue_timestamp_utc, utc=True)
         valid = pd.to_datetime(frame.valid_timestamp_utc, utc=True)
+        if issue[~frame.forecast_source.eq("OPEN_METEO_LIVE")].isna().any():
+            raise ValueError("Missing issue reference for archived/NWS forecast")
         known = issue.notna()
         difference = (valid[known] - issue[known]).dt.total_seconds() / 3600
         if (

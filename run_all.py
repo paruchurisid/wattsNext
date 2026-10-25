@@ -18,6 +18,7 @@ from src import (
 )
 from src.common import STATUS, configure_cache, get, manifest, atomic_json
 from src.validation import validate, validate_directory
+from src.reporting import build_report
 
 MODULES = {
     "historical": fetch_historical_weather,
@@ -107,6 +108,11 @@ def smoke_window(start, end):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--progress",
+        action="store_true",
+        help="Show durable outage download progress without network access",
+    )
     parser.add_argument("--start-year", type=int, default=2015)
     parser.add_argument("--end-year", type=int, default=2026)
     parser.add_argument("--start-date")
@@ -162,10 +168,16 @@ def main():
     if start > end:
         parser.error("Start date exceeds available end date")
     configure_cache(args.output_dir / "cache")
+    if args.progress:
+        from src.progress import progress
+
+        print(json.dumps(progress(args.output_dir / "cache"), indent=2), flush=True)
+        return 0
     if args.validate_only:
         try:
             report = validate_directory(args.output_dir, start, end)
             atomic_json(args.output_dir / "validation_summary.json", report)
+            build_report(args.output_dir, start, end)
             print(json.dumps(report, indent=2), flush=True)
             return 0
         except (ValueError, OSError) as exc:
@@ -205,6 +217,8 @@ def main():
     gaps = any(s["status"] == "coverage_gap" for s in STATUS)
     summary = {
         "schema_version": "1.0",
+        "pipelines": args.pipelines,
+        "all_products_built": len(args.pipelines) == len(MODULES),
         "start": start,
         "end": end,
         "validation_passed": ok,
@@ -217,6 +231,7 @@ def main():
     (args.output_dir / "run_summary.json").write_text(
         json.dumps(summary, indent=2), encoding="utf-8"
     )
+    build_report(args.output_dir, start, end)
     print(json.dumps(summary, indent=2), flush=True)
     return 2 if not ok or failures or (args.strict_coverage and gaps) else 0
 

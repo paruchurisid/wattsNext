@@ -73,7 +73,14 @@ def timestamp_window(info, start, end):
 
 
 def filtered_csv_ranges(
-    info, year, cache, normalize, workers=None, block_size=16 * 1024 * 1024, window=None
+    info,
+    year,
+    cache,
+    normalize,
+    workers=None,
+    block_size=16 * 1024 * 1024,
+    window=None,
+    executor=None,
 ):
     workers = workers or max(
         1, min(32, int(os.environ.get("EAGLE_RANGE_WORKERS", "8")))
@@ -132,6 +139,10 @@ def filtered_csv_ranges(
         )
         return frame
 
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        frames = list(pool.map(fetch, offsets))
+    if executor is not None:
+        pending = [executor.submit(fetch, offset) for offset in offsets]
+        frames = [future.result() for future in pending]
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            frames = list(pool.map(fetch, offsets))
     return pd.concat(frames, ignore_index=True)

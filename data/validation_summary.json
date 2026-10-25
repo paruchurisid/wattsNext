@@ -1,6 +1,6 @@
 {
-  "hazards": {
-    "rows": 518379,
+  "historical": {
+    "rows": 517800,
     "missing_join_keys": 0,
     "counties_present": [
       "39049",
@@ -12,36 +12,45 @@
     "requested_start": "2015-01-01",
     "requested_end": "2026-10-24",
     "timestamps": {
-      "begin_timestamp_utc": {
-        "min": "2015-01-01 01:00:00+00:00",
+      "timestamp_utc": {
+        "min": "2015-01-01 00:00:00+00:00",
         "max": "2026-10-24 23:00:00+00:00"
-      },
-      "end_timestamp_utc": {
-        "min": "2015-01-01 02:00:00+00:00",
-        "max": "2026-10-25 00:00:00+00:00"
       }
     },
     "nonnull_counts": {
-      "event_id": 518379,
-      "city_key": 518379,
-      "fips_code": 518379,
-      "begin_timestamp_utc": 518379,
-      "end_timestamp_utc": 518379,
-      "event_type": 2488,
-      "damage_property_usd": 2287,
-      "damage_crops_usd": 2246,
-      "record_type": 518379,
-      "source_dataset": 518379,
-      "geographic_match": 2488,
-      "source_zone_id": 2488,
-      "source_zone_name": 2488,
-      "usgs_site": 515891,
-      "discharge_cfs": 501585,
-      "gage_height_ft": 512936,
-      "is_river_flooding": 409519,
-      "flood_category": 515891,
-      "threshold_reference": 515891,
-      "flood_stage_ft": 412470
+      "timestamp_utc": 517800,
+      "temp_c": 517800,
+      "precipitation_mm": 517800,
+      "rain_mm": 517800,
+      "snowfall_cm": 517800,
+      "snow_depth_m": 517800,
+      "weather_code": 517800,
+      "wind_speed_kmh": 517800,
+      "wind_gust_kmh": 517800,
+      "dewpoint_f": 517135,
+      "relative_humidity_pct": 516917,
+      "wind_direction_deg": 493002,
+      "wind_speed_knots": 516636,
+      "wind_gust_knots": 67100,
+      "precipitation_1hr_in": 517251,
+      "asos_snow_depth_in": 1298,
+      "peak_wind_gust_knots": 27745,
+      "ice_accretion_1hr_in": 2158,
+      "ice_accretion_3hr_in": 619,
+      "ice_accretion_6hr_in": 909,
+      "is_freezing_rain": 517251,
+      "is_snow": 517251,
+      "is_ice_pellets": 517251,
+      "is_thunderstorm": 517251,
+      "asos_temp_c": 517180,
+      "local_date": 517800,
+      "ghcnd_snowfall_in": 517341,
+      "ghcnd_snow_depth_in": 516045,
+      "city_key": 517800,
+      "asos_id": 517800,
+      "ghcnd_id": 517800,
+      "source_dataset": 517800,
+      "fips_code": 517800
     }
   }
 }

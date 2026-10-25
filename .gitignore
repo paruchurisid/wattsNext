@@ -27,4 +27,12 @@ node_modules/
 .uv-cache/
 data/cache/
 data/smoke/
+# Generated pipeline products are stored in Neon, not committed to GitHub.
+data/historical_weather.csv
+data/severe_weather_events.csv
+data/power_outages.csv
+data/weather_forecast.csv
 !/.env.example
+
+data/*.log
+data/.staging/

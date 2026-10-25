@@ -20,8 +20,8 @@ SESSION.headers["User-Agent"] = NWS_USER_AGENT
 SESSION.mount(
     "https://",
     HTTPAdapter(
-        pool_connections=24,
-        pool_maxsize=24,
+        pool_connections=72,
+        pool_maxsize=72,
         max_retries=Retry(
             total=4,
             backoff_factor=1,

@@ -195,5 +195,103 @@ class ProductContractTests(unittest.TestCase):
         self.assertEqual(frame.forecast_source.iloc[0], "OPEN_METEO_ARCHIVED_RUN")
 
 
+class ExtendedContracts(unittest.TestCase):
+    def test_wind_direction_wraps_through_north(self):
+        from src.fetch_historical_weather import circular_degrees
+
+        angle = circular_degrees(pd.Series([350.0, 10.0]))
+        self.assertLess(min(abs(angle), abs(angle - 360)), 1e-8)
+
+    def test_range_seek_keeps_requested_dates(self):
+        from src.bulk import timestamp_window
+        from unittest.mock import MagicMock, patch
+        import re
+
+        header = b"fips_code,county,state,customers_out,run_start_time\n"
+        rows = [
+            f"51770,Roanoke,Virginia,100,{time}\n".encode()
+            for time in pd.date_range("2025-01-01", periods=10000, freq="min")
+        ]
+        data = header + b"".join(rows)
+
+        def response(url, headers, stream):
+            a, b = map(int, re.findall(r"\d+", headers["Range"]))
+            result = MagicMock()
+            result.status_code = 206
+            result.__enter__.return_value = result
+            result.iter_content.return_value = [data[a : b + 1]]
+            return result
+
+        with patch("src.bulk.get", side_effect=response):
+            lower, upper = timestamp_window(
+                {"size": len(data), "download_url": "https://example.invalid/test.csv"},
+                "2025-01-03",
+                "2025-01-04",
+            )
+        first = header + b"".join(rows[:2880])
+        last = header + b"".join(rows[:5760])
+        self.assertLessEqual(lower, len(first))
+        self.assertGreaterEqual(upper, len(last))
+
+    def test_known_forecast_requires_issue_reference(self):
+        from src.validation import validate
+
+        frame = pd.DataFrame(
+            {
+                "city_key": ["ROA"],
+                "fips_code": ["51770"],
+                "forecast_source": ["NWS_NDFD"],
+                "valid_timestamp_utc": ["2025-01-01T00:00Z"],
+                "issue_timestamp_utc": [pd.NaT],
+                "lead_time_hours": [float("nan")],
+            }
+        )
+        with self.assertRaisesRegex(ValueError, "Missing issue"):
+            validate("forecasts", frame, "2025-01-01", "2025-01-01")
+
+
+class SharedTransferContracts(unittest.TestCase):
+    def test_shared_executor_reassembles_filtered_csv(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from unittest.mock import MagicMock, patch
+        from src.bulk import filtered_csv_ranges
+        import io, re
+
+        payload = b"fips_code,county,state,customers_out,run_start_time\n51770,Roanoke,Virginia,100,2025-01-01 00:00:00\n51770,Roanoke,Virginia,200,2025-01-01 00:15:00\n00001,Other,Virginia,999,2025-01-01 00:15:00\n"
+
+        def get(url, headers, stream):
+            begin, finish = map(int, re.findall(r"\d+", headers["Range"]))
+            finish = min(finish, len(payload) - 1)
+            response = MagicMock()
+            response.__enter__.return_value = response
+            response.status_code = 206
+            response.headers = {
+                "Content-Range": f"bytes {begin}-{finish}/{len(payload)}"
+            }
+            response.raw = io.BytesIO(payload[begin : finish + 1])
+            response.iter_content.return_value = [payload[begin : finish + 1]]
+            return response
+
+        with (
+            TemporaryDirectory(dir=Path(__file__).parent) as directory,
+            ThreadPoolExecutor(max_workers=2) as pool,
+        ):
+            with patch("src.bulk.get", side_effect=get):
+                frame = filtered_csv_ranges(
+                    {
+                        "id": 1,
+                        "size": len(payload),
+                        "download_url": "https://example.invalid/test.csv",
+                    },
+                    2025,
+                    directory,
+                    normalize,
+                    block_size=32,
+                    executor=pool,
+                )
+        self.assertEqual(frame.fips_code.tolist(), ["51770", "51770"])
+        self.assertEqual(frame.customers_out.tolist(), [100, 200])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,52 +1,62 @@
 [
   {
-    "source": "NWS county zones ROA",
+    "source": "Open-Meteo archive ROA",
     "status": "ok",
-    "rows": 2
+    "rows": 103560
   },
   {
-    "source": "NWS county zones CMH",
+    "source": "IEM ROA",
     "status": "ok",
-    "rows": 1
+    "rows": 103414
   },
   {
-    "source": "NWS county zones CRW",
+    "source": "GHCND ROA",
     "status": "ok",
-    "rows": 1
+    "rows": 4312
   },
   {
-    "source": "NWS county zones TUL",
+    "source": "Open-Meteo archive CMH",
     "status": "ok",
-    "rows": 1
+    "rows": 103560
   },
   {
-    "source": "NOAA Storm Events",
+    "source": "IEM CMH",
     "status": "ok",
-    "rows": 2488
+    "rows": 103466
   },
   {
-    "source": "NWPS threshold 02055000",
+    "source": "GHCND CMH",
     "status": "ok",
-    "rows": 4
+    "rows": 4312
   },
   {
-    "source": "NWPS threshold 03227500",
+    "source": "Open-Meteo archive CRW",
     "status": "ok",
-    "rows": 4
+    "rows": 103560
   },
   {
-    "source": "NWPS threshold 03198000",
+    "source": "IEM CRW",
     "status": "ok",
-    "rows": 1
+    "rows": 103447
   },
   {
-    "source": "NWPS threshold 07164500",
+    "source": "GHCND CRW",
     "status": "ok",
-    "rows": 4
+    "rows": 4312
   },
   {
-    "source": "USGS IV",
+    "source": "Open-Meteo archive TUL",
     "status": "ok",
-    "rows": 515891
+    "rows": 103560
+  },
+  {
+    "source": "IEM TUL",
+    "status": "ok",
+    "rows": 103510
+  },
+  {
+    "source": "GHCND TUL",
+    "status": "ok",
+    "rows": 4312
   }
 ]

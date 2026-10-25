@@ -65,6 +65,19 @@ def normalize(frame, start, end):
         frame.timestamp_utc, utc=True, errors="coerce"
     )
     frame["customers_out"] = pd.to_numeric(frame.customers_out, errors="coerce")
+    if frame.customers_out.lt(0).any():
+        raise ValueError("Negative customers-out observations")
+    invalid = frame[["timestamp_utc", "customers_out"]].isna().any(axis=1)
+    if invalid.any():
+        from .common import STATUS
+
+        STATUS.append(
+            {
+                "source": "EAGLE-I row validation",
+                "status": "coverage_gap",
+                "invalid_target_rows": int(invalid.sum()),
+            }
+        )
     return frame[
         frame.timestamp_utc.ge(pd.Timestamp(start, tz="UTC"))
         & frame.timestamp_utc.lt(pd.Timestamp(end, tz="UTC") + pd.Timedelta(days=1))
@@ -97,6 +110,14 @@ def eagle(start, end):
             and pd.Timestamp(start).year <= int(match[1]) <= pd.Timestamp(end).year
         ):
             files.append((int(match[1]), item))
+    common.atomic_json(
+        common.CACHE_ROOT / "eagle/catalog.json",
+        {
+            "files": [dict(info, year=year) for year, info in files],
+            "start": start,
+            "end": end,
+        },
+    )
     available = {year for year, _ in files}
     missing = sorted(
         set(range(pd.Timestamp(start).year, pd.Timestamp(end).year + 1)) - available
@@ -138,7 +159,9 @@ def eagle(start, end):
                 window=(start, end),
             )
 
-        frame = filtered_csv_ranges(info, year, common.CACHE_ROOT / "eagle", normalize)
+        frame = filtered_csv_ranges(
+            info, year, common.CACHE_ROOT / "eagle", normalize, executor=range_pool
+        )
         cache.parent.mkdir(parents=True, exist_ok=True)
         temp = cache.with_suffix(".tmp")
         frame.to_parquet(temp, index=False)
@@ -149,7 +172,15 @@ def eagle(start, end):
         return frame
 
     # Only target-county rows survive each chunk, bounding memory and disk use.
-    with ThreadPoolExecutor(max_workers=2) as pool:
+    import os
+
+    workers = max(1, min(32, int(os.environ.get("EAGLE_RANGE_WORKERS", "8"))))
+    # A shared pool keeps transfers busy when one year's last range is slow.
+    # Prefetching annual files does not multiply the global connection bound.
+    with (
+        ThreadPoolExecutor(max_workers=workers) as range_pool,
+        ThreadPoolExecutor(max_workers=4) as pool,
+    ):
         frames = list(pool.map(fetch, sorted(files)))
     frame = pd.concat(frames, ignore_index=True)
     return frame[
@@ -268,7 +299,13 @@ def aggregate(frame, resolution="event"):
                     right_censored=end > county.timestamp_utc.max(),
                 )
             )
-    return pd.DataFrame(rows)
+    result = pd.DataFrame(rows)
+    if len(result):
+        result["resolution"] = resolution
+        if resolution == "15min":
+            result["timestamp_utc"] = result.start_timestamp_utc
+            result["customers_out"] = result.peak_customers_out
+    return result
 
 
 def disturbances(start, end, outdir):
@@ -277,12 +314,42 @@ def disturbances(start, end, outdir):
     cache = CACHE_ROOT
     cache.mkdir(exist_ok=True, parents=True)
     frames = []
-    for year in range(pd.Timestamp(start).year, min(pd.Timestamp(end).year, 2025) + 1):
+    for year in range(pd.Timestamp(start).year, pd.Timestamp(end).year + 1):
         ext = "xlsx" if year >= 2024 else "xls"
         url = f"https://doe417.energy.gov/summaries/{year}_Annual_Summary.{ext}"
         path = cache / f"OE417_{year}.{ext}"
         if not path.exists():
-            path.write_bytes(get(url).content)
+            import requests
+
+            try:
+                response = get(url)
+            except requests.HTTPError as exc:
+                if exc.response.status_code == 404:
+                    from .common import STATUS
+
+                    STATUS.append(
+                        {
+                            "source": "DOE-417 coverage",
+                            "status": "coverage_gap",
+                            "missing_year": year,
+                            "reason": "Annual report not published at official download endpoint",
+                        }
+                    )
+                    continue
+                raise
+            if response.content.lstrip().startswith((b"<!DOCTYPE", b"<html")):
+                from .common import STATUS
+
+                STATUS.append(
+                    {
+                        "source": "DOE-417 coverage",
+                        "status": "coverage_gap",
+                        "missing_year": year,
+                        "reason": "Publisher returned a webpage, not an annual Excel report",
+                    }
+                )
+                continue
+            path.write_bytes(response.content)
         raw = pd.read_excel(path, header=None)
         header = next(
             (
@@ -312,20 +379,6 @@ def disturbances(start, end, outdir):
         frames.append(f)
     result = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
     result.to_csv(outdir / "doe_disturbances.csv", index=False)
-    if pd.Timestamp(end).year > 2025:
-        from .common import STATUS
-
-        STATUS.append(
-            {
-                "source": "DOE-417 coverage",
-                "status": "coverage_gap",
-                "missing_years": list(
-                    range(
-                        max(2026, pd.Timestamp(start).year), pd.Timestamp(end).year + 1
-                    )
-                ),
-            }
-        )
     # Region-wide counts stay in a sidecar: allocating them to a county invents observations.
     return result
 
@@ -362,6 +415,10 @@ def eia_pages(route, start, end, facets):
 def load_anomalies(actual, forecast):
     """Join ONLY equal geography and valid times; forecasts must predate valid time."""
     keys = ["subba", "timestamp_utc"]
+    actual = actual.copy()
+    actual["timestamp_utc"] = pd.to_datetime(actual.timestamp_utc, utc=True)
+    forecast = forecast.copy()
+    forecast["timestamp_utc"] = pd.to_datetime(forecast.timestamp_utc, utc=True)
     if actual.duplicated(keys).any() or forecast.duplicated(keys).any():
         raise ValueError("Duplicate sub-BA load/forecast keys")
     forecast = forecast.copy()
@@ -369,6 +426,10 @@ def load_anomalies(actual, forecast):
     forecast["issue_timestamp_utc"] = pd.to_datetime(
         forecast.issue_timestamp_utc, utc=True
     )
+    if forecast[keys + ["issue_timestamp_utc", "forecast_mw"]].isna().any().any():
+        raise ValueError(
+            "Load forecast has missing join keys, issue time or measurements"
+        )
     if forecast.issue_timestamp_utc.ge(forecast.timestamp_utc).any():
         raise ValueError("Load forecast must be issued before its valid hour")
     merged = actual.merge(forecast, on=keys, how="left", validate="one_to_one")
@@ -465,26 +526,30 @@ def run(start, end, outdir, resolution="event", **kwargs):
         doe["parsed_date"] = pd.to_datetime(
             doe.date_began, errors="coerce", format="mixed"
         )
-        for i, r in result.iterrows():
-            # A report must name this county AND state. Multi-county totals are never copied.
-            match = doe[
-                area.str.contains(r.county_name.replace(" ", "").lower(), regex=False)
-                & area.str.contains(
-                    state_names[r.state].replace(" ", "").lower(), regex=False
-                )
-            ]
-            dates = match.parsed_date
-            local_start = (
-                r.start_timestamp_utc.tz_convert(FIPS[r.fips_code].iana_tz)
-                .tz_localize(None)
-                .normalize()
+        # Build five county/date lookups once, rather than rescanning every
+        # national report for each individual outage event.
+        for fips, city in FIPS.items():
+            mask = area.str.contains(
+                city.counties[fips].replace(" ", "").lower(), regex=False
+            ) & area.str.contains(
+                state_names[city.state].replace(" ", "").lower(), regex=False
             )
-            match = match[dates.eq(local_start)]
-            if len(match):
-                result.loc[i, "reported_cause"] = (
-                    "DOE_DATE_COUNTY_ASSOCIATION: "
-                    + "; ".join(match.event_type.dropna().astype(str).unique())
-                )
+            matched = doe[mask].dropna(subset=["parsed_date", "event_type"])
+            causes = matched.groupby("parsed_date").event_type.agg(
+                lambda values: "; ".join(sorted(set(values.astype(str))))
+            )
+            indices = result.index[result.fips_code.eq(fips)]
+            dates = (
+                pd.to_datetime(result.loc[indices, "start_timestamp_utc"], utc=True)
+                .dt.tz_convert(city.iana_tz)
+                .dt.tz_localize(None)
+                .dt.normalize()
+            )
+            labels = dates.map(causes)
+            known = labels.notna()
+            result.loc[labels.index[known], "reported_cause"] = (
+                "DOE_DATE_COUNTY_ASSOCIATION: " + labels[known]
+            )
     if not result.empty:
         result["subba_load_drop_mw"] = float("nan")
         if not load.empty:
@@ -507,7 +572,7 @@ def run(start, end, outdir, resolution="event", **kwargs):
         for i, r in result.iterrows():
             match = storms[
                 (storms.fips_code == r.fips_code)
-                & (storms.parsed_begin <= r.end_timestamp_utc)
+                & (storms.parsed_begin < r.end_timestamp_utc)
                 & (storms.parsed_end >= r.start_timestamp_utc)
             ]
             if len(match) and result.loc[i, "reported_cause"] == "UNKNOWN":
