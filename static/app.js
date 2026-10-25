@@ -35,6 +35,7 @@
     }
     const response = await fetch(address.origin + path, {
       method: body ? "POST" : "GET",
+      targetAddressSpace: "loopback",
       ...(body ? { headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {}),
       signal: AbortSignal.timeout(body ? 120000 : 5000),
     });
@@ -697,7 +698,7 @@
     document.getElementById("provider-select").value = connection.provider;
     document.getElementById("ollama-url-input").value = connection.ollama_url || "http://127.0.0.1:11434";
     document.getElementById("ollama-model-input").value = connection.provider === "local" ? connection.model : "llama3.2:3b";
-    document.getElementById("ollama-origin-help").textContent = `OLLAMA_ORIGINS=${location.origin}`;
+    document.getElementById("ollama-origin-help").textContent = `$env:OLLAMA_ORIGINS = "${location.origin}"\nollama serve`;
     updateProviderFields();
     document.getElementById("settings-status").textContent = settingsStatus({ ...connection, connected: connectionState === "connected" });
     } catch (_) { document.getElementById("settings-status").textContent = "Could not load Settings. Check the app connection and try again."; }

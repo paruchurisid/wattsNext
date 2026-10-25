@@ -1,7 +1,6 @@
 """
 Watt'sNext server: routes, in-memory sessions, chat orchestration, provider
-connection. Binds to all interfaces for local-network hosting; HOST overrides it.
-No API keys are ever logged or written
+connection. Binds to 127.0.0.1 only. No API keys are ever logged or written
 to disk — they live only in the in-memory SETTINGS dict for this process.
 """
 import uuid
@@ -522,4 +521,4 @@ app = Starlette(routes=[
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host=os.environ.get("HOST", "0.0.0.0"), port=int(os.environ.get("PORT", "8000")))
+    uvicorn.run(app, host="127.0.0.1", port=8000)
