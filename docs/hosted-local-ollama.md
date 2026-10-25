@@ -14,7 +14,7 @@ computer's localhost. Open the website on the same computer running Ollama.
 2. In PowerShell, allow the exact website origin and start Ollama:
 
    ```powershell
-   $env:OLLAMA_ORIGINS = 'https://watts-next-phi.vercel.app'
+   $env:OLLAMA_ORIGINS = 'https://wattsnext.vercel.app'
    ollama serve
    ```
 

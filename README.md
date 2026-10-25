@@ -133,7 +133,7 @@ Copy [.env.example](.env.example) as a starting point. Never commit `.env.local`
 For the hosted site, the browser can connect directly to a local Ollama instance if Ollama allows the site's origin:
 
 ```powershell
-$env:OLLAMA_ORIGINS = "https://watts-next-phi.vercel.app"
+$env:OLLAMA_ORIGINS = "https://wattsnext.vercel.app"
 ollama serve
 ```
 
