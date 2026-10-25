@@ -36,9 +36,30 @@ uses temperature 0, a 4096-token context, a 180-token output budget, four
 recent history messages, and ten-minute model residency. Python supplies the
 facts, cards, uncertainty labels and safety instructions. Unsupported numbers,
 conflicting risk labels, cut-off answers, or provider failures produce a
-visibly labeled rule-based response. Preparation, short factual follow-ups,
-and completed-repair guidance deliberately use rules. These checks are guardrails,
+visibly labeled rule-based response. Preparation and completed-repair guidance
+deliberately use rules. These checks are guardrails,
 not a general semantic proof of every model sentence.
+
+### AI connections on the hosted site
+
+Open the engine control below the composer, or Settings. Choose **Local · Ollama**
+to connect the browser directly to Ollama on your computer. Start Ollama, install
+`llama3.2:3b`, and allow the site in `OLLAMA_ORIGINS` before starting Ollama:
+
+```powershell
+$env:OLLAMA_ORIGINS = "https://watts-next-phi.vercel.app"
+ollama serve
+```
+
+Keep Ollama on its default localhost address; allow local network access if your
+browser asks. The browser sends the server-prepared household context to Ollama,
+then returns its answer for verification. Vercel never tries to reach your PC's
+localhost. Model failures are shown explicitly; facts-only mode is an opt-in.
+
+Choose **Cloud · Gemini** and enter your API key to use Gemini instead. The key
+is checked without updating shared server settings, kept only in the current
+tab's memory, and sent over HTTPS with each chat request. Reloading clears it.
+The app identifies model-generated answers and any verification fallback.
 
 Chat understands the same explicit replay actions as the what-if buttons,
 including "What if access is blocked?" and "What if 2 more crews arrive?".
@@ -240,3 +261,133 @@ approval; the workflow's environment name alone does not enforce it. Release
 runs are serialized and cannot cancel an active migration or deployment.
 Use Actions' manual Run workflow on `main` to validate without deploying;
 production jobs run only for version tags.
+
+### Seasonal weather outlook
+
+Storm Activity now offers independently switchable NWS alerts, seven-day weather
+hazards, and an estimated outage-risk index at four sample locations (Roanoke,
+Columbus, Charleston, Tulsa). `/api/weather/outlook` fetches Open-Meteo daily
+forecasts and three complete years of historical reanalysis. Same-calendar-month
+hazard frequency adjusts a transparent wind/precipitation/snow/temperature score.
+The index is an uncalibrated screening heuristic, not a percentage probability
+of losing power. Synthetic bundled damage records are not used as training labels.
+Real outage timestamps, asset exposure, and held-out validation are required to
+calibrate an outage probability. Missing history is labeled forecast-only; missing
+forecasts produce no estimates. Successful results cache for 30 minutes and
+provider failures retry after one minute. Point markers do not imply area coverage.
+Source: https://open-meteo.com/en/docs/historical-weather-api
+
+## Weather and outage training-data ingestion
+
+The modular ingestion package lives in `src/` and is separate from the web
+application. Install its dependencies and run a live seven-day check:
+
+```powershell
+uv venv .venv-pipeline
+uv pip install --python .venv-pipeline/Scripts/python.exe -r requirements-pipeline.in
+.\.venv-pipeline\Scripts\python.exe run_all.py --smoke-test
+.\.venv-pipeline\Scripts\python.exe run_all.py --start-year 2015 --end-year 2026
+```
+
+A full run first writes a seven-day sample under `data/smoke/`. It starts the
+backfill only if every pipeline returns records and all attempted sources pass.
+An empty hazard or outage window can be legitimate, but cannot satisfy this
+strict smoke gate. Exit code 2 means incomplete validation, not successful
+coverage. `--smoke-test` writes directly to `data/`; `--output-dir PATH` changes
+that destination. `--resolution 15min` retains all observed county snapshots,
+including zero counts, instead of constructing events. Dates end no later than
+2026-10-24 or yesterday UTC. All downloads use retrying HTTPS with timeouts;
+IEM has a one-second pause between yearly station requests. Output CSVs are
+atomically replaced. Failures and row counts are recorded in
+`data/ingestion_status.json`; check this manifest before using the data.
+
+Set optional keys in `.env` using `.env.example`. Supply an identifying contact
+in `NWS_USER_AGENT`. The NCEI Access service does not need `NOAA_CDO_TOKEN`.
+Without `EIA_API_KEY`, load enrichment is skipped. This pipeline does not read
+or expose credentials from the application's `.env.local`.
+
+| CSV | Grain and keys | Measurements and interpretation |
+| --- | --- | --- |
+| `historical_weather.csv` | County/station/hour; `city_key`, `fips_code`, `asos_id`, `ghcnd_id`, `timestamp_utc` | Reanalysis `temp_c`, `precipitation_mm`, `rain_mm`, `snowfall_cm`, `snow_depth_m`, `wind_speed_kmh`, `wind_gust_kmh`; ASOS `asos_temp_c`, `dewpoint_f`, `relative_humidity_pct`, `wind_direction_deg`, `wind_speed_knots`, `wind_gust_knots`, `peak_wind_gust_knots`, `precipitation_1hr_in`, `ice_accretion_1hr_in`, `ice_accretion_3hr_in`, `ice_accretion_6hr_in`, `asos_snow_depth_in`; GHCND `ghcnd_snowfall_in`, `ghcnd_snow_depth_in` |
+| `severe_weather_events.csv` | Hazard event/county, or river parameter/gage/hour/county; `event_id`, `fips_code`, UTC begin/end | `event_type`, `damage_property_usd`, `damage_crops_usd`, `gage_height_ft`, `discharge_cfs`; `record_type` separates meteorological hazards from river observations |
+| `power_outages.csv` | County/event or county/15-minute snapshot | Required event identifiers, city/county/state/primary utility metadata, UTC start/end, duration minutes, peak customers, customer-hours, reported cause, source and `ACTUAL_UTILITY_OUTAGE` type |
+| `weather_forecast.csv` | Source/county/valid hour/issue reference | `forecast_source`, `issue_timestamp_utc`, `valid_timestamp_utc`, `lead_time_hours`, city/FIPS/coordinates and weather fields using the same unit suffixes |
+
+FIPS is a five-character string: read CSVs with `dtype={'fips_code': str}`.
+All timestamps carry UTC offsets. Blank measurements mean unavailable, never
+zero. ASOS weather-code flags identify freezing rain/drizzle, snow, ice pellets
+and thunderstorms. ASOS temperatures and humidity use hourly means; gusts,
+rolling precipitation/ice accumulations and binary flags use maxima. Summing
+rolling accumulations would double count sub-hourly reports. NOAA daily values
+join by local calendar date, including the prior UTC day's local date. Daily
+snowfall repeated across hours must not be summed. These daily aggregates and
+post-event storm reports are retrospective labels and can leak future
+information if used as predictors before their publication time.
+
+Both Roanoke City (`51770`) and Roanoke County (`51161`) receive KROA weather,
+but retain separate outage counts. Each city's station/reanalysis/gage series
+is replicated across its target counties; these are not independent weather
+samples. Use grouped time-based train/test splits. County outage observations
+do not resolve feeders, circuits or household restoration. Public aggregation
+also reflects infrastructure-security/CEII considerations; this pipeline does
+not establish a particular archive's legal reason for aggregation. The
+configured utility is the area's primary utility, not an observed provider
+identity in a county-total snapshot.
+
+An outage event requires at least two consecutive observations at or above
+100 customers, exactly 15 minutes apart. Missing samples break an event.
+Customer-hours integrate observed 15-minute bins; end time is the end of the
+last observed bin, not a verified restoration timestamp. Boundary-censor flags
+identify events touching the downloaded county series boundaries. Duplicate
+county/timestamps are deduplicated; conflicting values fail rather than being
+added. NOAA overlap labels explicitly say `TEMPORAL_ASSOCIATION`; they do not
+prove outage causation. DOE association requires the county and state to be
+named on the same start date. Region-wide DOE counts stay in
+`doe_disturbances.csv` and are never allocated to counties.
+
+### Source availability and limits
+
+- The supplied OEDI v2 URL returned 404 in the live check. The downloader falls
+  back to the archive currently linked from the official submission,
+  `https://data.openei.org/files/6458/Outage_Dataset_R1.zip`. ZIP contents are
+  filtered in CSV chunks after a cached download. Recognized pre-aggregated
+  event records are retained in `oedi_correlated_events.csv`; they cannot
+  reconstruct the requested 15-minute event threshold and stay out of the
+  primary outage CSV.
+- The Figshare catalog currently publishes EAGLE-I yearly county files through
+  2025. The runner does not fabricate 2026 outage coverage. Yearly CSVs can be
+  over a gigabyte; they are filtered in bounded chunks without saving the raw
+  CSV. Only files named `eaglei_outages_YEAR.csv` are selected.
+- The legacy OE-417 hostname failed DNS resolution. Annual Excel summaries are
+  now downloaded from the official `https://doe417.energy.gov/summaries/` route,
+  using XLS before 2024 and XLSX afterwards. Their time conventions and broad
+  reported areas do not justify manufacturing county outage events.
+- NCEI annual Storm Events files have publication lag. The current official
+  April 2026 zone/county correlation file matches split zones to counties;
+  historical zone-boundary changes need versioned crosswalks before a
+  production historical zone study. The current crosswalk is not a historical
+  boundary reconstruction. No annual file means no validated storm coverage.
+- USGS stage/discharge are observations, not a flood declaration. A flood flag
+  requires independently verified, station-specific flood stage thresholds.
+- Open-Meteo Previous Runs fixed-offset history begins in 2024 for the default
+  archive; it cannot supply 2021–2023 issued forecasts. Its `previous_day1`
+  values have a nominal 24-hour reference (`issue_time_semantics`), not a known
+  model initialization. Live Open-Meteo initialization and lead time remain
+  blank; retrieval time is recorded separately. Use the Single Runs API with
+  explicit model/run identifiers if exact initialization is required. NWS uses
+  provider `updateTime`, and expired periods are omitted.
+- EIA's sub-BA series provides actual load, written to `eia_subba_load.csv`.
+  It does not supply a matching sub-BA forecast. Consequently the pipeline
+  does not invent `actual_mw - forecast_mw`; that enrichment needs a separately
+  verified forecast source at matching geography and issue time.
+
+These limits mean source coverage through 2026, exact historical forecast
+issuance, versioned historical zones, flood labels, and sub-BA load anomalies
+are not currently complete. Review the source manifest and coverage before
+training a model. No synthetic data is generated by the ingestion code.
+
+Focused validation:
+
+```powershell
+.\.venv-pipeline\Scripts\python.exe -m unittest tests.test_ingestion_pipeline -v
+```

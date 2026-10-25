@@ -14,6 +14,53 @@
   let busy = false;
   let chatReady = false;
   let householdKnowledge = null;
+  // Connection credentials belong to this tab, never shared server settings or disk.
+  let connection = null;
+  let connectionState = "disconnected";
+  const hosted = !["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+
+  function updateEngine(connected, label) {
+    connectionState = connected ? "connected" : "disconnected";
+    const button = document.getElementById("engine-status-btn");
+    button.dataset.state = connection && connection.offline_mode ? "offline" : connectionState;
+    document.getElementById("engine-label").textContent = label || (connection && connection.offline_mode
+      ? "Household facts · AI off" : connected ? `${connection.provider === "local" ? "Ollama" : "Gemini"} · ${connection.model}` : "Connect your AI · Ollama or Gemini");
+  }
+
+  async function ollamaRequest(path, body) {
+    const address = new URL(connection.ollama_url || "http://127.0.0.1:11434");
+    if (!["http:", "https:"].includes(address.protocol) || address.username || address.password ||
+        !["localhost", "127.0.0.1", "[::1]"].includes(address.hostname)) {
+      throw new Error("Use an Ollama address on localhost or 127.0.0.1.");
+    }
+    const response = await fetch(address.origin + path, {
+      method: body ? "POST" : "GET",
+      ...(body ? { headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {}),
+      signal: AbortSignal.timeout(body ? 120000 : 5000),
+    });
+    if (!response.ok) throw new Error("Ollama rejected the request. Check that the model is installed.");
+    const result = await response.json();
+    if (result.error) throw new Error("Ollama could not complete the request.");
+    return result;
+  }
+
+  async function checkOllama() {
+    const result = await ollamaRequest("/api/tags");
+    if (!(result.models || []).some(model => model.name === connection.model || model.name === connection.model + ":latest")) {
+      throw new Error(`Install ${connection.model} in Ollama, then connect again.`);
+    }
+    updateEngine(true);
+  }
+
+  async function loadConnection() {
+    try {
+      const { ok, body } = await api("/api/settings");
+      if (!ok) throw new Error("Connection unavailable");
+      connection = { provider: body.provider, model: body.model || "llama3.2:3b", offline_mode: body.offline_mode,
+        browser_local: hosted, ollama_url: "http://127.0.0.1:11434" };
+      updateEngine(!hosted && body.connected || body.provider === "gemini" && body.connected);
+    } catch (_) { connection = { provider: "local", model: "llama3.2:3b", offline_mode: false, browser_local: hosted }; updateEngine(false); }
+  }
 
   function useHouseholdKnowledge(data) {
     if (!data || !data.chat_context || !data.chat_context.ready) throw new Error("Household information is not ready yet.");
@@ -153,6 +200,11 @@
     for (const city of Object.keys(byCity).sort()) {
       const group = document.createElement("optgroup");
       group.label = city;
+      if (CSS.supports("appearance", "base-select")) {
+        const heading = document.createElement("legend");
+        heading.textContent = city;
+        group.appendChild(heading);
+      }
       for (const h of byCity[city]) {
         const opt = document.createElement("option");
         opt.value = h.household_id;
@@ -161,7 +213,14 @@
       }
       householdSelect.appendChild(group);
     }
+    updateHouseholdCity();
   }
+
+  function updateHouseholdCity() {
+    const selected = householdSelect.selectedOptions[0];
+    document.getElementById("household-city").textContent = selected ? selected.parentElement.label + " · Sample home" : "Choose a sample home";
+  }
+  householdSelect.addEventListener("change", updateHouseholdCity);
 
   async function startSession(householdId) {
     if (busy) return;
@@ -436,14 +495,40 @@
     addMessage("user", text, false, null);
     showTyping();
     try {
-    const { ok, status, body } = await api("/api/chat", {
+    const payload = { session_id: sessionId, message: text, knowledge_revision: householdKnowledge.revision,
+      ...(connection ? { connection } : {}) };
+    let { ok, status, body } = await api("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ session_id: sessionId, message: text, knowledge_revision: householdKnowledge.revision }),
+      body: JSON.stringify(payload),
     });
+    if (ok && body.local_request) {
+      const prepared = body;
+      if (body.knowledge) useHouseholdKnowledge(body.knowledge);
+      setBusy(true, `Asking ${connection.model} on your computer…`);
+      const messages = [{ role: "system", content: prepared.local_request.system }];
+      for (const turn of prepared.local_request.history) {
+        messages.push({ role: turn.role === "model" ? "assistant" : "user", content: turn.parts.map(part => part.text || "").join(" ").slice(0,1200) });
+      }
+      messages.push({ role: "user", content: prepared.local_request.prompt });
+      let generated;
+      try {
+        generated = await ollamaRequest("/api/chat", { model: connection.model, messages, stream: false,
+          keep_alive: "10m", options: { temperature: 0, num_ctx: 4096, num_predict: 320 } });
+      } catch (error) {
+        updateEngine(false, "Ollama disconnected · Open connection settings");
+        throw new Error("Cannot reach Ollama on your computer. Open the AI connection below to check its address and browser access, or connect Gemini.");
+      }
+      if (!generated.message || typeof generated.message.content !== "string" || !generated.message.content.trim() || generated.done_reason === "length") {
+        throw new Error("Ollama returned an empty or incomplete answer. Please try again.");
+      }
+      ({ ok, status, body } = await api("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...payload, turn_id: prepared.turn_id, local_result: generated.message.content }) }));
+    }
     hideTyping();
     if (!ok && status === 502) {
-      addMessage("assistant", "I couldn't reach the AI provider (" + body.category + ").", false, null);
+      updateEngine(false, "AI connection needs attention");
+      addMessage("assistant", body.message || "I couldn't reach the AI provider (" + body.category + ").", false, null);
       offerOfflineMode();
       return;
     }
@@ -465,15 +550,16 @@
       range.textContent = `${change.before.low_hours.value}-${change.before.high_hours.value} hours → ${change.after.low_hours.value}-${change.after.high_hours.value} hours`;
       msg.prepend(range);
     }
-    if (body.local_model || body.local_fallback) {
+    if (body.local_model || body.gemini_model || body.local_fallback) {
       const note = document.createElement("div");
       note.className = "reply-source";
-      note.textContent = body.local_model ? "AI answer based on this household's Wiki"
+      note.textContent = body.local_model || body.gemini_model ? `${body.local_model ? "Ollama" : "Gemini"} · ${body.local_model || body.gemini_model} · Household context`
         : (body.local_error && body.local_error.category === "validation"
           ? "We used the household facts directly because the AI answer could not be verified."
           : "AI is unavailable. This answer comes directly from your household's information.");
       msg.prepend(note);
     }
+    if (body.local_model || body.gemini_model) updateEngine(true);
     if (body.cards && body.cards.restoration && !body.cards.restoration.fallback.fallback) {
       lastEstimate = body.cards.restoration;
     }
@@ -506,11 +592,8 @@
     btn.type = "button";
     btn.textContent = "Use offline mode";
     btn.addEventListener("click", async () => {
-      await api("/api/settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ offline_mode: true }),
-      });
+      connection = { ...(connection || { provider: "local" }), offline_mode: true };
+      updateEngine(false);
       card.remove();
       addMessage("assistant", "AI is off. You can now ask questions using the household facts.", true, null);
     });
@@ -595,6 +678,7 @@
   const settingsDialog = document.getElementById("settings-dialog");
   function updateProviderFields() {
     document.getElementById("gemini-settings").hidden = document.getElementById("provider-select").value !== "gemini";
+    document.getElementById("local-settings").hidden = document.getElementById("provider-select").value !== "local";
   }
   document.getElementById("provider-select").addEventListener("change", updateProviderFields);
   updateProviderFields();
@@ -604,38 +688,60 @@
     if (body.last_error) return body.last_error.message || "Connection unavailable (" + body.last_error.category + ").";
     return "AI is not connected. Start Ollama on this computer, or turn on answers without AI.";
   }
-  document.getElementById("settings-btn").addEventListener("click", async () => {
+  async function openSettings() {
     settingsDialog.showModal();
     document.getElementById("settings-status").textContent = "Checking connection…";
     try {
-    const { ok, body } = await api("/api/settings");
-    if (!ok) throw new Error("Settings unavailable");
-    document.getElementById("offline-toggle").checked = body.offline_mode;
-    document.getElementById("provider-select").value = body.provider || (body.connected ? "gemini" : "local");
+    if (!connection) await loadConnection();
+    document.getElementById("offline-toggle").checked = connection.offline_mode;
+    document.getElementById("provider-select").value = connection.provider;
+    document.getElementById("ollama-url-input").value = connection.ollama_url || "http://127.0.0.1:11434";
+    document.getElementById("ollama-model-input").value = connection.provider === "local" ? connection.model : "llama3.2:3b";
+    document.getElementById("ollama-origin-help").textContent = `OLLAMA_ORIGINS=${location.origin}`;
     updateProviderFields();
-    document.getElementById("settings-status").textContent = settingsStatus(body);
+    document.getElementById("settings-status").textContent = settingsStatus({ ...connection, connected: connectionState === "connected" });
     } catch (_) { document.getElementById("settings-status").textContent = "Could not load Settings. Check the app connection and try again."; }
-  });
+  }
+  document.getElementById("settings-btn").addEventListener("click", openSettings);
+  document.getElementById("engine-status-btn").addEventListener("click", openSettings);
   document.getElementById("settings-close").addEventListener("click", () => settingsDialog.close());
   document.getElementById("settings-save").addEventListener("click", async () => {
     const save = document.getElementById("settings-save");
     save.disabled = true;
     document.getElementById("settings-status").textContent = "Saving and checking connection…";
     try {
-    const apiKey = document.getElementById("api-key-input").value;
+    const apiKey = document.getElementById("api-key-input").value.trim();
     const offline = document.getElementById("offline-toggle").checked;
-    const payload = { offline_mode: offline, provider: document.getElementById("provider-select").value };
-    if (apiKey && payload.provider === "gemini" && !offline) payload.api_key = apiKey;
-    const { ok, body } = await api("/api/settings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    document.getElementById("api-key-input").value = "";
-    document.getElementById("settings-status").textContent = ok
-      ? settingsStatus(body)
-      : "Connection failed (" + body.category + "). Offline mode is available.";
-    } catch (_) { document.getElementById("settings-status").textContent = "Could not save Settings. Check the app connection and try again."; }
+    const provider = document.getElementById("provider-select").value;
+    const previous = connection;
+    const candidate = { ...connection, provider, offline_mode: offline };
+    if (provider === "local") {
+      candidate.model = document.getElementById("ollama-model-input").value.trim() || "llama3.2:3b";
+      candidate.ollama_url = document.getElementById("ollama-url-input").value.trim();
+      candidate.browser_local = true;
+    } else if (!offline) {
+      const key = apiKey || (connection.provider === "gemini" ? connection.api_key : "");
+      if (key) {
+        const { ok, body } = await api("/api/connection", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ api_key: key }) });
+        if (!ok) throw new Error(body.message || body.error || "Gemini connection failed.");
+        candidate.api_key = key;
+        candidate.model = body.model;
+      } else if (!(connection.provider === "gemini" && connectionState === "connected")) {
+        throw new Error("Enter your Gemini API key to connect.");
+      }
+      candidate.browser_local = false;
+    }
+    connection = candidate;
+    try {
+      if (!offline && provider === "local") await checkOllama();
+    } catch (error) {
+      connection = previous;
+      if (error instanceof TypeError) throw new Error("Your browser could not reach Ollama. Allow local network access for this site, keep Ollama running, and check the connection help below.");
+      throw error;
+    }
+    updateEngine(!offline);
+    document.getElementById("settings-status").textContent = settingsStatus({ ...connection, connected: !offline });
+    } catch (error) { document.getElementById("settings-status").textContent = error.message || "Could not connect. Check your engine and try again."; }
     finally { save.disabled = false; document.getElementById("api-key-input").value = ""; }
   });
 
@@ -815,24 +921,77 @@
   }
 
   async function loadWeatherMap(root) {
-    const section = dashboardSection("Live U.S. weather activity", "warning", "var(--color-icon-orange)");
-    const note = document.createElement("p");
-    note.className = "weather-disclaimer";
-    note.textContent = "Current weather warnings from the National Weather Service. They do not show power outages or repair teams.";
-    section.appendChild(note);
-    const map = document.createElement("div"); map.id = "weather-map"; map.className = "weather-map"; section.appendChild(map); root.appendChild(section);
-    if (!window.L) { map.textContent = "The map could not load. Check the National Weather Service for current warnings."; return; }
-    const leafletMap = L.map(map, { scrollWheelZoom: false }).setView([39.5, -98.5], 4);
+    const section = dashboardSection("Weather & outage risk outlook", "warning", "var(--color-icon-orange)");
+    const note = document.createElement("p"); note.className = "weather-disclaimer";
+    note.textContent = "Loading NWS alerts…"; section.appendChild(note);
+    const controls = document.createElement("div"); controls.className = "weather-controls";
+    const label = document.createElement("label"); label.textContent = "Forecast day ";
+    const dayPicker = document.createElement("select"); dayPicker.setAttribute("aria-label", "Forecast day");
+    label.appendChild(dayPicker); controls.appendChild(label); section.appendChild(controls);
+    const detail = document.createElement("p"); detail.className = "weather-disclaimer";
+    detail.setAttribute("aria-live", "polite"); detail.textContent = "Loading seven-day seasonal outlook…"; section.appendChild(detail);
+    const map = document.createElement("div"); map.id = "weather-map"; map.className = "weather-map";
+    section.appendChild(map); root.appendChild(section);
+    if (!window.L) { map.textContent = "Map unavailable. Check the National Weather Service for current warnings."; return; }
+    const leafletMap = L.map(map, { scrollWheelZoom: false }).setView([38.5, -88], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap contributors" }).addTo(leafletMap);
-    try {
-      const response = await fetch("/api/weather/alerts");
-      const geo = await response.json();
-      const colors = { Extreme: "#8e24aa", Severe: "#d32f2f", Moderate: "#ef6c00", Minor: "#2e7d32" };
-      L.geoJSON(geo, { style: feature => ({ color: colors[feature.properties.severity] || "#546e7a", fillOpacity: .35, weight: 1 }),
-        onEachFeature: (feature, layer) => layer.bindPopup(`<strong>${feature.properties.event}</strong><br>${feature.properties.area}<br><small>${feature.properties.headline || "Active NWS alert"}</small>`)
-      }).addTo(leafletMap);
-      note.textContent = `${geo.features.length} areas have weather warnings from the National Weather Service. These warnings do not show power outages.`;
-    } catch (_) { note.textContent = "Weather warnings could not load. You can still explore this household’s example."; }
+    const alerts = L.layerGroup().addTo(leafletMap);
+    const risk = L.layerGroup().addTo(leafletMap);
+    const events = L.layerGroup();
+    L.control.layers(null, { "Live NWS alerts": alerts, "Outage risk index (estimated)": risk, "Potential weather events": events }, { collapsed: false }).addTo(leafletMap);
+    const popup = lines => {
+      const el = document.createElement("div");
+      lines.forEach(line => { const p = document.createElement("p"); p.textContent = line; el.appendChild(p); });
+      return el;
+    };
+    const loadAlerts = async () => {
+      try {
+        const response = await fetch("/api/weather/alerts"); if (!response.ok) throw new Error();
+        const geo = await response.json();
+        if (!geo.live) throw new Error();
+        const colors = { Extreme: "#8e24aa", Severe: "#d32f2f", Moderate: "#ef6c00", Minor: "#2e7d32" };
+        L.geoJSON(geo, { style: f => ({ color: colors[f.properties.severity] || "#546e7a", fillOpacity: .25, weight: 1 }),
+          onEachFeature: (f, layer) => layer.bindPopup(popup([f.properties.event, f.properties.area, f.properties.headline || "Active NWS alert"])) }).addTo(alerts);
+        note.textContent = `${geo.features.length} active NWS alerts. Some alerts have no map geometry. Alerts are separate from modeled risk.`;
+      } catch (_) { note.textContent = "Live NWS alerts unavailable. Forecast layers have independent availability."; }
+    };
+    const loadOutlook = async () => {
+      try {
+        const response = await fetch("/api/weather/outlook"); if (!response.ok) throw new Error();
+        const geo = await response.json();
+        const dates = [...new Set(geo.features.flatMap(f => f.properties.days.map(d => d.date)))].sort();
+        if (!dates.length) throw new Error();
+        dates.forEach(date => { const option = document.createElement("option"); option.value = date; option.textContent = date; dayPicker.appendChild(option); });
+        const render = () => {
+          risk.clearLayers(); events.clearLayers();
+          const selected = dayPicker.value;
+          const month = Number(selected.slice(5, 7));
+          const season = month === 12 || month <= 2 ? "Winter" : month <= 5 ? "Spring" : month <= 8 ? "Summer" : "Autumn";
+          const summaries = [];
+          geo.features.forEach(f => {
+            const p = f.properties, day = p.days.find(d => d.date === selected); if (!day) return;
+            const latlng = [f.geometry.coordinates[1], f.geometry.coordinates[0]];
+            const color = { High: "#dc2626", Elevated: "#d97706", Low: "#15803d" }[day.band];
+            const c = day.conditions;
+            const info = [p.name + " · " + selected, `${day.band} weather-related outage risk · ${day.index}/100 index (not a probability)`,
+              `Gusts ${c.gust} km/h · precipitation ${c.rain} mm · snow ${c.snow} cm · ${c.low}–${c.high} °C`,
+              day.drivers.length ? "Drivers: " + day.drivers.join(", ") : "No screening thresholds exceeded.",
+              day.history_days ? `${day.history_days} historical days in this calendar month; ${Math.round(day.historical_hazard_day_fraction * 100)}% exceeded a weather threshold.` : "Historical baseline unavailable; forecast-only score."];
+            L.circleMarker(latlng, { radius: 13, color, fillColor: color, fillOpacity: .65, weight: 2 }).bindPopup(popup(info)).addTo(risk);
+            if (day.drivers.length) L.marker(latlng).bindPopup(popup(info)).addTo(events);
+            summaries.push(`${p.name}: ${day.band} (${day.index}/100)`);
+          });
+          detail.textContent = `${season} · ${selected} · ` + summaries.join(" · ") + (geo.errors.length ? " · " + geo.errors.join("; ") : "");
+        };
+        dayPicker.addEventListener("change", render); render();
+        const method = document.createElement("details");
+        const summary = document.createElement("summary"); summary.textContent = "How this estimate works"; method.appendChild(summary);
+        method.appendChild(popup([geo.method, geo.coverage, "Screening thresholds: gusts ≥50 km/h, precipitation ≥20 mm/day, snow ≥5 cm/day, heat ≥38.7 °C or cold ≤−16.7 °C. Low <40; elevated 40–69; high ≥70. These are prototype thresholds, not official warnings.", "Green: low · Amber: elevated · Red: high. Updated " + new Date(geo.generated_at).toLocaleString()]));
+        const source = document.createElement("a"); source.href = "https://open-meteo.com/"; source.textContent = "Weather data: Open-Meteo"; source.target = "_blank"; source.rel = "noopener"; method.appendChild(source);
+        section.appendChild(method);
+      } catch (_) { detail.textContent = "Seasonal outlook unavailable. No risk estimate can be shown. Reopen Storm Activity to retry."; dayPicker.disabled = true; }
+    };
+    await Promise.allSettled([loadAlerts(), loadOutlook()]);
   }
 
   async function loadDashboard() {
@@ -995,7 +1154,7 @@
   applyStoredTheme();
   positionNavigation();
   setBusy(false, "Loading sample households…");
-  loadHouseholds().then(() => startSession(householdSelect.value)).catch(() => {
+  Promise.all([loadConnection(), loadHouseholds()]).then(() => startSession(householdSelect.value)).catch(() => {
     document.getElementById("chat-status").textContent = "Could not load households. Refresh to try again.";
   });
 })();

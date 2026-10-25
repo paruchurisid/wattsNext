@@ -39,16 +39,16 @@ def _categorize_http_error(err):
 
 
 def _request(path, api_key, method="GET", body=None, timeout=15):
-    url = f"{API_BASE}/{path}?key={api_key}"
+    url = f"{API_BASE}/{path}"
     data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(url, data=data, method=method, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(url, data=data, method=method, headers={"Content-Type": "application/json", "x-goog-api-key": api_key})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read().decode())
     except urllib.error.HTTPError as e:
-        raise ProviderError(_categorize_http_error(e), e.read().decode()[:300]) from e
-    except urllib.error.URLError as e:
-        raise ProviderError("unavailable", str(e.reason)) from e
+        raise ProviderError(_categorize_http_error(e), "Gemini rejected the request. Check your key, quota, and model access.") from e
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        raise ProviderError("unavailable", "Could not reach Gemini. Please try again.") from e
 
 
 def list_models(api_key):

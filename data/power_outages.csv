@@ -1,0 +1,1 @@
+outage_event_id,source_dataset,city_key,fips_code,county_name,state,utility_name,start_timestamp_utc,end_timestamp_utc,duration_minutes,peak_customers_out,customer_hours_interrupted,reported_cause,record_type

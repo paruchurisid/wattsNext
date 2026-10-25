@@ -343,14 +343,10 @@ def _attach_verified_guidance(rendered, deterministic):
     return rendered
 
 
-def local_reply(message, household_id, scenario, history=None, declared_needs=None, knowledge_snapshot=None):
+def local_reply(message, household_id, scenario, history=None, declared_needs=None, knowledge_snapshot=None, *, prepare=False):
     """The local model explains Python's answer; cards and numbers stay authoritative."""
     knowledge_snapshot = knowledge_snapshot or knowledge.build(household_id, scenario, declared_needs)
     deterministic = offline_reply(message, household_id, scenario, history, declared_needs, knowledge_snapshot)
-    if small_talk_reply(message) or is_greeting(message):
-        return deterministic
-    if deterministic.get("rules_reason") == "follow_up":
-        return deterministic
     if deterministic.get("fallback"):
         deterministic["offline"] = True
         return deterministic
@@ -365,17 +361,27 @@ def local_reply(message, household_id, scenario, history=None, declared_needs=No
     fact_text = _render_offline_text(_contextual_intent(message, history), facts) if facts else deterministic["text"]
     prompt = ("QUESTION: " + message + "\nFACTS (computed household Wiki):\n" + fact_text +
               "\nWIKI CONTEXT:\n" + knowledge.context_text(knowledge_snapshot, _contextual_intent(message, history), message))
+    if prepare:
+        return {"local_request": {"system": LOCAL_SYSTEM, "prompt": prompt, "history": (history or [])[-4:]},
+                "local_expected": deterministic}
     try:
         rendered = local_llm.generate(prompt, system=LOCAL_SYSTEM, history=history)
-        rendered = _attach_verified_guidance(rendered, deterministic)
-        if not _render_is_grounded(rendered, deterministic):
-            raise local_llm.LocalProviderError("Local response did not preserve the verified facts", "validation")
-        return {"text": rendered, "cards": deterministic["cards"], "fallback": False, "offline": False, "local_model": local_llm.model_name()}
+        return finish_local_reply(rendered, deterministic, local_llm.model_name())
     except local_llm.LocalProviderError as exc:
         deterministic["offline"] = True
         deterministic["local_fallback"] = True
         deterministic["local_error"] = {"category": exc.category, "message": str(exc)}
         return deterministic
+
+
+def finish_local_reply(rendered, deterministic, model):
+    """Validate browser-local inference against the server's computed facts."""
+    rendered = _attach_verified_guidance(rendered, deterministic)
+    if not _render_is_grounded(rendered, deterministic):
+        return {**deterministic, "offline": True, "local_fallback": True,
+                "local_error": {"category": "validation", "message": "The model answer did not preserve the household facts."}}
+    return {"text": rendered, "cards": deterministic["cards"], "fallback": False,
+            "offline": False, "local_model": model}
 
 
 def online_reply(api_key, model, message, household_id, scenario, history, declared_needs=None, knowledge_snapshot=None):
@@ -413,4 +419,4 @@ def online_reply(api_key, model, message, household_id, scenario, history, decla
         raise gemini.ProviderError("unavailable", "The provider did not finish its answer.")
     if "restoration" in cards and "prep" not in cards:
         cards["prep"] = tools.get_prep_guidance(household_id, scenario["repairs_complete"], declared_needs)
-    return {"text": response["text"], "cards": cards, "fallback": False, "offline": False}
+    return {"text": response["text"], "cards": cards, "fallback": False, "offline": False, "gemini_model": model}

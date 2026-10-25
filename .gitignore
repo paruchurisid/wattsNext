@@ -19,3 +19,12 @@ release/
 .neon
 node_modules/
 .env.local
+
+.vercel
+.env*
+
+.venv-pipeline/
+.uv-cache/
+data/cache/
+data/smoke/
+!/.env.example

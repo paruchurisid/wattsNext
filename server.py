@@ -33,7 +33,7 @@ _gemini_key = os.environ.get("GEMINI_API_KEY")
 SETTINGS = {
     "api_key": _gemini_key,
     "model": os.environ.get("GEMINI_MODEL", "gemini-2.5-flash") if _gemini_key else None,
-    "provider": os.environ.get("WATTSNEXT_PROVIDER", "local"),
+    "provider": os.environ.get("WATTSNEXT_PROVIDER", "gemini" if _gemini_key else "local"),
     "offline_mode": False,
     "last_error": None,
 }
@@ -145,9 +145,53 @@ async def chat_endpoint(request):
         return JSONResponse({"error": "Please keep messages under 2,000 characters."}, status_code=400)
     if session["busy"]:
         return JSONResponse({"error": "A reply is still being prepared. Please wait."}, status_code=409)
+    settings = dict(SETTINGS)
+    connection = body.get("connection")
+    if connection is not None:
+        if (not isinstance(connection, dict) or connection.get("provider") not in ("local", "gemini") or
+                not isinstance(connection.get("offline_mode", False), bool) or
+                not isinstance(connection.get("api_key", ""), str) or
+                not isinstance(connection.get("model", ""), str) or
+                len(connection.get("model", "")) > 100 or
+                len(connection.get("api_key", "")) > 512 or
+                not isinstance(connection.get("browser_local", False), bool)):
+            return JSONResponse({"error": "invalid connection"}, status_code=400)
+        settings.update({k: connection[k] for k in ("provider", "offline_mode", "model", "browser_local") if k in connection})
+        # Browser keys are used only for this request; never shared with other visitors.
+        if connection.get("api_key"):
+            settings["api_key"] = connection["api_key"]
+        elif settings["provider"] == "gemini":
+            settings["api_key"] = _gemini_key
     session["busy"] = True
     try:
-        reply = await run_in_threadpool(_chat_reply, message, session, dict(SETTINGS))
+        if "local_result" in body:
+            pending = session.get("pending_local")
+            result = body["local_result"]
+            if (not pending or body.get("turn_id") != pending["turn_id"] or message != pending["message"]):
+                return JSONResponse({"error": "This local reply expired. Please send the message again."}, status_code=409)
+            if pending["reply"]["knowledge_revision"] != _household_knowledge(session)["revision"]:
+                session.pop("pending_local", None)
+                return JSONResponse({"error": "The household changed. Please send the message again."}, status_code=409)
+            if not isinstance(result, str) or not result.strip() or len(result) > 12000:
+                return JSONResponse({"error": "The local model returned an invalid answer."}, status_code=400)
+            session.pop("pending_local", None)
+            reply = {**pending["reply"], **chat.finish_local_reply(result, pending["expected"], pending["model"])}
+            if reply.get("scenario_change"):
+                reply["text"] = "Example updated. " + reply["text"]
+        else:
+            reply = await run_in_threadpool(_chat_reply, message, session, settings)
+        if "local_request" in reply:
+            expected = reply.pop("local_expected")
+            expected["cards"].update(reply.get("cards", {}))
+            local_request = reply.pop("local_request")
+            turn_id = uuid.uuid4().hex
+            session["pending_local"] = {"turn_id": turn_id, "message": message, "reply": reply,
+                                        "expected": expected, "model": settings.get("model") or local_llm.model_name()}
+            return JSONResponse({"local_request": local_request, "turn_id": turn_id,
+                                 "knowledge": reply["knowledge"], "knowledge_revision": reply["knowledge_revision"]})
+    except gemini.ProviderError as exc:
+        return JSONResponse({"error": "provider_error", "category": exc.category,
+                             "message": exc.message, "offer_offline": True}, status_code=502)
     finally:
         session["busy"] = False
 
@@ -187,22 +231,18 @@ def _chat_reply(message, session, settings):
     snapshot = _household_knowledge(session)
     if settings["offline_mode"]:
         reply = chat.offline_reply(message, session["household_id"], session["scenario"], session["history"], session["declared_needs"], snapshot)
-    elif settings["provider"] == "local" or not settings["api_key"] or not settings["model"]:
-        reply = chat.local_reply(message, session["household_id"], session["scenario"], session["history"], session["declared_needs"], snapshot)
+    elif settings["provider"] == "local":
+        reply = chat.local_reply(message, session["household_id"], session["scenario"], session["history"], session["declared_needs"], snapshot,
+                                 prepare=settings.get("browser_local", False))
     else:
-        try:
-            reply = chat.online_reply(
+        if not settings.get("api_key") or not settings.get("model"):
+            raise gemini.ProviderError("permission", "Connect your Gemini API key in Settings before chatting.")
+        reply = chat.online_reply(
                 settings["api_key"], settings["model"], message,
                 session["household_id"], session["scenario"], session["history"],
                 session["declared_needs"],
                 snapshot,
             )
-        except gemini.ProviderError as e:
-            SETTINGS["last_error"] = {"category": e.category, "message": e.message}
-            # Customer-service continuity: Gemini is optional. If it fails,
-            # render the same deterministic answer through the local model.
-            reply = chat.local_reply(message, session["household_id"], session["scenario"], session["history"], session["declared_needs"], snapshot)
-            reply["provider_fallback"] = {"from": "gemini", "category": e.category}
 
     latest = _household_knowledge(session)
     if latest["revision"] != snapshot["revision"]:
@@ -214,10 +254,11 @@ def _chat_reply(message, session, settings):
     if action:
         after = tools.get_restoration_estimate(session["household_id"], **session["scenario"])
         reply["scenario_change"] = {"action": action, "before": before, "after": after, "scenario": dict(session["scenario"])}
-        reply["text"] = "Example updated. " + reply["text"]
+        if "text" in reply:
+            reply["text"] = "Example updated. " + reply["text"]
         if not after.get("fallback", {}).get("fallback"):
             previous = {"low_hours": before["low_hours"]["value"], "high_hours": before["high_hours"]["value"]}
-            reply["cards"]["alerts"] = tools.get_alert_info(session["household_id"], **session["scenario"], previous_estimate=previous, declared_needs=session["declared_needs"])
+            reply.setdefault("cards", {})["alerts"] = tools.get_alert_info(session["household_id"], **session["scenario"], previous_estimate=previous, declared_needs=session["declared_needs"])
             if session["previous_estimate"] is None:
                 session["previous_estimate"] = previous
     reply["knowledge_revision"] = snapshot["revision"]
@@ -358,6 +399,18 @@ async def get_settings(request):
     })
 
 
+async def check_connection(request):
+    """Check a visitor's Gemini key without storing it in shared process settings."""
+    body = await _json_object(request)
+    if not body or not isinstance(body.get("api_key"), str) or not body["api_key"].strip() or len(body["api_key"]) > 512:
+        return JSONResponse({"error": "Enter your Gemini API key."}, status_code=400)
+    try:
+        model = await run_in_threadpool(gemini.pin_model, body["api_key"].strip())
+        return JSONResponse({"connected": True, "provider": "gemini", "model": model})
+    except gemini.ProviderError as exc:
+        return JSONResponse({"error": "provider_error", "category": exc.category, "message": exc.message}, status_code=502)
+
+
 async def update_settings(request):
     body = await _json_object(request)
     if body is None:
@@ -429,6 +482,11 @@ async def import_readiness(request):
 async def weather_alerts(request):
     return JSONResponse(await run_in_threadpool(weather.active_alerts))
 
+
+async def weather_outlook(request):
+    from backend.weather_outlook import outlook
+    return JSONResponse(await run_in_threadpool(outlook))
+
 async def replay(request):
     session = _session_or_404(request.query_params.get("session_id"))
     if session is None: return JSONResponse({"error":"unknown session_id"}, status_code=404)
@@ -447,6 +505,7 @@ app = Starlette(routes=[
     Route("/api/wiki", wiki_endpoint),
     Route("/api/settings", get_settings, methods=["GET"]),
     Route("/api/settings", update_settings, methods=["POST"]),
+    Route("/api/connection", check_connection, methods=["POST"]),
     Route("/api/governance/data-quality", data_quality),
     Route("/api/governance/model-card", model_card),
     Route("/api/governance/audit-log", governance_audit),
@@ -455,6 +514,7 @@ app = Starlette(routes=[
     Route("/api/health/ready", readiness),
     Route("/api/governance/import-readiness", import_readiness),
     Route("/api/weather/alerts", weather_alerts),
+    Route("/api/weather/outlook", weather_outlook),
     Route("/api/replay", replay),
     Mount("/static", StaticFiles(directory="static"), name="static"),
 ])

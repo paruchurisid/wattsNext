@@ -1,0 +1,29 @@
+
+src.fetch_historical_weather: 840 actual rows
+            timestamp_utc  temp_c  precipitation_mm  rain_mm  snowfall_cm  snow_depth_m  weather_code  wind_speed_kmh  wind_gust_kmh  dewpoint_f  relative_humidity_pct  wind_direction_deg  wind_speed_knots  wind_gust_knots  precipitation_1hr_in  asos_snow_depth_in  peak_wind_gust_knots  ice_accretion_1hr_in  ice_accretion_3hr_in  ice_accretion_6hr_in  is_freezing_rain  is_snow  is_ice_pellets  is_thunderstorm  asos_temp_c local_date  ghcnd_snowfall_in  ghcnd_snow_depth_in city_key asos_id    ghcnd_id                  source_dataset fips_code
+2026-10-18 00:00:00+00:00     9.3               0.0      0.0          0.0           0.0             0            12.1           28.8        31.0                  51.53               330.0               5.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN                 0        0               0                0     8.888889 2026-10-17                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+2026-10-18 01:00:00+00:00     8.9               0.0      0.0          0.0           0.0             0            11.0           25.2        30.0                  49.48               350.0               5.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN                 0        0               0                0     8.888889 2026-10-17                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+2026-10-18 02:00:00+00:00     8.1               0.0      0.0          0.0           0.0             0             8.5           23.4        31.0                  57.71               320.0               6.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN                 0        0               0                0     7.222222 2026-10-17                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+Join keys: zero missing
+
+src.fetch_severe_weather: 1,512 actual rows
+                                     event_id city_key fips_code       begin_timestamp_utc         end_timestamp_utc       record_type source_dataset usgs_site  discharge_cfs  gage_height_ft event_type damage_property_usd damage_crops_usd
+USGS-02055000-00060-2026-10-18T00:00:00+00:00      ROA     51770 2026-10-18 00:00:00+00:00 2026-10-18 01:00:00+00:00 RIVER_OBSERVATION        USGS_IV  02055000          124.0             NaN        NaN                 NaN              NaN
+USGS-02055000-00060-2026-10-18T00:00:00+00:00      ROA     51161 2026-10-18 00:00:00+00:00 2026-10-18 01:00:00+00:00 RIVER_OBSERVATION        USGS_IV  02055000          124.0             NaN        NaN                 NaN              NaN
+USGS-02055000-00060-2026-10-18T01:00:00+00:00      ROA     51770 2026-10-18 01:00:00+00:00 2026-10-18 02:00:00+00:00 RIVER_OBSERVATION        USGS_IV  02055000          119.0             NaN        NaN                 NaN              NaN
+Join keys: zero missing
+WARNING EAGLE-I unavailable: EAGLE-I catalog contains no yearly files covering 2026-10-18 through 2026-10-24
+WARNING DOE OE-417 annual summaries unavailable: Official annual DOE-417 summaries currently end in 2025; no report for requested years
+
+src.fetch_power_outages: 0 actual rows
+Empty DataFrame
+Columns: [outage_event_id, source_dataset, city_key, fips_code, county_name, state, utility_name, start_timestamp_utc, end_timestamp_utc, duration_minutes, peak_customers_out, customer_hours_interrupted, reported_cause, record_type]
+Index: []
+EMPTY: schema exists, but this is NOT evidence of source coverage.
+
+src.fetch_weather_forecasts: 3,535 actual rows
+      valid_timestamp_utc       issue_timestamp_utc   temp_c  wind_speed_kmh short_forecast  precipitation_probability_pct forecast_source issue_time_semantics  lead_time_hours city_key     lat      lon fips_code  precipitation_mm  rain_mm  snowfall_cm  snow_depth_m  weather_code  wind_gust_kmh  freezing_level_height_m retrieved_timestamp_utc
+2026-10-25 07:00:00+00:00 2026-10-25 06:30:30+00:00 3.333333             0.0   Mostly Clear                            0.0        NWS_NDFD provider_update_time         0.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT
+2026-10-25 08:00:00+00:00 2026-10-25 06:30:30+00:00 2.777778             0.0   Mostly Clear                            0.0        NWS_NDFD provider_update_time         1.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT
+2026-10-25 09:00:00+00:00 2026-10-25 06:30:30+00:00 2.777778             0.0  Partly Cloudy                            0.0        NWS_NDFD provider_update_time         2.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT
+Join keys: zero missing
