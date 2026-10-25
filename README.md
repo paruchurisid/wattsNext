@@ -214,12 +214,29 @@ manager instead.
 ## CI/CD release process
 
 Every pull request runs repository secret checks, Python compilation and
-tests, JavaScript/build validation, migration-file checks, and a production
-Docker smoke test. Dependabot keeps Python packages, npm packages, and GitHub
-Actions current.
+lint, Python and npm dependency audits, unit/API tests, migration integrity
+and rollback tests against disposable Postgres, desktop/mobile Chromium tests,
+and a production Docker smoke test. Browser reports are retained for seven days.
+Dependabot keeps Python packages, npm packages, and GitHub Actions current.
+
+Python requirements are generated lockfiles. Update them from the repository root:
+
+```bash
+python -m piptools compile --strip-extras --output-file requirements.txt requirements.in
+python -m piptools compile --strip-extras --output-file requirements-dev.txt requirements-dev.in
+```
+
+The npm lockfile pins the deployment CLI. Targeted overrides patch its transitive
+dependencies; review them when upgrading Vercel and verify `npm audit` and
+`npx --no-install vercel --version` before removing them.
 
 Production deployment is intentionally tag-gated. After the `production`
 GitHub environment approval, pushing a tag such as `v1.0.0` deploys through
 Vercel when `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID` are set as
-repository or environment secrets. Neon migrations should be run separately
-against the direct production connection before the deployment is approved.
+repository or environment secrets. The pipeline applies versioned Neon migrations
+using the `DATABASE_URL_UNPOOLED` production secret before deploying Vercel.
+Configure required reviewers on the GitHub `production` environment to enforce
+approval; the workflow's environment name alone does not enforce it. Release
+runs are serialized and cannot cancel an active migration or deployment.
+Use Actions' manual Run workflow on `main` to validate without deploying;
+production jobs run only for version tags.
