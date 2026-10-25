@@ -1,0 +1,10 @@
+services:
+  wattsnext:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.local
+    environment:
+      WATTSNEXT_USE_NEON: "true"
+      PORT: "8000"

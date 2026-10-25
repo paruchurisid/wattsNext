@@ -1,0 +1,97 @@
+[
+  {
+    "case_id": "transformer_roanoke",
+    "label": "Transformer damage",
+    "storm_setting": "severe",
+    "substation": "STATION24",
+    "circuit": "CIR114",
+    "cities": [
+      "Roanoke",
+      "Hardy",
+      "Boones Mill"
+    ],
+    "path_valid": true,
+    "damage_items": [
+      {
+        "asset_type": "transformer",
+        "quantity": 1,
+        "size_kva": 25,
+        "repaired": false
+      }
+    ],
+    "source_note": "Unrepaired transformer damage on STATION24/CIR114 in the ARCOS damage extract (arcos_prod_damage_09_28_Clip). 25 kVA is the modal transformer size on this circuit."
+  },
+  {
+    "case_id": "wirepole_vinton",
+    "label": "Primary wire and pole damage",
+    "storm_setting": "severe",
+    "substation": "STATION29",
+    "circuit": "CIR6",
+    "cities": [
+      "Vinton",
+      "Goodview",
+      "Blue Ridge"
+    ],
+    "path_valid": true,
+    "damage_items": [
+      {
+        "asset_type": "primary",
+        "quantity": 2,
+        "repaired": false
+      },
+      {
+        "asset_type": "pole",
+        "quantity": 1,
+        "size_group": "medium",
+        "repaired": false
+      }
+    ],
+    "source_note": "Unrepaired primary-wire and pole damage on STATION29/CIR6 in the ARCOS damage extract."
+  },
+  {
+    "case_id": "wire_montvale",
+    "label": "Primary wire damage",
+    "storm_setting": "moderate",
+    "substation": "STATION2",
+    "circuit": "CIR60",
+    "cities": [
+      "Montvale",
+      "Blue Ridge"
+    ],
+    "path_valid": true,
+    "damage_items": [
+      {
+        "asset_type": "primary",
+        "quantity": 2,
+        "repaired": false
+      }
+    ],
+    "source_note": "Unrepaired primary-wire damage on STATION2/CIR60 in the ARCOS damage extract."
+  },
+  {
+    "case_id": "calm_roanoke",
+    "label": "No recorded damage",
+    "storm_setting": "calm",
+    "substation": "STATION10",
+    "circuit": "CIR95",
+    "cities": [
+      "Roanoke"
+    ],
+    "path_valid": true,
+    "damage_items": [],
+    "source_note": "STATION10/CIR95 has zero damage records in the ARCOS extract \u2014 included deliberately alongside the Roanoke transformer case to show risk follows the upstream path, not the city name."
+  },
+  {
+    "case_id": "no_path",
+    "label": "No validated upstream path",
+    "storm_setting": "severe",
+    "substation": null,
+    "circuit": null,
+    "cities": [
+      "Roanoke"
+    ],
+    "path_valid": false,
+    "damage_items": [],
+    "source_note": "Synthetic consistency-check failure: this household's premise does not resolve to a complete upstream chain in matched_upstream.txt. Used to exercise the cannot-predict fallback."
+  }
+]

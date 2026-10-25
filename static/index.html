@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f5f7">
+  <title>Watt'sNext — Your power, understood.</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+</head>
+<body>
+  <a class="skip-link" href="#conversation">Skip to content</a>
+  <div class="app" data-view="ask">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Watt'sNext home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m13.5 3-8 11h6l-1 7 8-11h-6z"/></svg></span>Watt'sNext</a>
+      <nav class="view-toggle" aria-label="Choose view">
+        <span class="nav-indicator" aria-hidden="true"></span>
+        <button type="button" id="view-ask-btn" aria-pressed="true">Ask</button>
+        <button type="button" id="view-dashboard-btn" aria-pressed="false">Storm Activity</button>
+        <button type="button" id="view-wiki-btn" aria-pressed="false">Wiki</button>
+      </nav>
+      <div class="toolbar-actions">
+        <div class="household-picker"><label for="household-select">Household</label><select id="household-select" aria-label="Choose a sample household by city"></select></div>
+        <button id="new-conversation-btn" class="icon-btn" aria-label="Start a new conversation" title="New conversation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button id="settings-btn" class="icon-btn" aria-label="Open settings" title="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></svg></button>
+      </div>
+    </header>
+
+    <main id="conversation" class="conversation" aria-label="Conversation" aria-live="polite" aria-relevant="additions" tabindex="-1">
+      <div class="empty-state" id="empty-state">
+        <div class="hero-symbol" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m27 6-16 22h12l-2 14 16-22H25z"/></svg></div>
+        <span class="eyebrow">A little clarity. A little peace of mind.</span>
+        <h1>Your power,<br><span>understood.</span></h1>
+        <p class="tagline">Know what's next when the power goes out.</p>
+        <p class="welcome-detail">Ask about your home's power, how long repairs could take, or what to do next.</p>
+        <button type="button" id="open-wiki-btn" class="text-button">Explore your household Wiki <span aria-hidden="true">↗</span></button>
+        <div class="replay-label"><span class="status-dot" aria-hidden="true"></span>Example only · Not a live outage report</div>
+      </div>
+    </main>
+
+    <section id="dashboard-view" class="dashboard" hidden aria-labelledby="dashboard-heading" tabindex="-1">
+      <div class="page-heading"><span class="eyebrow">The bigger picture</span><h1 id="dashboard-heading">Storm activity.</h1><p>See the example repairs that could affect your home's power.</p></div>
+      <div class="honesty-strip"><span class="status-dot" aria-hidden="true"></span>This example uses past damage records. Your power company has not confirmed these repair times.</div>
+      <div id="dashboard-content"></div>
+    </section>
+
+    <section id="wiki-view" class="wiki-view" hidden aria-labelledby="wiki-heading" tabindex="-1">
+      <div class="wiki-header page-heading"><span class="eyebrow">Everything in one place</span><h1 id="wiki-heading">Your household,<br>at a glance.</h1><p>Everything we know about this household's example. Chat uses these same facts to answer your questions.</p></div>
+      <div id="wiki-content" aria-live="polite"></div>
+    </section>
+
+    <footer class="interaction-dock">
+      <div class="scenario-heading"><span>Try a different example</span><span class="scenario-caption">Wiki and chat update together</span></div>
+      <div class="chips" id="whatif-chips" hidden aria-label="Example controls">
+        <button data-action="block_access"><span aria-hidden="true">↗</span> Road blocked</button>
+        <button data-action="add_crews"><span aria-hidden="true">＋</span> Two more repair teams</button>
+        <button data-action="complete_repairs"><span aria-hidden="true">✓</span> Repairs complete</button>
+        <button data-action="reset"><span aria-hidden="true">↺</span> Start over</button>
+      </div>
+      <form class="composer" id="composer">
+        <label for="message-input" class="visually-hidden">Message</label>
+        <input id="message-input" type="text" placeholder="Ask about your household…" autocomplete="off" maxlength="2000" disabled>
+        <button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 18V6m-5 5 5-5 5 5"/></svg></button>
+      </form>
+      <div class="chat-status" id="chat-status" role="status">Loading your household…</div>
+    </footer>
+  </div>
+
+  <dialog id="evidence-dialog" aria-labelledby="evidence-kind">
+    <span class="dialog-eyebrow">About this number</span><h2 class="evidence-kind" id="evidence-kind"></h2>
+    <p id="evidence-note"></p><button id="evidence-close" class="primary-button">Done</button>
+  </dialog>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-heading">
+    <div class="dialog-header"><div><span class="dialog-eyebrow">Make it yours</span><h2 id="settings-heading">Settings</h2></div><button id="settings-close" class="icon-btn close-btn" aria-label="Close">×</button></div>
+    <div class="settings-grid">
+      <section class="settings-section"><h3>Conversation</h3>
+        <div class="setting-row"><label for="provider-select">Answer engine</label><select id="provider-select"><option value="local">AI on this computer</option><option value="gemini">Online AI (Gemini)</option></select></div>
+        <div class="setting-row"><label for="offline-toggle"><strong>Use household facts without AI</strong><span>Get answers directly from this household's Wiki.</span></label><input id="offline-toggle" type="checkbox" role="switch" aria-label="Offline explanation mode"></div>
+        <div class="status-line" id="settings-status" role="status">Checking connection…</div>
+        <p class="settings-help">AI on this computer uses Ollama. If an AI answer does not match the household facts, we show an answer from those facts instead.</p>
+      </section>
+      <section class="settings-section" id="gemini-settings"><h3>Gemini connection</h3><label for="api-key-input">API key</label><input id="api-key-input" type="password" placeholder="Enter your API key" autocomplete="off"><p class="settings-help">Your key stays in this app's memory.</p></section>
+      <section class="settings-section"><h3>Appearance</h3><div class="setting-row"><label for="theme-select">Theme</label><select id="theme-select"><option value="system">Automatic</option><option value="light">Light</option><option value="dark">Dark</option></select></div></section>
+      <div class="dialog-footer"><button id="settings-save" class="primary-button">Save changes</button></div>
+    </div>
+  </dialog>
+  <script src="/static/app.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+</body>
+</html>

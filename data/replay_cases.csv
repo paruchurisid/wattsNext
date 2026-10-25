@@ -1,0 +1,121 @@
+case_key,label,storm_setting,circuit_key,path_valid,source_note
+CASE0001,Pole and wire damage,severe,CIR001,true,Synthetic replay case generated for Watt'sNext
+CASE0002,Pole and wire damage,severe,CIR002,true,Synthetic replay case generated for Watt'sNext
+CASE0003,Primary wire damage,calm,CIR003,false,Synthetic case: no validated upstream path exists
+CASE0004,Multiple equipment failures,moderate,CIR004,true,Synthetic replay case generated for Watt'sNext
+CASE0005,Primary wire damage,calm,CIR005,true,Synthetic replay case generated for Watt'sNext
+CASE0006,Multiple equipment failures,severe,CIR006,true,Synthetic replay case generated for Watt'sNext
+CASE0007,Multiple equipment failures,severe,CIR007,true,Synthetic replay case generated for Watt'sNext
+CASE0008,Primary wire damage,calm,CIR008,true,Synthetic replay case generated for Watt'sNext
+CASE0009,Primary wire damage,calm,CIR009,true,Synthetic replay case generated for Watt'sNext
+CASE0010,Transformer damage,moderate,CIR010,true,Synthetic replay case generated for Watt'sNext
+CASE0011,Pole and wire damage,calm,CIR011,true,Synthetic replay case generated for Watt'sNext
+CASE0012,No recorded damage,severe,CIR012,true,Synthetic replay case generated for Watt'sNext
+CASE0013,Transformer damage,moderate,CIR013,false,Synthetic case: no validated upstream path exists
+CASE0014,Transformer damage,severe,CIR014,true,Synthetic replay case generated for Watt'sNext
+CASE0015,No recorded damage,moderate,CIR015,true,Synthetic replay case generated for Watt'sNext
+CASE0016,Pole and wire damage,calm,CIR016,true,Synthetic replay case generated for Watt'sNext
+CASE0017,Multiple equipment failures,moderate,CIR017,true,Synthetic replay case generated for Watt'sNext
+CASE0018,Pole and wire damage,moderate,CIR018,true,Synthetic replay case generated for Watt'sNext
+CASE0019,Transformer damage,severe,CIR019,true,Synthetic replay case generated for Watt'sNext
+CASE0020,Pole and wire damage,moderate,CIR020,true,Synthetic replay case generated for Watt'sNext
+CASE0021,No recorded damage,calm,CIR021,true,Synthetic replay case generated for Watt'sNext
+CASE0022,No recorded damage,calm,CIR022,true,Synthetic replay case generated for Watt'sNext
+CASE0023,Transformer damage,calm,CIR023,true,Synthetic replay case generated for Watt'sNext
+CASE0024,Multiple equipment failures,severe,CIR024,true,Synthetic replay case generated for Watt'sNext
+CASE0025,Multiple equipment failures,moderate,CIR025,true,Synthetic replay case generated for Watt'sNext
+CASE0026,Primary wire damage,moderate,CIR026,true,Synthetic replay case generated for Watt'sNext
+CASE0027,Pole and wire damage,severe,CIR027,true,Synthetic replay case generated for Watt'sNext
+CASE0028,No recorded damage,moderate,CIR028,true,Synthetic replay case generated for Watt'sNext
+CASE0029,Multiple equipment failures,moderate,CIR029,true,Synthetic replay case generated for Watt'sNext
+CASE0030,Pole and wire damage,severe,CIR030,true,Synthetic replay case generated for Watt'sNext
+CASE0031,Transformer damage,moderate,CIR031,true,Synthetic replay case generated for Watt'sNext
+CASE0032,Transformer damage,severe,CIR032,true,Synthetic replay case generated for Watt'sNext
+CASE0033,Transformer damage,severe,CIR033,true,Synthetic replay case generated for Watt'sNext
+CASE0034,No recorded damage,moderate,CIR034,false,Synthetic case: no validated upstream path exists
+CASE0035,Pole and wire damage,severe,CIR035,true,Synthetic replay case generated for Watt'sNext
+CASE0036,Pole and wire damage,severe,CIR036,true,Synthetic replay case generated for Watt'sNext
+CASE0037,Primary wire damage,moderate,CIR037,true,Synthetic replay case generated for Watt'sNext
+CASE0038,Primary wire damage,calm,CIR038,true,Synthetic replay case generated for Watt'sNext
+CASE0039,Pole and wire damage,severe,CIR039,true,Synthetic replay case generated for Watt'sNext
+CASE0040,No recorded damage,severe,CIR040,true,Synthetic replay case generated for Watt'sNext
+CASE0041,Multiple equipment failures,severe,CIR041,true,Synthetic replay case generated for Watt'sNext
+CASE0042,Multiple equipment failures,moderate,CIR042,true,Synthetic replay case generated for Watt'sNext
+CASE0043,Pole and wire damage,moderate,CIR043,true,Synthetic replay case generated for Watt'sNext
+CASE0044,Pole and wire damage,severe,CIR044,true,Synthetic replay case generated for Watt'sNext
+CASE0045,No recorded damage,calm,CIR045,true,Synthetic replay case generated for Watt'sNext
+CASE0046,No recorded damage,moderate,CIR046,true,Synthetic replay case generated for Watt'sNext
+CASE0047,Pole and wire damage,moderate,CIR047,true,Synthetic replay case generated for Watt'sNext
+CASE0048,Primary wire damage,severe,CIR048,true,Synthetic replay case generated for Watt'sNext
+CASE0049,Primary wire damage,severe,CIR049,true,Synthetic replay case generated for Watt'sNext
+CASE0050,No recorded damage,calm,CIR050,true,Synthetic replay case generated for Watt'sNext
+CASE0051,Primary wire damage,moderate,CIR051,true,Synthetic replay case generated for Watt'sNext
+CASE0052,Pole and wire damage,severe,CIR052,true,Synthetic replay case generated for Watt'sNext
+CASE0053,Pole and wire damage,moderate,CIR053,true,Synthetic replay case generated for Watt'sNext
+CASE0054,No recorded damage,severe,CIR054,true,Synthetic replay case generated for Watt'sNext
+CASE0055,Multiple equipment failures,moderate,CIR055,true,Synthetic replay case generated for Watt'sNext
+CASE0056,No recorded damage,moderate,CIR056,true,Synthetic replay case generated for Watt'sNext
+CASE0057,Primary wire damage,calm,CIR057,true,Synthetic replay case generated for Watt'sNext
+CASE0058,Primary wire damage,moderate,CIR058,true,Synthetic replay case generated for Watt'sNext
+CASE0059,No recorded damage,severe,CIR059,false,Synthetic case: no validated upstream path exists
+CASE0060,Multiple equipment failures,severe,CIR060,true,Synthetic replay case generated for Watt'sNext
+CASE0061,Primary wire damage,moderate,CIR001,true,Synthetic replay case generated for Watt'sNext
+CASE0062,No recorded damage,moderate,CIR002,true,Synthetic replay case generated for Watt'sNext
+CASE0063,Pole and wire damage,calm,CIR003,true,Synthetic replay case generated for Watt'sNext
+CASE0064,Pole and wire damage,moderate,CIR004,true,Synthetic replay case generated for Watt'sNext
+CASE0065,Transformer damage,moderate,CIR005,false,Synthetic case: no validated upstream path exists
+CASE0066,Pole and wire damage,calm,CIR006,true,Synthetic replay case generated for Watt'sNext
+CASE0067,Pole and wire damage,moderate,CIR007,true,Synthetic replay case generated for Watt'sNext
+CASE0068,No recorded damage,severe,CIR008,true,Synthetic replay case generated for Watt'sNext
+CASE0069,Pole and wire damage,moderate,CIR009,true,Synthetic replay case generated for Watt'sNext
+CASE0070,Primary wire damage,severe,CIR010,true,Synthetic replay case generated for Watt'sNext
+CASE0071,Multiple equipment failures,moderate,CIR011,true,Synthetic replay case generated for Watt'sNext
+CASE0072,Pole and wire damage,severe,CIR012,true,Synthetic replay case generated for Watt'sNext
+CASE0073,Primary wire damage,severe,CIR013,true,Synthetic replay case generated for Watt'sNext
+CASE0074,Pole and wire damage,moderate,CIR014,true,Synthetic replay case generated for Watt'sNext
+CASE0075,Primary wire damage,severe,CIR015,true,Synthetic replay case generated for Watt'sNext
+CASE0076,Multiple equipment failures,moderate,CIR016,true,Synthetic replay case generated for Watt'sNext
+CASE0077,Transformer damage,moderate,CIR017,true,Synthetic replay case generated for Watt'sNext
+CASE0078,Pole and wire damage,severe,CIR018,true,Synthetic replay case generated for Watt'sNext
+CASE0079,Pole and wire damage,moderate,CIR019,true,Synthetic replay case generated for Watt'sNext
+CASE0080,Multiple equipment failures,severe,CIR020,true,Synthetic replay case generated for Watt'sNext
+CASE0081,No recorded damage,severe,CIR021,true,Synthetic replay case generated for Watt'sNext
+CASE0082,No recorded damage,moderate,CIR022,true,Synthetic replay case generated for Watt'sNext
+CASE0083,No recorded damage,calm,CIR023,true,Synthetic replay case generated for Watt'sNext
+CASE0084,Transformer damage,severe,CIR024,true,Synthetic replay case generated for Watt'sNext
+CASE0085,Multiple equipment failures,severe,CIR025,true,Synthetic replay case generated for Watt'sNext
+CASE0086,Pole and wire damage,severe,CIR026,true,Synthetic replay case generated for Watt'sNext
+CASE0087,No recorded damage,severe,CIR027,true,Synthetic replay case generated for Watt'sNext
+CASE0088,Pole and wire damage,moderate,CIR028,true,Synthetic replay case generated for Watt'sNext
+CASE0089,Transformer damage,severe,CIR029,true,Synthetic replay case generated for Watt'sNext
+CASE0090,No recorded damage,moderate,CIR030,true,Synthetic replay case generated for Watt'sNext
+CASE0091,Multiple equipment failures,severe,CIR031,true,Synthetic replay case generated for Watt'sNext
+CASE0092,Multiple equipment failures,moderate,CIR032,true,Synthetic replay case generated for Watt'sNext
+CASE0093,Primary wire damage,severe,CIR033,true,Synthetic replay case generated for Watt'sNext
+CASE0094,No recorded damage,severe,CIR034,true,Synthetic replay case generated for Watt'sNext
+CASE0095,Pole and wire damage,calm,CIR035,true,Synthetic replay case generated for Watt'sNext
+CASE0096,Pole and wire damage,moderate,CIR036,true,Synthetic replay case generated for Watt'sNext
+CASE0097,Transformer damage,calm,CIR037,true,Synthetic replay case generated for Watt'sNext
+CASE0098,No recorded damage,moderate,CIR038,true,Synthetic replay case generated for Watt'sNext
+CASE0099,Primary wire damage,calm,CIR039,false,Synthetic case: no validated upstream path exists
+CASE0100,Transformer damage,calm,CIR040,true,Synthetic replay case generated for Watt'sNext
+CASE0101,Pole and wire damage,severe,CIR041,true,Synthetic replay case generated for Watt'sNext
+CASE0102,Multiple equipment failures,moderate,CIR042,true,Synthetic replay case generated for Watt'sNext
+CASE0103,Pole and wire damage,severe,CIR043,true,Synthetic replay case generated for Watt'sNext
+CASE0104,Primary wire damage,severe,CIR044,true,Synthetic replay case generated for Watt'sNext
+CASE0105,Pole and wire damage,moderate,CIR045,true,Synthetic replay case generated for Watt'sNext
+CASE0106,Multiple equipment failures,calm,CIR046,true,Synthetic replay case generated for Watt'sNext
+CASE0107,Multiple equipment failures,severe,CIR047,true,Synthetic replay case generated for Watt'sNext
+CASE0108,No recorded damage,moderate,CIR048,true,Synthetic replay case generated for Watt'sNext
+CASE0109,No recorded damage,moderate,CIR049,true,Synthetic replay case generated for Watt'sNext
+CASE0110,No recorded damage,calm,CIR050,true,Synthetic replay case generated for Watt'sNext
+CASE0111,Pole and wire damage,severe,CIR051,true,Synthetic replay case generated for Watt'sNext
+CASE0112,Transformer damage,moderate,CIR052,true,Synthetic replay case generated for Watt'sNext
+CASE0113,Transformer damage,calm,CIR053,true,Synthetic replay case generated for Watt'sNext
+CASE0114,Primary wire damage,severe,CIR054,true,Synthetic replay case generated for Watt'sNext
+CASE0115,Transformer damage,severe,CIR055,true,Synthetic replay case generated for Watt'sNext
+CASE0116,Pole and wire damage,moderate,CIR056,true,Synthetic replay case generated for Watt'sNext
+CASE0117,Pole and wire damage,moderate,CIR057,true,Synthetic replay case generated for Watt'sNext
+CASE0118,Transformer damage,moderate,CIR058,true,Synthetic replay case generated for Watt'sNext
+CASE0119,Primary wire damage,calm,CIR059,true,Synthetic replay case generated for Watt'sNext
+CASE0120,No recorded damage,severe,CIR060,true,Synthetic replay case generated for Watt'sNext

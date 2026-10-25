@@ -1,0 +1,178 @@
+{
+  "indirect_multiplier": 4.5,
+  "indirect_multiplier_source": "Install_Labor_HackOHIO.xlsx \u2014 Indirect labor multiplier (ILM). Applied to install+removal hours to account for drive time, safety discussion, and setup. Do not add drive/setup/safety time again on top of this.",
+  "categories": {
+    "transformer": {
+      "unit": "per transformer, by kVA size",
+      "evidence": "source_data",
+      "sizes": {
+        "10": {
+          "install_hours": 1.189485714285714,
+          "removal_hours": 0.8082285714285719
+        },
+        "15": {
+          "install_hours": 1.184,
+          "removal_hours": 0.8000000000000004
+        },
+        "25": {
+          "install_hours": 1.1880851063829778,
+          "removal_hours": 0.8061276595744681
+        },
+        "37": {
+          "install_hours": 1.2384,
+          "removal_hours": 0.8816000000000005
+        },
+        "50": {
+          "install_hours": 1.2445957446808502,
+          "removal_hours": 0.890893617021277
+        },
+        "75": {
+          "install_hours": 1.2776585365853663,
+          "removal_hours": 0.9369756097560975
+        },
+        "100": {
+          "install_hours": 1.2800000000000007,
+          "removal_hours": 0.944
+        },
+        "167": {
+          "install_hours": 1.2800000000000007,
+          "removal_hours": 0.9439999999999997
+        },
+        "250": {
+          "install_hours": 1.3304615384615381,
+          "removal_hours": 0.9624615384615383
+        },
+        "333": {
+          "install_hours": 1.3546666666666665,
+          "removal_hours": 0.9759999999999999
+        },
+        "500": {
+          "install_hours": 1.3795555555555552,
+          "removal_hours": 0.9866666666666666
+        },
+        "833": {
+          "install_hours": 1.364,
+          "removal_hours": 0.98
+        }
+      }
+    },
+    "pole": {
+      "unit": "per pole, by height group",
+      "evidence": "source_data",
+      "sizes": {
+        "small": {
+          "install_hours": 1.9416103896103902,
+          "removal_hours": 0.763636363636363
+        },
+        "medium": {
+          "install_hours": 2.50295207667732,
+          "removal_hours": 0.9274888178913726
+        },
+        "large": {
+          "install_hours": 3.368367816091952,
+          "removal_hours": 1.153195402298852
+        }
+      }
+    },
+    "fuse_bank": {
+      "unit": "per fuse cutout",
+      "evidence": "source_data",
+      "install_hours": 0.25600000000000017,
+      "removal_hours": 0.12800000000000009
+    },
+    "recloser_bank": {
+      "unit": "per recloser",
+      "evidence": "source_data",
+      "install_hours": 0.5726238532110097,
+      "removal_hours": 0.5253577981651364
+    },
+    "switch": {
+      "unit": "per switch",
+      "evidence": "source_data",
+      "install_hours": 1.7579459459459466,
+      "removal_hours": 1.0097297297297296
+    },
+    "secondary": {
+      "unit": "per secondary conductor attachment",
+      "evidence": "source_data",
+      "install_hours": 0.23258536585365866,
+      "removal_hours": 0.12682926829268298
+    },
+    "primary": {
+      "unit": "per primary conductor span",
+      "evidence": "assumption",
+      "evidence_note": "The supplied labor workbook has no per-span primary-conductor rate. Using the Dead-End (conductor termination) category as the closest documented proxy \u2014 a stated assumption, not a source rate.",
+      "install_hours": 0.10760784313725497,
+      "removal_hours": 0.06400000000000004
+    },
+    "capacitor_bank": {
+      "unit": "per capacitor bank",
+      "evidence": "assumption",
+      "evidence_note": "No capacitor-bank rate supplied; using Equipment Lead as a proxy.",
+      "install_hours": 0.6501904761904762,
+      "removal_hours": 0.20609523809523825
+    },
+    "light": {
+      "unit": "per light",
+      "evidence": "assumption",
+      "evidence_note": "No streetlight rate supplied; using Equipment Lead as a proxy.",
+      "install_hours": 0.6501904761904762,
+      "removal_hours": 0.20609523809523825
+    },
+    "step_transformer": {
+      "unit": "per transformer, by kVA size (step transformers use the same table)",
+      "evidence": "assumption",
+      "evidence_note": "No step-transformer-specific rate supplied; reusing the distribution transformer table.",
+      "sizes": {
+        "10": {
+          "install_hours": 1.189485714285714,
+          "removal_hours": 0.8082285714285719
+        },
+        "15": {
+          "install_hours": 1.184,
+          "removal_hours": 0.8000000000000004
+        },
+        "25": {
+          "install_hours": 1.1880851063829778,
+          "removal_hours": 0.8061276595744681
+        },
+        "37": {
+          "install_hours": 1.2384,
+          "removal_hours": 0.8816000000000005
+        },
+        "50": {
+          "install_hours": 1.2445957446808502,
+          "removal_hours": 0.890893617021277
+        },
+        "75": {
+          "install_hours": 1.2776585365853663,
+          "removal_hours": 0.9369756097560975
+        },
+        "100": {
+          "install_hours": 1.2800000000000007,
+          "removal_hours": 0.944
+        },
+        "167": {
+          "install_hours": 1.2800000000000007,
+          "removal_hours": 0.9439999999999997
+        },
+        "250": {
+          "install_hours": 1.3304615384615381,
+          "removal_hours": 0.9624615384615383
+        },
+        "333": {
+          "install_hours": 1.3546666666666665,
+          "removal_hours": 0.9759999999999999
+        },
+        "500": {
+          "install_hours": 1.3795555555555552,
+          "removal_hours": 0.9866666666666666
+        },
+        "833": {
+          "install_hours": 1.364,
+          "removal_hours": 0.98
+        }
+      }
+    }
+  }
+}

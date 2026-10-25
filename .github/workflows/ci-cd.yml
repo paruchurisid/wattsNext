@@ -1,0 +1,188 @@
+name: Watt'sNext CI/CD
+
+on:
+  pull_request:
+  push:
+    branches: [backend-section, main, master]
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: wattsnext-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: '3.13'
+  NODE_VERSION: '22'
+  PYTHONDONTWRITEBYTECODE: '1'
+  WATTSNEXT_USE_NEON: 'false'
+
+jobs:
+  repository-checks:
+    name: Repository checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Check for tracked secrets and local env files
+        shell: bash
+        run: |
+          test ! -f .env && test ! -f .env.local
+          if git ls-files | grep -E '(^|/)(\.env|\.env\..*)$|\.pem$|\.key$'; then
+            echo 'Secret-like files are tracked.'
+            exit 1
+          fi
+      - name: Scan repository for secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  python-checks:
+    name: Python checks
+    runs-on: ubuntu-latest
+    needs: repository-checks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && pip install -r requirements-dev.txt
+      - name: Compile all Python modules
+        run: python -m compileall -q backend concierge server.py api scripts
+      - name: Run unit and API tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify migration files are present and parseable
+        run: |
+          test -s migrations/001_initial.sql
+          test -s migrations/002_household_case_mapping.sql
+          python - <<'PY'
+          from pathlib import Path
+          for path in Path('migrations').glob('*.sql'):
+              text = path.read_text()
+              assert 'create table' in text.lower() or 'alter table' in text.lower()
+          print('Migration files validated')
+          PY
+
+  frontend-checks:
+    name: Frontend checks
+    runs-on: ubuntu-latest
+    needs: repository-checks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - name: Install frontend tooling
+        run: npm ci
+      - name: Validate frontend build and JavaScript syntax
+        run: npm run build
+      - name: Validate JSON configuration
+        run: node -e "JSON.parse(require('fs').readFileSync('vercel.json')); JSON.parse(require('fs').readFileSync('package.json'))"
+
+  docker-checks:
+    name: Docker checks
+    runs-on: ubuntu-latest
+    needs: [python-checks, frontend-checks]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production image
+        run: docker build --tag wattsnext:${{ github.sha }} .
+      - name: Start production container
+        run: |
+          docker run -d --name wattsnext-ci -p 8000:8000 \
+            -e WATTSNEXT_USE_NEON=false \
+            wattsnext:${{ github.sha }}
+      - name: Wait for health endpoint
+        run: |
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8000/api/health/database; then exit 0; fi
+            sleep 2
+          done
+          docker logs wattsnext-ci
+          exit 1
+      - name: Verify homepage and API docs
+        run: |
+          curl --fail --silent http://127.0.0.1:8000/ > /dev/null
+          curl --fail --silent http://127.0.0.1:8000/api/docs > /dev/null
+      - if: always()
+        run: docker logs wattsnext-ci || true
+      - if: always()
+        run: docker rm --force wattsnext-ci || true
+
+  release-readiness:
+    name: Release readiness
+    runs-on: ubuntu-latest
+    needs: [python-checks, frontend-checks, docker-checks]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check production deployment files
+        run: |
+          test -s vercel.json
+          test -s api/index.py
+          test -s Dockerfile
+          test -s docker-compose.yml
+          grep -q 'DATABASE_URL' README.md
+          grep -q 'GEMINI_API_KEY' README.md
+      - name: Generate release metadata
+        run: |
+          mkdir -p release
+          printf 'commit=%s\nref=%s\n' "$GITHUB_SHA" "$GITHUB_REF" > release/metadata.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wattsnext-release-${{ github.sha }}
+          path: release/metadata.txt
+
+  deploy-vercel:
+    name: Deploy to Vercel
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    needs: [release-readiness, neon-migrations]
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+      - name: Deploy production build
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          test -n "$VERCEL_TOKEN"
+          npx --yes vercel@latest deploy --prod --token "$VERCEL_TOKEN" --yes
+
+  neon-migrations:
+    name: Apply production Neon migrations
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    needs: release-readiness
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Install migration dependencies
+        run: pip install --no-cache-dir 'psycopg[binary]>=3.2'
+      - name: Apply versioned migrations to Neon production
+        env:
+          DATABASE_URL_UNPOOLED: ${{ secrets.DATABASE_URL_UNPOOLED }}
+        run: |
+          test -n "$DATABASE_URL_UNPOOLED"
+          python scripts/migrate.py
+          python - <<'PY'
+          import os, psycopg
+          with psycopg.connect(os.environ['DATABASE_URL_UNPOOLED']) as conn:
+              with conn.cursor() as cur:
+                  cur.execute("select count(*) from information_schema.tables where table_schema='public' and table_name='households'")
+                  assert cur.fetchone()[0] == 1
+          print('Production Neon schema verified')
+          PY

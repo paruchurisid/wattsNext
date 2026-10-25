@@ -1,0 +1,160 @@
+{
+  "households": [
+    {
+      "household_id": "h1",
+      "display_name": "Household A",
+      "city": "Roanoke",
+      "case_id": "transformer_roanoke",
+      "declared_needs": {
+        "power_bank": true,
+        "needs_phone_for_work": true,
+        "medical_device": false
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h2",
+      "display_name": "Household B",
+      "city": "Roanoke",
+      "case_id": "transformer_roanoke",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": true
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h3",
+      "display_name": "Household C",
+      "city": "Hardy",
+      "case_id": "transformer_roanoke",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": false,
+      "alert_channel": "email"
+    },
+    {
+      "household_id": "h4",
+      "display_name": "Household D",
+      "city": "Vinton",
+      "case_id": "wirepole_vinton",
+      "declared_needs": {
+        "power_bank": true,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h5",
+      "display_name": "Household E",
+      "city": "Goodview",
+      "case_id": "wirepole_vinton",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": true
+      },
+      "alert_opt_in": true,
+      "alert_channel": "email"
+    },
+    {
+      "household_id": "h6",
+      "display_name": "Household F",
+      "city": "Blue Ridge",
+      "case_id": "wirepole_vinton",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h7",
+      "display_name": "Household G",
+      "city": "Montvale",
+      "case_id": "wire_montvale",
+      "declared_needs": {
+        "power_bank": true,
+        "needs_phone_for_work": true,
+        "medical_device": false
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h8",
+      "display_name": "Household H",
+      "city": "Blue Ridge",
+      "case_id": "wire_montvale",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": false,
+      "alert_channel": "email"
+    },
+    {
+      "household_id": "h9",
+      "display_name": "Household I",
+      "city": "Montvale",
+      "case_id": "wire_montvale",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": true
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h10",
+      "display_name": "Household J",
+      "city": "Roanoke",
+      "case_id": "calm_roanoke",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": true,
+      "alert_channel": "sms"
+    },
+    {
+      "household_id": "h11",
+      "display_name": "Household K",
+      "city": "Roanoke",
+      "case_id": "calm_roanoke",
+      "declared_needs": {
+        "power_bank": true,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": true,
+      "alert_channel": "email"
+    },
+    {
+      "household_id": "h12",
+      "display_name": "Household L",
+      "city": "Roanoke",
+      "case_id": "no_path",
+      "declared_needs": {
+        "power_bank": false,
+        "needs_phone_for_work": false,
+        "medical_device": false
+      },
+      "alert_opt_in": false,
+      "alert_channel": "sms"
+    }
+  ]
+}
