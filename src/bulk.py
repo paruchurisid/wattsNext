@@ -1,11 +1,12 @@
 """Bounded, restartable HTTP range reads for publisher CSV files.
 
-EAGLE-I's five-column export has one physical line per observation. Overlapping
+EAGLE-I's CSV exports have one physical line per observation. Overlapping
 range boundaries retain each complete CSV record exactly once.
 """
 
 from concurrent.futures import ThreadPoolExecutor
 import io
+import csv
 import os
 from pathlib import Path
 import pandas as pd
@@ -24,6 +25,54 @@ def csv_window(payload, offset, stop, total):
             raise ValueError("CSV record exceeds range overlap")
         right = index + 1
     return payload[left:right]
+
+
+def county_windows(info, fips_codes):
+    """Locate complete county sections in the verified county-ordered export."""
+    total = info["size"]
+    probes = {}
+
+    def key(offset):
+        if offset in probes:
+            return probes[offset]
+        stop = min(total - 1, offset + 65535)
+        with get(
+            info["download_url"],
+            headers={"Range": f"bytes={offset}-{stop}"},
+            stream=True,
+        ) as response:
+            if response.status_code != 206:
+                raise ValueError("Byte ranges unavailable")
+            payload = b"".join(response.iter_content(65536))
+        lines = payload.splitlines()
+        record = next(csv.reader([lines[1].decode()]))
+        value = record[0].zfill(5)
+        if not value.isdigit():
+            raise ValueError("Unexpected county index key")
+        probes[offset] = value
+        ordered = sorted(probes.items())
+        if any(x[1] > y[1] for x, y in zip(ordered, ordered[1:])):
+            raise ValueError("County export is not ordered by FIPS")
+        return value
+
+    for offset in [0, total // 4, total // 2, 3 * total // 4, max(0, total - 65536)]:
+        key(offset)
+
+    def bound(target):
+        low = 0
+        high = max(0, total - 65536)
+        while high - low > 65536:
+            mid = (low + high) // 2
+            if key(mid) < target:
+                low = mid
+            else:
+                high = mid
+        return max(0, low - 65536), min(total, high + 131072)
+
+    return [
+        (bound(fips)[0], bound(str(int(fips) + 1).zfill(5))[1])
+        for fips in sorted(fips_codes)
+    ]
 
 
 def timestamp_window(info, start, end):
@@ -45,7 +94,8 @@ def timestamp_window(info, start, end):
         # Skip a partial first record, or the header at byte zero.
         if len(lines) < 2:
             raise ValueError("Cannot locate a complete outage record")
-        value = pd.Timestamp(lines[1].decode().rsplit(",", 1)[-1].strip())
+        record = next(csv.reader([lines[1].decode()]))
+        value = pd.Timestamp(record[4].strip())
         probes[offset] = value
         ordered = sorted(probes.items())
         if any(x[1] > y[1] for x, y in zip(ordered, ordered[1:])):
@@ -81,6 +131,7 @@ def filtered_csv_ranges(
     block_size=16 * 1024 * 1024,
     window=None,
     executor=None,
+    byte_windows=None,
 ):
     workers = workers or max(
         1, min(32, int(os.environ.get("EAGLE_RANGE_WORKERS", "8")))
@@ -97,7 +148,13 @@ def filtered_csv_ranges(
             raise ValueError("Publisher no longer supports byte-range downloads")
         header = response.raw.read(4096).split(b"\n", 1)[0] + b"\n"
     lower, upper = timestamp_window(info, *window) if window else (0, total)
-    offsets = list(range((lower // block_size) * block_size, upper, block_size))
+    offsets = sorted(
+        {
+            offset
+            for a, b in (byte_windows or [(lower, upper)])
+            for offset in range((a // block_size) * block_size, b, block_size)
+        }
+    )
 
     @retry(
         stop=stop_after_attempt(4), wait=wait_exponential(min=1, max=30), reraise=True

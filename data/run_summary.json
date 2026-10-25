@@ -1,9 +1,16 @@
 {
   "schema_version": "1.0",
+  "pipelines": [
+    "historical",
+    "hazards",
+    "outages",
+    "forecasts"
+  ],
+  "all_products_built": true,
   "start": "2015-01-01",
   "end": "2026-10-24",
   "validation_passed": true,
   "source_failures": false,
-  "publisher_coverage_gaps": false,
-  "status": "complete"
+  "publisher_coverage_gaps": true,
+  "status": "complete_with_coverage_gaps"
 }

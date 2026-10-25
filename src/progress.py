@@ -49,5 +49,5 @@ def progress(cache):
         "total_bytes": total,
         "completed_percent": round(100 * complete / total, 2) if total else 0,
         "years": years,
-        "note": "Counts durable complete range checkpoints; bytes in active transfers are excluded.",
+        "note": "Archive bytes represented by durable checkpoints; complete county-indexed exports count as processed without transferring unrelated counties. Bytes in active transfers are excluded.",
     }

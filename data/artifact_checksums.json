@@ -1,0 +1,18 @@
+{
+  "historical_weather.csv": {
+    "sha256": "bb53d4cabdeb24bf3c44df46876f14fe7dfc174a9d744126ff5bba2faf88e882",
+    "bytes": 105726893
+  },
+  "severe_weather_events.csv": {
+    "sha256": "160a9dfb826ce8eb9e6608e16b8036e69d0f6dcfe6f02f6560d84e2ead73f035",
+    "bytes": 120054338
+  },
+  "power_outages.csv": {
+    "sha256": "578f8bc92ca66c093e51c3c08aa366451f9a9776b8e81782ddd22db818df2bb7",
+    "bytes": 3772958
+  },
+  "weather_forecast.csv": {
+    "sha256": "ae2b8a4242470083691908f71d0f0963ab0d23bd5a37bac34da91f866e5c3ae3",
+    "bytes": 25360825
+  }
+}

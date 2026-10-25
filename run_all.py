@@ -49,6 +49,7 @@ def execute(start, end, outdir, resolution, names=None, **options):
                     working,
                     resolution=resolution,
                     hazard_path=outdir / "severe_weather_events.csv",
+                    smoke_test=require_samples,
                     **options,
                 )
                 coverage[name] = validate(name, frame, start, end)

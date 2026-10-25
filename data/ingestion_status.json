@@ -58,5 +58,787 @@
     "source": "GHCND TUL",
     "status": "ok",
     "rows": 4312
+  },
+  {
+    "source": "NWS county zones ROA",
+    "status": "ok",
+    "rows": 2
+  },
+  {
+    "source": "NWS county zones CMH",
+    "status": "ok",
+    "rows": 1
+  },
+  {
+    "source": "NWS county zones CRW",
+    "status": "ok",
+    "rows": 1
+  },
+  {
+    "source": "NWS county zones TUL",
+    "status": "ok",
+    "rows": 1
+  },
+  {
+    "source": "NOAA Storm Events",
+    "status": "ok",
+    "rows": 2488
+  },
+  {
+    "source": "NWPS threshold 02055000",
+    "status": "ok",
+    "rows": 4
+  },
+  {
+    "source": "NWPS threshold 03227500",
+    "status": "ok",
+    "rows": 4
+  },
+  {
+    "source": "NWPS threshold 03198000",
+    "status": "ok",
+    "rows": 1
+  },
+  {
+    "source": "NWPS threshold 07164500",
+    "status": "ok",
+    "rows": 4
+  },
+  {
+    "source": "USGS IV",
+    "status": "ok",
+    "rows": 515891
+  },
+  {
+    "source": "EAGLE-I coverage",
+    "status": "coverage_gap",
+    "missing_years": [
+      2026
+    ],
+    "reason": "Years absent from publisher catalog"
+  },
+  {
+    "source": "EAGLE-I",
+    "status": "ok",
+    "rows": 1318136
+  },
+  {
+    "source": "OEDI event archive",
+    "status": "context_only",
+    "rows": 16439,
+    "reason": "Pre-aggregated events retained in sidecar; no 15-minute snapshots"
+  },
+  {
+    "source": "OEDI",
+    "status": "ok",
+    "rows": 0
+  },
+  {
+    "source": "DOE-417 coverage",
+    "status": "coverage_gap",
+    "missing_year": 2026,
+    "reason": "Publisher returned a webpage, not an annual Excel report"
+  },
+  {
+    "source": "DOE OE-417 annual summaries",
+    "status": "ok",
+    "rows": 3492
+  },
+  {
+    "source": "EIA",
+    "status": "skipped",
+    "reason": "EIA_API_KEY unset"
+  },
+  {
+    "source": "EIA load",
+    "status": "ok",
+    "rows": 0
+  },
+  {
+    "source": "Open-Meteo Previous Runs coverage",
+    "status": "coverage_gap",
+    "start": "2015-01-01",
+    "end": "2023-12-31",
+    "reason": "Publisher fixed-lead archive starts in 2024"
+  },
+  {
+    "source": "NWS ROA",
+    "status": "ok",
+    "rows": 154
+  },
+  {
+    "source": "Open-Meteo live ROA",
+    "status": "ok",
+    "rows": 374
+  },
+  {
+    "source": "Open-Meteo previous runs ROA",
+    "status": "ok",
+    "rows": 24672
+  },
+  {
+    "source": "Open-Meteo exact run 2024-04-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-05-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-06-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-07-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-08-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-09-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-10-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-11-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-12-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-01-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-02-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-03-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-04-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-05-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-06-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-07-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-08-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-09-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-10-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-11-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-12-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-01-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-02-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-03-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-04-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-05-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-06-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-07-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-08-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-09-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-10-01T00:00 ROA",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "NWS CMH",
+    "status": "ok",
+    "rows": 154
+  },
+  {
+    "source": "Open-Meteo live CMH",
+    "status": "ok",
+    "rows": 374
+  },
+  {
+    "source": "Open-Meteo previous runs CMH",
+    "status": "ok",
+    "rows": 24672
+  },
+  {
+    "source": "Open-Meteo exact run 2024-04-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-05-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-06-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-07-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-08-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-09-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-10-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-11-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-12-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-01-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-02-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-03-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-04-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-05-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-06-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-07-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-08-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-09-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-10-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-11-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-12-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-01-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-02-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-03-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-04-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-05-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-06-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-07-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-08-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-09-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-10-01T00:00 CMH",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "NWS CRW",
+    "status": "ok",
+    "rows": 154
+  },
+  {
+    "source": "Open-Meteo live CRW",
+    "status": "ok",
+    "rows": 374
+  },
+  {
+    "source": "Open-Meteo previous runs CRW",
+    "status": "ok",
+    "rows": 24672
+  },
+  {
+    "source": "Open-Meteo exact run 2024-04-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-05-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-06-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-07-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-08-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-09-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-10-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-11-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-12-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-01-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-02-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-03-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-04-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-05-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-06-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-07-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-08-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-09-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-10-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-11-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-12-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-01-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-02-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-03-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-04-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-05-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-06-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-07-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-08-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-09-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-10-01T00:00 CRW",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "NWS TUL",
+    "status": "ok",
+    "rows": 154
+  },
+  {
+    "source": "Open-Meteo live TUL",
+    "status": "ok",
+    "rows": 374
+  },
+  {
+    "source": "Open-Meteo previous runs TUL",
+    "status": "ok",
+    "rows": 24672
+  },
+  {
+    "source": "Open-Meteo exact run 2024-04-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-05-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-06-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-07-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-08-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-09-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-10-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-11-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2024-12-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-01-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-02-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-03-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-04-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-05-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-06-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-07-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-08-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-09-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-10-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-11-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2025-12-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-01-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-02-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-03-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-04-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-05-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-06-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-07-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-08-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-09-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
+  },
+  {
+    "source": "Open-Meteo exact run 2026-10-01T00:00 TUL",
+    "status": "ok",
+    "rows": 48
   }
 ]

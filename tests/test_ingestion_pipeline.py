@@ -293,5 +293,77 @@ class SharedTransferContracts(unittest.TestCase):
         self.assertEqual(frame.customers_out.tolist(), [100, 200])
 
 
+class CauseEnrichmentContracts(unittest.TestCase):
+    def test_empty_doe_matches_and_county_matches(self):
+        from unittest.mock import Mock, patch
+        from src.fetch_power_outages import run
+
+        snapshots = pd.DataFrame(
+            {
+                "fips_code": ["51770", "51770"],
+                "timestamp_utc": pd.to_datetime(
+                    ["2025-01-01T12:00Z", "2025-01-01T12:15Z"]
+                ),
+                "customers_out": [100, 200],
+            }
+        )
+        for area, expected in [
+            ("Other County, Ohio", "UNKNOWN"),
+            ("Roanoke City, Virginia", "DOE_DATE_COUNTY_ASSOCIATION: Winter Storm"),
+        ]:
+            doe = pd.DataFrame(
+                {
+                    "date_began": ["2025-01-01"],
+                    "area_affected": [area],
+                    "event_type": ["Winter Storm"],
+                }
+            )
+            with TemporaryDirectory(dir=Path(__file__).parent) as directory:
+                with patch.multiple(
+                    "src.fetch_power_outages",
+                    eagle=Mock(return_value=snapshots),
+                    oedi=Mock(return_value=pd.DataFrame()),
+                    disturbances=Mock(return_value=doe),
+                    eia=Mock(return_value=pd.DataFrame()),
+                ):
+                    result = run("2025-01-01", "2025-01-01", Path(directory))
+            self.assertEqual(result.reported_cause.iloc[0], expected)
+
+
+class CountyIndexContracts(unittest.TestCase):
+    def test_county_bounds_include_whole_sections(self):
+        from unittest.mock import MagicMock, patch
+        from src.bulk import county_windows
+        import re
+
+        data = b"fips_code,county,state,customers_out,run_start_time,total_customers\n"
+        for code in ["01001", "39049", "40143", "51161", "51770", "54039", "78030"]:
+            data += b"".join(
+                f"{code},County,State,100,2024-01-01 00:00:00,200000\n".encode()
+                for _ in range(1000)
+            )
+
+        def response(url, headers, stream):
+            a, b = map(int, re.findall(r"\d+", headers["Range"]))
+            result = MagicMock()
+            result.status_code = 206
+            result.__enter__.return_value = result
+            result.iter_content.return_value = [data[a : b + 1]]
+            return result
+
+        with patch("src.bulk.get", side_effect=response):
+            windows = county_windows(
+                {"size": len(data), "download_url": "https://example.invalid/test.csv"},
+                ["39049", "51770"],
+            )
+        for code, (lower, upper) in zip(["39049", "51770"], windows):
+            self.assertLessEqual(lower, data.index((code + ",").encode()))
+            self.assertGreaterEqual(
+                upper,
+                data.rindex((code + ",").encode())
+                + len(f"{code},County,State,100,2024-01-01 00:00:00,200000\n"),
+            )
+
+
 if __name__ == "__main__":
     unittest.main()

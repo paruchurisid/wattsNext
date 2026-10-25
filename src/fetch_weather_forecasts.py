@@ -47,7 +47,8 @@ def nws(city):
                 issue_time_semantics="provider_update_time",
             )
         )
-    return pd.DataFrame(rows).query("valid_timestamp_utc >= issue_timestamp_utc")
+    frame=pd.DataFrame(rows)
+    return frame[frame.valid_timestamp_utc.ge(issue)&frame.valid_timestamp_utc.ge(pd.Timestamp.now(tz='UTC').ceil('h'))]
 
 
 def meteo(city, start, end, archived=False):
@@ -95,6 +96,10 @@ def meteo(city, start, end, archived=False):
             "nominal_fixed_lead_24h" if archived else "initialization_unavailable"
         )
         f["retrieved_timestamp_utc"] = pd.Timestamp.now(tz="UTC")
+        if not archived:
+            f = f[
+                f.valid_timestamp_utc.ge(f.retrieved_timestamp_utc.iloc[0].ceil("h"))
+            ].copy()
         f["forecast_source"] = (
             "OPEN_METEO_ARCHIVED_DAY1" if archived else "OPEN_METEO_LIVE"
         )
@@ -170,6 +175,20 @@ def run(start, end, outdir, **kwargs):
             f = optional(source + " " + city.city_key, fn)
             if f.empty:
                 continue
+            if kwargs.get("smoke_test"):
+                if f.forecast_source.iloc[0] in ("NWS_NDFD", "OPEN_METEO_LIVE"):
+                    first = pd.Timestamp.now(tz="UTC").ceil("h")
+                    f = f[
+                        f.valid_timestamp_utc.ge(first)
+                        & f.valid_timestamp_utc.lt(first + pd.Timedelta(days=7))
+                    ].copy()
+                else:
+                    f = f[
+                        f.valid_timestamp_utc.ge(pd.Timestamp(start, tz="UTC"))
+                        & f.valid_timestamp_utc.lt(
+                            pd.Timestamp(end, tz="UTC") + pd.Timedelta(days=1)
+                        )
+                    ].copy()
             f["lead_time_hours"] = (
                 pd.to_datetime(f.valid_timestamp_utc, utc=True)
                 - pd.to_datetime(f.issue_timestamp_utc, utc=True)

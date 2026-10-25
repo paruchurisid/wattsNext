@@ -143,7 +143,31 @@ def eagle(start, end):
             common.LOG.info("EAGLE-I %s: using filtered checkpoint", year)
             return pd.read_parquet(cache)
         common.LOG.info("EAGLE-I %s: streaming %.1f MB", year, info["size"] / 1e6)
-        from .bulk import filtered_csv_ranges
+        from .bulk import filtered_csv_ranges, county_windows
+
+        # The publisher's 2024 six-column export is county-ordered. Read complete
+        # county sections instead of scanning unrelated national observations.
+        if year == 2024:
+            windows = county_windows(info, FIPS)
+            frame = filtered_csv_ranges(
+                info,
+                year,
+                common.CACHE_ROOT / "eagle",
+                normalize,
+                workers=4,
+                block_size=1024 * 1024,
+                byte_windows=windows,
+            )
+            cache.parent.mkdir(parents=True, exist_ok=True)
+            temp = cache.with_suffix(".tmp")
+            frame.to_parquet(temp, index=False)
+            temp.replace(cache)
+            common.LOG.info(
+                "EAGLE-I %s: checkpointed %s snapshots via verified county index",
+                year,
+                len(frame),
+            )
+            return frame
 
         if (pd.Timestamp(end) - pd.Timestamp(start)).days < 32:
             common.LOG.info(
@@ -547,9 +571,10 @@ def run(start, end, outdir, resolution="event", **kwargs):
             )
             labels = dates.map(causes)
             known = labels.notna()
-            result.loc[labels.index[known], "reported_cause"] = (
-                "DOE_DATE_COUNTY_ASSOCIATION: " + labels[known]
-            )
+            if known.any():
+                result.loc[labels.index[known], "reported_cause"] = (
+                    "DOE_DATE_COUNTY_ASSOCIATION: " + labels[known].astype(str)
+                )
     if not result.empty:
         result["subba_load_drop_mw"] = float("nan")
         if not load.empty:

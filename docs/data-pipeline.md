@@ -79,7 +79,10 @@ CSV exports are read with bounded HTTP byte ranges; complete CSV records are
 retained exactly once across range boundaries. Each range is filtered to the
 five counties and checkpointed as Parquet. Only small county subsets persist,
 not the national raw CSVs. Annual checkpoints are keyed by publisher file ID
-and size. A publisher revision therefore cannot silently reuse an older version.
+and size. A publisher revision therefore cannot silently reuse an older version. The
+2024 export is ordered by county and adds `total_customers`; verified FIPS
+index bounds retrieve complete county sections for that version. County-indexed
+access is checked against independently downloaded national-scan observations.
 The complete national transfer is roughly 12 GB before county filtering and can
 take substantial time. Completed ranges survive interruption. Default concurrency
 is eight range requests globally, with up to four annual files prefetched;
@@ -129,7 +132,10 @@ NOAA daily snow joins by local date, including the preceding local calendar day.
 Hourly temperatures/humidity use means; wind direction uses a circular mean;
 gusts, rolling accumulations and weather flags use maxima. Summing repeated
 rolling precipitation or ice values would double count METAR/SPECI reports.
-Daily snow values repeated across hours must not be summed.
+Daily snow values repeated across hours must not be summed. ASOS bin labels
+refer to the beginning of the hour; all reports within that bin are only known
+after the hour closes. Shift those aggregates to the next hour for an as-of
+predictor, and account separately for source publication delays.
 
 ### Hazards: storm event/county or river gage/hour/county
 

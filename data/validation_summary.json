@@ -52,5 +52,137 @@
       "source_dataset": 517800,
       "fips_code": 517800
     }
+  },
+  "hazards": {
+    "rows": 518379,
+    "missing_join_keys": 0,
+    "counties_present": [
+      "39049",
+      "40143",
+      "51161",
+      "51770",
+      "54039"
+    ],
+    "requested_start": "2015-01-01",
+    "requested_end": "2026-10-24",
+    "timestamps": {
+      "begin_timestamp_utc": {
+        "min": "2015-01-01 01:00:00+00:00",
+        "max": "2026-10-24 23:00:00+00:00"
+      },
+      "end_timestamp_utc": {
+        "min": "2015-01-01 02:00:00+00:00",
+        "max": "2026-10-25 00:00:00+00:00"
+      }
+    },
+    "nonnull_counts": {
+      "event_id": 518379,
+      "city_key": 518379,
+      "fips_code": 518379,
+      "begin_timestamp_utc": 518379,
+      "end_timestamp_utc": 518379,
+      "event_type": 2488,
+      "damage_property_usd": 2287,
+      "damage_crops_usd": 2246,
+      "record_type": 518379,
+      "source_dataset": 518379,
+      "geographic_match": 2488,
+      "source_zone_id": 2488,
+      "source_zone_name": 2488,
+      "usgs_site": 515891,
+      "discharge_cfs": 501585,
+      "gage_height_ft": 512936,
+      "is_river_flooding": 409519,
+      "flood_category": 515891,
+      "threshold_reference": 515891,
+      "flood_stage_ft": 412470
+    }
+  },
+  "outages": {
+    "rows": 16920,
+    "missing_join_keys": 0,
+    "counties_present": [
+      "39049",
+      "40143",
+      "51161",
+      "51770",
+      "54039"
+    ],
+    "requested_start": "2015-01-01",
+    "requested_end": "2026-10-24",
+    "timestamps": {
+      "start_timestamp_utc": {
+        "min": "2015-01-01 05:15:00+00:00",
+        "max": "2025-12-31 23:15:00+00:00"
+      },
+      "end_timestamp_utc": {
+        "min": "2015-01-01 07:15:00+00:00",
+        "max": "2025-12-31 23:45:00+00:00"
+      }
+    },
+    "nonnull_counts": {
+      "outage_event_id": 16920,
+      "source_dataset": 16920,
+      "city_key": 16920,
+      "fips_code": 16920,
+      "county_name": 16920,
+      "state": 16920,
+      "utility_name": 16920,
+      "start_timestamp_utc": 16920,
+      "end_timestamp_utc": 16920,
+      "duration_minutes": 16920,
+      "peak_customers_out": 16920,
+      "customer_hours_interrupted": 16920,
+      "reported_cause": 16920,
+      "record_type": 16920,
+      "boundary_semantics": 16920,
+      "left_censored": 16920,
+      "right_censored": 16920,
+      "resolution": 16920,
+      "subba_load_drop_mw": 0
+    }
+  },
+  "forecasts": {
+    "rows": 133440,
+    "missing_join_keys": 0,
+    "counties_present": [
+      "39049",
+      "40143",
+      "51161",
+      "51770",
+      "54039"
+    ],
+    "requested_start": "2015-01-01",
+    "requested_end": "2026-10-24",
+    "timestamps": {
+      "valid_timestamp_utc": {
+        "min": "2024-01-01 00:00:00+00:00",
+        "max": "2026-11-09 23:00:00+00:00"
+      }
+    },
+    "nonnull_counts": {
+      "valid_timestamp_utc": 133440,
+      "issue_timestamp_utc": 131570,
+      "temp_c": 131220,
+      "wind_speed_kmh": 10080,
+      "short_forecast": 770,
+      "precipitation_probability_pct": 770,
+      "forecast_source": 133440,
+      "issue_time_semantics": 133440,
+      "lead_time_hours": 131570,
+      "city_key": 133440,
+      "lat": 133440,
+      "lon": 133440,
+      "fips_code": 133440,
+      "precipitation_mm": 130295,
+      "rain_mm": 9155,
+      "snowfall_cm": 9155,
+      "snow_depth_m": 9310,
+      "weather_code": 9155,
+      "wind_gust_kmh": 130295,
+      "freezing_level_height_m": 1870,
+      "retrieved_timestamp_utc": 132670,
+      "forecast_model": 7440
+    }
   }
 }

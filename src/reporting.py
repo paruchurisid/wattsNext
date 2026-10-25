@@ -28,15 +28,17 @@ def build_report(directory, start, end):
             for c in required
             if c.endswith("timestamp_utc") and c != "issue_timestamp_utc"
         )
+        source_column = "forecast_source" if name == "forecasts" else "source_dataset"
         for chunk in pd.read_csv(
             path,
             chunksize=100000,
             dtype={"fips_code": str},
-            usecols=["city_key", "fips_code", timestamp],
+            usecols=["city_key", "fips_code", timestamp, source_column],
         ):
             chunk["year"] = pd.to_datetime(chunk[timestamp], utc=True).dt.year
+            chunk["source"] = chunk[source_column]
             grouped = (
-                chunk.groupby(["city_key", "fips_code", "year"])
+                chunk.groupby(["source", "city_key", "fips_code", "year"])
                 .size()
                 .rename("rows")
                 .reset_index()
@@ -46,14 +48,14 @@ def build_report(directory, start, end):
     if rows:
         counts = (
             pd.concat(rows, ignore_index=True)
-            .groupby(["dataset", "city_key", "fips_code", "year"], as_index=False)[
-                "rows"
-            ]
+            .groupby(
+                ["dataset", "source", "city_key", "fips_code", "year"], as_index=False
+            )["rows"]
             .sum()
         )
     else:
         counts = pd.DataFrame(
-            columns=["dataset", "city_key", "fips_code", "year", "rows"]
+            columns=["dataset", "source", "city_key", "fips_code", "year", "rows"]
         )
     counts.to_csv(directory / "coverage_by_county_year.csv", index=False)
     atomic_json(directory / "artifact_checksums.json", artifacts)
