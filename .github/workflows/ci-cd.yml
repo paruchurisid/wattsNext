@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: wattsnext-${{ github.workflow }}-${{ startsWith(github.ref, 'refs/tags/') && 'production' || github.ref }}
-  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+  group: wattsnext-${{ github.workflow }}-${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')) && 'production' || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/') }}
 
 env:
   PYTHON_VERSION: '3.13'
@@ -195,11 +195,14 @@ jobs:
           path: release/metadata.txt
 
   deploy-vercel:
-    name: Deploy to Vercel
-    if: startsWith(github.ref, 'refs/tags/v')
+    name: Deploy Vercel production
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: [release-readiness, neon-migrations]
-    environment: production
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -208,20 +211,62 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Deploy production build
+        id: deploy
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID || vars.VERCEL_PROJECT_ID }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           test -n "$VERCEL_TOKEN"
           test -n "$VERCEL_ORG_ID"
           test -n "$VERCEL_PROJECT_ID"
-          npx --no-install vercel deploy --prod --token "$VERCEL_TOKEN" --yes
+          url=$(npx --no-install vercel deploy --prod --token "$VERCEL_TOKEN" --yes --no-color)
+          printf 'url=%s\n' "$url" >> "$GITHUB_OUTPUT"
+          printf '### Vercel production\n\n%s\n' "$url" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy-vercel-preview:
+    name: Deploy Vercel preview
+    if: >-
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
+       github.actor != 'dependabot[bot]') ||
+      (github.event_name != 'pull_request' &&
+       github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: release-readiness
+    environment:
+      name: preview
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Deploy preview build
+        id: deploy
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID || vars.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          for name in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Configure $name in GitHub Actions secrets or variables; see docs/ci-cd-deployments.md."
+              exit 1
+            fi
+          done
+          url=$(npx --no-install vercel deploy --token "$VERCEL_TOKEN" --yes --no-color)
+          printf 'url=%s\n' "$url" >> "$GITHUB_OUTPUT"
+          printf '### Vercel preview\n\n%s\n' "$url" >> "$GITHUB_STEP_SUMMARY"
 
   neon-migrations:
     name: Apply production Neon migrations
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: release-readiness
     environment: production
     steps:
@@ -232,13 +277,15 @@ jobs:
         env:
           DATABASE_URL_UNPOOLED: ${{ secrets.DATABASE_URL_UNPOOLED }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID || vars.VERCEL_PROJECT_ID }}
         run: |
-          test -n "$DATABASE_URL_UNPOOLED"
-          test -n "$VERCEL_TOKEN"
-          test -n "$VERCEL_ORG_ID"
-          test -n "$VERCEL_PROJECT_ID"
+          for name in DATABASE_URL_UNPOOLED VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Configure $name in GitHub Actions secrets or variables; see docs/ci-cd-deployments.md."
+              exit 1
+            fi
+          done
       - name: Install migration dependencies
         run: python -m pip install --no-cache-dir -r requirements.txt
       - name: Apply versioned migrations to Neon production
