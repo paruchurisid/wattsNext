@@ -130,7 +130,7 @@ jobs:
       - run: npm ci
       - run: npx --no-install playwright install --with-deps chromium
       - run: npm run test:browser
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: browser-results
@@ -189,7 +189,7 @@ jobs:
         run: |
           mkdir -p release
           printf 'commit=%s\nref=%s\n' "$GITHUB_SHA" "$GITHUB_REF" > release/metadata.txt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: wattsnext-release-${{ github.sha }}
           path: release/metadata.txt
