@@ -1,0 +1,33 @@
+2026-10-25 03:13:45,285 INFO Smoke test uses common published archive week 2025-01-01 through 2025-01-07
+2026-10-25 03:13:45,285 INFO historical: fetching 2025-01-01 through 2025-01-07
+
+historical: 840 actual rows
+            timestamp_utc  temp_c  precipitation_mm  rain_mm  snowfall_cm  snow_depth_m  weather_code  wind_speed_kmh  wind_gust_kmh  dewpoint_f  relative_humidity_pct  wind_direction_deg  wind_speed_knots  wind_gust_knots  precipitation_1hr_in  asos_snow_depth_in  peak_wind_gust_knots  ice_accretion_1hr_in  ice_accretion_3hr_in  ice_accretion_6hr_in  is_freezing_rain  is_snow  is_ice_pellets  is_thunderstorm  asos_temp_c local_date  ghcnd_snowfall_in  ghcnd_snow_depth_in city_key asos_id    ghcnd_id                  source_dataset fips_code
+2025-01-01 00:00:00+00:00     9.3               0.0      0.0          0.0           0.0             1            15.2           33.1        46.0                  96.29                 0.0               0.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN                 0        0               0                0     8.333333 2024-12-31                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+2025-01-01 01:00:00+00:00     7.3               0.0      0.0          0.0           0.0             0             7.5           15.8        45.0                  92.71               100.0               3.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN                 0        0               0                0     8.333333 2024-12-31                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+2025-01-01 02:00:00+00:00     7.7               0.0      0.0          0.0           0.0             3            17.1           35.3        37.0                  60.79               260.0              11.0             19.0                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN                 0        0               0                0    10.000000 2024-12-31                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+Join keys: zero missing
+2026-10-25 03:14:01,292 INFO hazards: fetching 2025-01-01 through 2025-01-07
+2026-10-25 03:14:01,348 INFO NOAA Storm Events 2025: processing official annual file
+2026-10-25 03:14:03,571 INFO USGS: hourly peaks 2025-01-01 through 2025-01-07
+
+hazards: 844 actual rows
+event_id city_key fips_code       begin_timestamp_utc         end_timestamp_utc   event_type  damage_property_usd  damage_crops_usd                              record_type    source_dataset           geographic_match source_zone_id source_zone_name usgs_site  discharge_cfs  gage_height_ft  is_river_flooding flood_category threshold_reference  flood_stage_ft
+ 1231115      ROA     51770 2025-01-05 23:20:00+00:00 2025-01-06 18:00:00+00:00 Winter Storm                  0.0               0.0 METEOROLOGICAL_HAZARD_AND_WEATHER_DAMAGE NOAA_STORM_EVENTS historical_event_zone_name            022          ROANOKE       NaN            NaN             NaN               <NA>            NaN                 NaN             NaN
+ 1231115      ROA     51161 2025-01-05 23:20:00+00:00 2025-01-06 18:00:00+00:00 Winter Storm                  0.0               0.0 METEOROLOGICAL_HAZARD_AND_WEATHER_DAMAGE NOAA_STORM_EVENTS historical_event_zone_name            022          ROANOKE       NaN            NaN             NaN               <NA>            NaN                 NaN             NaN
+ 1225665      CRW     54039 2025-01-05 18:00:00+00:00 2025-01-07 03:11:00+00:00 Winter Storm                  0.0               0.0 METEOROLOGICAL_HAZARD_AND_WEATHER_DAMAGE NOAA_STORM_EVENTS historical_event_zone_name            015          KANAWHA       NaN            NaN             NaN               <NA>            NaN                 NaN             NaN
+Join keys: zero missing
+2026-10-25 03:14:05,158 INFO outages: fetching 2025-01-01 through 2025-01-07
+2026-10-25 03:14:05,167 INFO EAGLE-I 2025: streaming 1402.3 MB
+2026-10-25 03:14:05,185 INFO EAGLE-I 2025: locating requested date window with HTTP ranges
+2026-10-25 03:14:05,186 WARNING EAGLE-I unavailable: filtered_csv_ranges() got an unexpected keyword argument 'window'
+2026-10-25 03:14:08,840 ERROR outages failed: Smoke test requires actual sample rows from outages
+2026-10-25 03:14:08,843 INFO forecasts: fetching 2025-01-01 through 2025-01-07
+
+forecasts: 3,775 actual rows
+      valid_timestamp_utc       issue_timestamp_utc   temp_c  wind_speed_kmh short_forecast  precipitation_probability_pct forecast_source issue_time_semantics  lead_time_hours city_key     lat      lon fips_code  precipitation_mm  rain_mm  snowfall_cm  snow_depth_m  weather_code  wind_gust_kmh  freezing_level_height_m retrieved_timestamp_utc forecast_model
+2026-10-25 07:00:00+00:00 2026-10-25 06:30:30+00:00 3.333333             0.0   Mostly Clear                            0.0        NWS_NDFD provider_update_time         0.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT            NaN
+2026-10-25 08:00:00+00:00 2026-10-25 06:30:30+00:00 2.777778             0.0   Mostly Clear                            0.0        NWS_NDFD provider_update_time         1.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT            NaN
+2026-10-25 09:00:00+00:00 2026-10-25 06:30:30+00:00 2.777778             0.0  Partly Cloudy                            0.0        NWS_NDFD provider_update_time         2.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT            NaN
+Join keys: zero missing
+2026-10-25 03:14:16,175 ERROR Smoke validation failed; see data/smoke/ingestion_status.json

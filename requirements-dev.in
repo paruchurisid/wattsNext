@@ -1,4 +1,6 @@
 -r requirements.txt
+# Test discovery includes the ingestion pipeline's pandas-based tests.
+-r requirements-pipeline.in
 httpx>=0.28,<1
 coverage==7.17.0
 ruff==0.17.2

@@ -1,65 +1,5 @@
 [
   {
-    "source": "Open-Meteo archive ROA",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "IEM ROA",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "GHCND ROA",
-    "status": "ok",
-    "rows": 4
-  },
-  {
-    "source": "Open-Meteo archive CMH",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "IEM CMH",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "GHCND CMH",
-    "status": "ok",
-    "rows": 4
-  },
-  {
-    "source": "Open-Meteo archive CRW",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "IEM CRW",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "GHCND CRW",
-    "status": "ok",
-    "rows": 4
-  },
-  {
-    "source": "Open-Meteo archive TUL",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "IEM TUL",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "GHCND TUL",
-    "status": "ok",
-    "rows": 4
-  },
-  {
     "source": "NWS county zones ROA",
     "status": "ok",
     "rows": 2
@@ -82,102 +22,31 @@
   {
     "source": "NOAA Storm Events",
     "status": "ok",
-    "rows": 0
+    "rows": 2488
+  },
+  {
+    "source": "NWPS threshold 02055000",
+    "status": "ok",
+    "rows": 4
+  },
+  {
+    "source": "NWPS threshold 03227500",
+    "status": "ok",
+    "rows": 4
+  },
+  {
+    "source": "NWPS threshold 03198000",
+    "status": "ok",
+    "rows": 1
+  },
+  {
+    "source": "NWPS threshold 07164500",
+    "status": "ok",
+    "rows": 4
   },
   {
     "source": "USGS IV",
     "status": "ok",
-    "rows": 1512
-  },
-  {
-    "source": "EAGLE-I",
-    "status": "unavailable",
-    "error": "EAGLE-I catalog contains no yearly files covering 2026-10-18 through 2026-10-24"
-  },
-  {
-    "source": "OEDI event archive",
-    "status": "context_only",
-    "rows": 0,
-    "reason": "Pre-aggregated events retained in sidecar; no 15-minute snapshots"
-  },
-  {
-    "source": "OEDI",
-    "status": "ok",
-    "rows": 0
-  },
-  {
-    "source": "DOE OE-417 annual summaries",
-    "status": "unavailable",
-    "error": "Official annual DOE-417 summaries currently end in 2025; no report for requested years"
-  },
-  {
-    "source": "EIA",
-    "status": "skipped",
-    "reason": "EIA_API_KEY unset"
-  },
-  {
-    "source": "EIA load",
-    "status": "ok",
-    "rows": 0
-  },
-  {
-    "source": "NWS ROA",
-    "status": "ok",
-    "rows": 155
-  },
-  {
-    "source": "Open-Meteo live ROA",
-    "status": "ok",
-    "rows": 384
-  },
-  {
-    "source": "Open-Meteo previous runs ROA",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "NWS CMH",
-    "status": "ok",
-    "rows": 155
-  },
-  {
-    "source": "Open-Meteo live CMH",
-    "status": "ok",
-    "rows": 384
-  },
-  {
-    "source": "Open-Meteo previous runs CMH",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "NWS CRW",
-    "status": "ok",
-    "rows": 155
-  },
-  {
-    "source": "Open-Meteo live CRW",
-    "status": "ok",
-    "rows": 384
-  },
-  {
-    "source": "Open-Meteo previous runs CRW",
-    "status": "ok",
-    "rows": 168
-  },
-  {
-    "source": "NWS TUL",
-    "status": "ok",
-    "rows": 155
-  },
-  {
-    "source": "Open-Meteo live TUL",
-    "status": "ok",
-    "rows": 384
-  },
-  {
-    "source": "Open-Meteo previous runs TUL",
-    "status": "ok",
-    "rows": 168
+    "rows": 515891
   }
 ]

@@ -1,0 +1,17 @@
+2026-10-25 02:55:37,496 INFO forecasts: fetching 2015-01-01 through 2026-10-24
+
+forecasts: 133,495 actual rows
+      valid_timestamp_utc       issue_timestamp_utc   temp_c  wind_speed_kmh short_forecast  precipitation_probability_pct forecast_source issue_time_semantics  lead_time_hours city_key     lat      lon fips_code  precipitation_mm  rain_mm  snowfall_cm  snow_depth_m  weather_code  wind_gust_kmh  freezing_level_height_m retrieved_timestamp_utc forecast_model
+2026-10-25 07:00:00+00:00 2026-10-25 06:30:30+00:00 3.333333             0.0   Mostly Clear                            0.0        NWS_NDFD provider_update_time         0.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT            NaN
+2026-10-25 08:00:00+00:00 2026-10-25 06:30:30+00:00 2.777778             0.0   Mostly Clear                            0.0        NWS_NDFD provider_update_time         1.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT            NaN
+2026-10-25 09:00:00+00:00 2026-10-25 06:30:30+00:00 2.777778             0.0  Partly Cloudy                            0.0        NWS_NDFD provider_update_time         2.491667      ROA 37.3169 -79.9741     51770               NaN      NaN          NaN           NaN           NaN            NaN                      NaN                     NaT            NaN
+Join keys: zero missing
+{
+  "schema_version": "1.0",
+  "start": "2015-01-01",
+  "end": "2026-10-24",
+  "validation_passed": true,
+  "source_failures": false,
+  "publisher_coverage_gaps": true,
+  "status": "complete_with_coverage_gaps"
+}

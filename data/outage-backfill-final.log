@@ -1,0 +1,141 @@
+2026-10-25 03:04:11,493 INFO EAGLE-I 2015: streaming 599.0 MB
+2026-10-25 03:04:11,494 INFO EAGLE-I 2016: streaming 619.8 MB
+2026-10-25 03:04:18,406 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,410 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,459 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,460 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,475 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,481 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,488 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,493 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,508 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,530 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,530 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,540 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,541 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,543 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,545 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,550 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,559 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,580 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,602 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,621 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,632 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,632 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,632 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,649 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,662 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,862 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,862 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:18,913 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:19,315 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:19,599 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:04:19,626 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:08:41,622 INFO EAGLE-I 2016: range 168/620 MB filtered (3066 target rows)
+2026-10-25 03:09:19,408 INFO EAGLE-I 2016: range 151/620 MB filtered (3137 target rows)
+2026-10-25 03:10:34,100 INFO EAGLE-I 2015: range 599/599 MB filtered (1646 target rows)
+2026-10-25 03:12:36,277 INFO EAGLE-I 2016: range 620/620 MB filtered (2873 target rows)
+2026-10-25 03:12:45,259 INFO EAGLE-I 2016: range 201/620 MB filtered (2746 target rows)
+2026-10-25 03:12:50,298 INFO EAGLE-I 2015: range 352/599 MB filtered (2263 target rows)
+2026-10-25 03:12:50,995 INFO EAGLE-I 2016: range 352/620 MB filtered (2115 target rows)
+2026-10-25 03:12:51,333 INFO EAGLE-I 2016: range 185/620 MB filtered (3319 target rows)
+2026-10-25 03:12:52,430 INFO EAGLE-I 2016: range 218/620 MB filtered (3601 target rows)
+2026-10-25 03:12:52,499 INFO EAGLE-I 2016: range 587/620 MB filtered (2595 target rows)
+2026-10-25 03:12:52,540 INFO EAGLE-I 2015: range 386/599 MB filtered (2571 target rows)
+2026-10-25 03:12:52,599 INFO EAGLE-I 2015: range 369/599 MB filtered (2624 target rows)
+2026-10-25 03:12:53,290 INFO EAGLE-I 2016: range 336/620 MB filtered (2716 target rows)
+2026-10-25 03:12:54,018 INFO EAGLE-I 2015: range 570/599 MB filtered (2662 target rows)
+2026-10-25 03:12:54,023 INFO EAGLE-I 2015: range 218/599 MB filtered (2767 target rows)
+2026-10-25 03:12:54,142 INFO EAGLE-I 2016: range 470/620 MB filtered (2666 target rows)
+2026-10-25 03:12:54,571 INFO EAGLE-I 2015: range 201/599 MB filtered (2514 target rows)
+2026-10-25 03:12:54,893 INFO EAGLE-I 2015: range 554/599 MB filtered (2554 target rows)
+2026-10-25 03:12:56,081 INFO EAGLE-I 2015: range 235/599 MB filtered (2588 target rows)
+2026-10-25 03:12:56,386 INFO EAGLE-I 2015: range 587/599 MB filtered (2362 target rows)
+2026-10-25 03:12:56,950 INFO EAGLE-I 2015: range 436/599 MB filtered (2599 target rows)
+2026-10-25 03:12:57,369 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:57,399 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:57,498 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:57,849 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:58,483 INFO EAGLE-I 2015: range 503/599 MB filtered (2177 target rows)
+2026-10-25 03:12:58,938 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:58,939 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,004 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,043 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,131 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,171 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,172 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,172 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,203 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,490 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,495 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,495 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,510 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,511 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,531 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,629 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,630 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,704 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,715 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,863 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:12:59,957 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,009 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,009 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,219 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,220 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,487 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,489 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,493 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:00,505 WARNING Connection pool is full, discarding connection: s3-eu-west-1.amazonaws.com. Connection pool size: 24
+2026-10-25 03:13:01,713 INFO EAGLE-I 2016: range 319/620 MB filtered (2600 target rows)
+2026-10-25 03:13:02,840 INFO EAGLE-I 2015: range 453/599 MB filtered (2928 target rows)
+2026-10-25 03:13:06,583 INFO EAGLE-I 2016: range 403/620 MB filtered (2713 target rows)
+2026-10-25 03:13:10,423 INFO EAGLE-I 2016: range 369/620 MB filtered (2487 target rows)
+2026-10-25 03:13:11,941 INFO EAGLE-I 2015: range 487/599 MB filtered (2349 target rows)
+2026-10-25 03:13:14,664 INFO EAGLE-I 2016: range 520/620 MB filtered (2753 target rows)
+2026-10-25 03:13:15,536 INFO EAGLE-I 2015: range 302/599 MB filtered (2814 target rows)
+2026-10-25 03:13:16,942 INFO EAGLE-I 2016: range 235/620 MB filtered (2673 target rows)
+2026-10-25 03:13:17,107 INFO EAGLE-I 2015: range 537/599 MB filtered (2439 target rows)
+2026-10-25 03:13:17,108 INFO EAGLE-I 2016: range 487/620 MB filtered (2872 target rows)
+2026-10-25 03:13:17,108 INFO EAGLE-I 2015: range 185/599 MB filtered (2516 target rows)
+2026-10-25 03:13:17,358 INFO EAGLE-I 2015: range 285/599 MB filtered (2723 target rows)
+2026-10-25 03:13:17,543 INFO EAGLE-I 2015: range 252/599 MB filtered (2929 target rows)
+2026-10-25 03:13:17,751 INFO EAGLE-I 2016: range 503/620 MB filtered (3005 target rows)
+2026-10-25 03:13:17,822 INFO EAGLE-I 2016: range 285/620 MB filtered (2903 target rows)
+2026-10-25 03:13:17,829 INFO EAGLE-I 2015: range 268/599 MB filtered (2866 target rows)
+2026-10-25 03:13:17,844 INFO EAGLE-I 2016: range 386/620 MB filtered (2778 target rows)
+2026-10-25 03:13:17,868 INFO EAGLE-I 2016: range 453/620 MB filtered (2274 target rows)
+2026-10-25 03:13:17,873 INFO EAGLE-I 2016: range 252/620 MB filtered (2720 target rows)
+2026-10-25 03:13:17,934 INFO EAGLE-I 2016: range 302/620 MB filtered (2604 target rows)
+2026-10-25 03:13:18,069 INFO EAGLE-I 2015: range 470/599 MB filtered (2656 target rows)
+2026-10-25 03:13:18,120 INFO EAGLE-I 2015: range 419/599 MB filtered (2561 target rows)
+2026-10-25 03:13:18,120 INFO EAGLE-I 2015: range 151/599 MB filtered (2510 target rows)
+2026-10-25 03:13:18,120 INFO EAGLE-I 2015: range 403/599 MB filtered (2560 target rows)
+2026-10-25 03:13:18,155 INFO EAGLE-I 2015: range 319/599 MB filtered (2554 target rows)
+2026-10-25 03:13:18,186 INFO EAGLE-I 2016: range 537/620 MB filtered (2905 target rows)
+2026-10-25 03:13:18,235 INFO EAGLE-I 2016: range 604/620 MB filtered (2670 target rows)
+2026-10-25 03:13:18,268 INFO EAGLE-I 2016: range 268/620 MB filtered (2765 target rows)
+2026-10-25 03:13:18,273 INFO EAGLE-I 2016: range 436/620 MB filtered (2860 target rows)
+2026-10-25 03:13:18,344 INFO EAGLE-I 2015: range 520/599 MB filtered (2483 target rows)
+2026-10-25 03:13:18,349 INFO EAGLE-I 2015: range 336/599 MB filtered (2383 target rows)
+2026-10-25 03:13:18,390 INFO EAGLE-I 2016: range 419/620 MB filtered (2787 target rows)
+2026-10-25 03:13:18,404 INFO EAGLE-I 2016: range 554/620 MB filtered (3029 target rows)
+2026-10-25 03:13:18,432 INFO EAGLE-I 2016: range 570/620 MB filtered (2875 target rows)
+2026-10-25 03:13:18,432 INFO EAGLE-I 2015: range 168/599 MB filtered (3135 target rows)
+2026-10-25 03:13:19,093 INFO EAGLE-I 2016: checkpointed 104033 county snapshots
+2026-10-25 03:13:19,094 INFO EAGLE-I 2015: checkpointed 97075 county snapshots
+2026-10-25 03:13:19,099 INFO EAGLE-I 2017: streaming 698.8 MB
+2026-10-25 03:13:19,128 INFO EAGLE-I 2018: streaming 999.2 MB
+2026-10-25 03:13:25,222 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:25,558 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:25,574 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:25,853 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:26,202 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:26,442 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:26,529 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:26,777 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:27,240 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:27,474 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:27,744 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:13:29,385 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 24
+2026-10-25 03:15:19,562 INFO EAGLE-I 2017: range 17/699 MB filtered (2879 target rows)
+2026-10-25 03:15:56,300 INFO EAGLE-I 2017: range 50/699 MB filtered (3587 target rows)

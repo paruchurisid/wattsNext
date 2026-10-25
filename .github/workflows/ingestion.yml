@@ -1,0 +1,72 @@
+name: County data pipeline
+on:
+  workflow_dispatch:
+    inputs:
+      start_year:
+        description: First historical year
+        default: '2015'
+        required: true
+      end_year:
+        description: Last historical year
+        default: '2026'
+        required: true
+      smoke_only:
+        description: Run only the common seven-day sample
+        type: boolean
+        default: true
+      resolution:
+        type: choice
+        options: [event, 15min]
+        default: event
+permissions:
+  contents: read
+concurrency:
+  group: county-data-pipeline
+  cancel-in-progress: false
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+      NWS_USER_AGENT: ${{ vars.NWS_USER_AGENT || '(WattsNextPipeline, data-team@example.com)' }}
+      START_YEAR: ${{ inputs.start_year }}
+      END_YEAR: ${{ inputs.end_year }}
+      RESOLUTION: ${{ inputs.resolution }}
+      SMOKE_ONLY: ${{ inputs.smoke_only }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements-pipeline.txt
+      - run: python -m pip install -r requirements-pipeline.txt
+      - run: python -m unittest tests.test_ingestion_pipeline -v
+      - uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: county-archives-v1-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: county-archives-v1-${{ runner.os }}-
+      - name: Fetch and validate official data
+        shell: bash
+        run: |
+          args=(--start-year "$START_YEAR" --end-year "$END_YEAR" --resolution "$RESOLUTION")
+          if [ "$SMOKE_ONLY" = true ]; then args+=(--smoke-test); fi
+          python run_all.py "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: county-training-data
+          retention-days: 30
+          path: |
+            data/historical_weather.csv
+            data/severe_weather_events.csv
+            data/power_outages.csv
+            data/weather_forecast.csv
+            data/ingestion_status.json
+            data/validation_summary.json
+            data/run_summary.json
+            data/reports/*.json
+            data/smoke/*.csv
+            data/smoke/*.json

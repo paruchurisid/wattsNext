@@ -1,0 +1,24 @@
+2026-10-25 03:00:01,739 INFO EAGLE-I 2015: streaming 599.0 MB
+2026-10-25 03:00:01,740 INFO EAGLE-I 2016: streaming 619.8 MB
+2026-10-25 03:00:07,203 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 10
+2026-10-25 03:00:07,212 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 10
+2026-10-25 03:00:07,215 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 10
+2026-10-25 03:00:09,638 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 10
+2026-10-25 03:00:09,638 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 10
+2026-10-25 03:00:09,713 WARNING Connection pool is full, discarding connection: ndownloader.figshare.com. Connection pool size: 10
+2026-10-25 03:02:04,005 INFO EAGLE-I 2015: range 34/599 MB filtered (3129 target rows)
+2026-10-25 03:02:09,887 INFO EAGLE-I 2016: range 34/620 MB filtered (3209 target rows)
+2026-10-25 03:02:13,254 INFO EAGLE-I 2016: range 50/620 MB filtered (2893 target rows)
+2026-10-25 03:02:19,646 INFO EAGLE-I 2015: range 117/599 MB filtered (3408 target rows)
+2026-10-25 03:02:21,301 INFO EAGLE-I 2016: range 101/620 MB filtered (3456 target rows)
+2026-10-25 03:02:25,211 INFO EAGLE-I 2016: range 17/620 MB filtered (2661 target rows)
+2026-10-25 03:02:28,408 INFO EAGLE-I 2015: range 134/599 MB filtered (2891 target rows)
+2026-10-25 03:02:29,516 INFO EAGLE-I 2016: range 134/620 MB filtered (2632 target rows)
+2026-10-25 03:02:30,193 INFO EAGLE-I 2016: range 84/620 MB filtered (2860 target rows)
+2026-10-25 03:02:31,564 INFO EAGLE-I 2016: range 67/620 MB filtered (2493 target rows)
+2026-10-25 03:02:38,436 INFO EAGLE-I 2016: range 117/620 MB filtered (2722 target rows)
+2026-10-25 03:02:45,051 INFO EAGLE-I 2015: range 50/599 MB filtered (3301 target rows)
+2026-10-25 03:02:45,373 INFO EAGLE-I 2015: range 17/599 MB filtered (2735 target rows)
+2026-10-25 03:02:47,111 INFO EAGLE-I 2015: range 67/599 MB filtered (2767 target rows)
+2026-10-25 03:02:47,143 INFO EAGLE-I 2015: range 101/599 MB filtered (3286 target rows)
+2026-10-25 03:02:48,865 INFO EAGLE-I 2015: range 84/599 MB filtered (3825 target rows)

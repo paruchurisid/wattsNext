@@ -26,4 +26,4 @@ uvicorn==0.54.0
     # via -r requirements.in
 
 # Ingestion pipeline dependencies (see requirements-pipeline.in)
--r requirements-pipeline.in
+-r requirements-pipeline.txt

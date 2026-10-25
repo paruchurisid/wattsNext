@@ -1,0 +1,17 @@
+2026-10-25 02:53:08,393 INFO historical: fetching 2015-01-01 through 2026-10-24
+
+historical: 517,800 actual rows
+            timestamp_utc  temp_c  precipitation_mm  rain_mm  snowfall_cm  snow_depth_m  weather_code  wind_speed_kmh  wind_gust_kmh  dewpoint_f  relative_humidity_pct  wind_direction_deg  wind_speed_knots  wind_gust_knots  precipitation_1hr_in  asos_snow_depth_in  peak_wind_gust_knots  ice_accretion_1hr_in  ice_accretion_3hr_in  ice_accretion_6hr_in  is_freezing_rain  is_snow  is_ice_pellets  is_thunderstorm  asos_temp_c local_date  ghcnd_snowfall_in  ghcnd_snow_depth_in city_key asos_id    ghcnd_id                  source_dataset fips_code
+2015-01-01 00:00:00+00:00    -1.7               0.0      0.0          0.0          0.01             0            10.5           22.7        15.8                  47.22               260.0               5.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN               0.0      0.0             0.0              0.0          1.0 2014-12-31                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+2015-01-01 01:00:00+00:00    -2.4               0.0      0.0          0.0          0.01             0            10.5           24.1        15.8                  50.75                 0.0               0.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN               0.0      0.0             0.0              0.0          0.0 2014-12-31                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+2015-01-01 02:00:00+00:00    -2.9               0.0      0.0          0.0          0.01             0            10.8           25.9        15.8                  58.75               260.0               6.0              NaN                   0.0                 NaN                   NaN                   NaN                   NaN                   NaN               0.0      0.0             0.0              0.0         -2.0 2014-12-31                0.0                  0.0      ROA    KROA USW00013741 OPEN_METEO_REANALYSIS+IEM+GHCND     51770
+Join keys: zero missing
+{
+  "schema_version": "1.0",
+  "start": "2015-01-01",
+  "end": "2026-10-24",
+  "validation_passed": true,
+  "source_failures": false,
+  "publisher_coverage_gaps": false,
+  "status": "complete"
+}

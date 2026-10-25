@@ -70,9 +70,9 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --upgrade pip && python -m pip install -r requirements-dev.txt
       - name: Compile all Python modules
-        run: python -m compileall -q backend concierge server.py api scripts
+        run: python -m compileall -q backend concierge server.py api scripts src run_all.py
       - name: Lint Python
-        run: python -m ruff check backend concierge server.py api scripts tests
+        run: python -m ruff check backend concierge server.py api scripts tests src run_all.py
       - name: Audit Python dependencies
         run: python -m pip_audit -r requirements.txt
       - name: Run unit and API tests
