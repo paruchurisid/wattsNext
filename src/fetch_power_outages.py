@@ -110,12 +110,23 @@ def eagle(start, end):
             and pd.Timestamp(start).year <= int(match[1]) <= pd.Timestamp(end).year
         ):
             files.append((int(match[1]), item))
+    catalog_path = common.CACHE_ROOT / "eagle/catalog.json"
+    catalog_files = {year: dict(info, year=year) for year, info in files}
+    catalog_start, catalog_end = start, end
+    if catalog_path.exists():
+        import json
+
+        previous = json.loads(catalog_path.read_text(encoding="utf-8"))
+        for info in previous.get("files", []):
+            catalog_files.setdefault(info["year"], info)
+        catalog_start = min(start, previous.get("start", start))
+        catalog_end = max(end, previous.get("end", end))
     common.atomic_json(
-        common.CACHE_ROOT / "eagle/catalog.json",
+        catalog_path,
         {
-            "files": [dict(info, year=year) for year, info in files],
-            "start": start,
-            "end": end,
+            "files": [catalog_files[year] for year in sorted(catalog_files)],
+            "start": catalog_start,
+            "end": catalog_end,
         },
     )
     available = {year for year, _ in files}
