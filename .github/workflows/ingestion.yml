@@ -43,7 +43,7 @@ jobs:
           cache-dependency-path: requirements-pipeline.txt
       - run: python -m pip install -r requirements.txt -r requirements-pipeline.txt
       - run: python -m unittest tests.test_ingestion_pipeline -v
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: data/cache
           key: county-archives-v1-${{ runner.os }}-${{ github.run_id }}
