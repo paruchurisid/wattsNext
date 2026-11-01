@@ -3,7 +3,7 @@
 -r requirements-pipeline.in
 httpx>=0.28,<1
 coverage==7.17.0
-ruff==0.17.2
+ruff==0.17.3
 bandit==1.9.4
 pip-audit==2.10.1
 pip-tools==7.6.2
