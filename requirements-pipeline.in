@@ -1,6 +1,6 @@
 requests>=2.32,<3
 pandas>=2.2,<4
-pyarrow>=19
+pyarrow>=26.0.1
 duckdb>=1.2
 python-dotenv>=1
 tenacity>=9
