@@ -4,7 +4,7 @@
     "test:browser": "playwright test"
   },
   "dependencies": {
-    "@neon/config": "^1.9.4",
+    "@neon/config": "^1.11.3",
     "@neon/env": "^1.6.5"
   },
   "overrides": {
